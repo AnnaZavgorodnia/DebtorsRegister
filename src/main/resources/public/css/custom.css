@@ -1,0 +1,120 @@
+@media screen {
+
+    .footer {
+        height: 75px
+    }
+
+    /*@font-face {*/
+    /*    font-family: 'FuturaNewDemi';*/
+    /*    src: url(../fonts/FuturaNewDemi/FuturaNewDemi-Reg.eot);*/
+    /*    src: url(../fonts/FuturaNewDemi/FuturaNewDemi-Reg.woff2) format("woff2"), url(../fonts/FuturaNewDemi/FuturaNewDemi-Reg.woff) format("woff"), url(../fonts/FuturaNewDemi/FuturaNewDemi-Reg.ttf) format("truetype");*/
+    /*    font-weight: 400;*/
+    /*    font-style: normal*/
+    /*}*/
+    /*@font-face {*/
+    /*    font-family: 'FuturaNewBook';*/
+    /*    src: url(../fonts/FuturaNewBook/FuturaNewBook-Reg.eot);*/
+    /*    src: url(../fonts/FuturaNewBook/FuturaNewBook-Reg.woff2) format("woff2"), url(../fonts/FuturaNewBook/FuturaNewBook-Reg.woff) format("woff"), url(../fonts/FuturaNewBook/FuturaNewBook-Reg.ttf) format("truetype");*/
+    /*    font-weight: 400;*/
+    /*    font-style: normal*/
+    /*}*/
+    /*@font-face {*/
+    /*    font-family: 'FuturaNewLight';*/
+    /*    src: url(../fonts/FuturaNewLight/FuturaNewLight-Reg.eot);*/
+    /*    src: url(../fonts/FuturaNewLight/FuturaNewLight-Reg.woff2) format("woff2"), url(../fonts/FuturaNewLight/FuturaNewLight-Reg.woff) format("woff"), url(../fonts/FuturaNewLight/FuturaNewLight-Reg.ttf) format("truetype");*/
+    /*    font-weight: 400;*/
+    /*    font-style: normal*/
+    /*}*/
+    /*@font-face {*/
+    /*    font-family: 'AmazingGroteskDemi';*/
+    /*    src: url(../fonts/AmazingGroteskDemi/AmazingGrotesk-DemiBold.eot);*/
+    /*    src: url(../fonts/AmazingGroteskDemi/AmazingGrotesk-DemiBold.woff2) format("woff2"), url(../fonts/AmazingGroteskDemi/AmazingGrotesk-DemiBold.woff) format("woff"), url(../fonts/AmazingGroteskDemi/AmazingGrotesk-DemiBold.ttf) format("truetype");*/
+    /*    font-weight: 400;*/
+    /*    font-style: normal*/
+    /*}*/
+    body {
+        font-family: "FuturaNewBook", Arial, "Helvetica Neue", Helvetica, sans-serif;
+        font-size: 16px;
+    }
+
+    .header {
+        vertical-align: middle;
+        background-color: rgb(57, 84, 165);
+        color: #F3F3F3;
+        margin: 0 0 1em 0;
+    }
+
+    .header-text {
+        margin: 1em 0 1em 0;
+        color: white;
+    }
+
+    .btn {
+        font-family: "FuturaNewDemi", Arial, "Helvetica Neue", Helvetica, sans-serif;
+    }
+
+    td.wide-column {
+        width: 35%;
+    }
+
+    td.address-column {
+        width: 15%;
+    }
+
+    div.docPdf {
+        font-family: "FuturaNewBook", Arial, "Helvetica Neue", Helvetica, sans-serif;
+        width: 730px;
+        height: 780px;
+        text-align: left;
+        /*padding-top: 10px;*/
+        background-color: gainsboro;
+    }
+
+    small {
+        font-size: 8pt;
+    }
+
+    a.init-link {
+        color: cornflowerblue;
+    }
+
+    div.pdd0 {
+        padding: 0 8px 8px;
+    }
+
+    img.padd-right {
+        padding-right: 7px;
+    }
+
+    fieldset.margin5 {
+        margin: 0 0 5px;
+    }
+
+    .div-border-bottom {
+        border-bottom: 1px solid #BBB;
+    }
+
+    .div-border {
+        border-bottom: 1px solid #BBB;
+        border-top: 1px solid #BBB;
+    }
+
+    form.top-padding {
+        padding-top: 10px;
+    }
+
+    p.pPadding {
+        padding: 30px;
+    }
+
+    span.spFont {
+        font-size: 14pt;
+    }
+
+    .img-left-my {
+        margin: 1em 1em 1em 1em;
+        border: none;
+    }
+
+
+}

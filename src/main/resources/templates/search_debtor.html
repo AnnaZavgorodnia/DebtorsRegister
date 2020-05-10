@@ -1,0 +1,469 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Єдиний реєстр боржників</title>
+    <link rel="icon" href="img/logo_min_just.png" type="image/png">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no"/>
+    <link rel="stylesheet" type="text/css" href="css/amazium.css">
+    <link rel="stylesheet" type="text/css" href="css/custom.css">
+    <link rel="stylesheet" type="text/css" href="css/pikaday.css">
+    <link rel="stylesheet" type="text/css" href="css/print.css"/>
+    <link rel="stylesheet" type="text/css" href="css/main.css"/>
+
+
+
+</head>
+
+<body>
+
+
+<header class="header ">
+    <div class="row row--align-center">
+        <div class="grid-4 txt-center">
+            <img src="img/logo_min_just.png" class="img-left-my" width="160px">
+        </div>
+        <div class="grid-6">
+            <h2 class="header-text">Єдиний реєстр боржників</h2>
+        </div>
+        <div class="grid-2 txt-center">
+            <button type="button" onclick="location.href='login.html'"
+                    class="btn btn--size-l btn--color-none header-text">
+                Увійти
+            </button>
+        </div>
+    </div>
+</header>
+
+
+<div class="content-area">
+    <div class="row" id="registerMode">
+        <form action="javascript:void(0);">
+            <fieldset class="hide-mobile">
+                    <span class="radio toggle">
+                        <span>
+                            <label id="registersName">
+                               Вітаємо, Олександр Сергійович Млекович!
+                            </label>
+                        </span>
+                        <span>
+                            <button type="button" class="btn btn--color-positive" name="mainPages"
+                                    id="createDebt" onClick="window.location = 'create_debt.html';">Створити запис про заборгованість</button>
+                        </span>
+                        <span>
+                            <button type="button" class="btn btn--color-info" name="mainPages"
+                                    id="viewMyProfile">Переглянути особистий профіль</button>
+                        </span>
+
+                        <span>
+                            <a type="button" class="btn btn--color-negative" name="mainPages"
+                                    id="exitRegister" href="/logout">Вийти</a>
+                        </span>
+
+                    </span>
+            </fieldset>
+        </form>
+    </div>
+
+    <div class="row" id="adminMode">
+        <form action="javascript:void(0);">
+            <fieldset class="hide-mobile">
+                    <span class="radio toggle">
+                        <span>
+                            <label id="adminName">
+                               Вітаємо, Олександр Сергійович Млекович( адмін )!
+                            </label>
+                        </span>
+
+                        <span>
+                            <button type="button" class="btn btn--color-positive" name="mainPages"
+                                    id="createProfile" onClick="window.location = 'create_registers_profile.html';">Створити профіль реєстратора</button>
+                        </span>
+
+                        <span>
+                            <button type="button" class="btn btn--color-info" name="mainPages"
+                                    id="searchProfile"
+                                    onClick="window.location = 'search_registers_profile.html';">Пошук реєстраторa</button>
+                        </span>
+
+                        <span>
+                            <button type="button" class="btn btn--color-info" name="mainPages"
+                                    id="viewProfiles"
+                                    onClick="window.location = 'all_profiles.html';">Переглянути всіх реєстраторів</button>
+                        </span>
+
+                        <span>
+                            <button type="button" class="btn btn--color-negative" name="mainPages"
+                                    id="exitAdmin">Вийти</button>
+                        </span>
+
+                    </span>
+            </fieldset>
+        </form>
+    </div>
+
+    <div class=" div-border-bottom">
+        <div class="row grid-12 ">
+            <form action="javascript:void(0);">
+                <fieldset class="hide-mobile">
+                    <span class="radio toggle">
+                        <span onClick="window.location = 'search_debtor.html';">
+                            <input type="radio" tabindex="6" name="mainPages" id="radioPage1" checked="checked">
+                            <label for="radioPage1">
+                                <span>Пошук боржника</span>
+                            </label>
+                        </span>
+                        <span onClick="window.location = 'alimony_debtors.html';">
+                            <input type="radio" tabindex="7" name="mainPages" id="radioPage2">
+                            <label for="radioPage2">
+                                <span>Заборгованість по аліментах</span>
+                            </label>
+                        </span>
+                        <span onClick="window.location = 'wages_debtors.html';">
+                            <input type="radio" tabindex="8" name="mainPages" id="radioPage3">
+                            <label for="radioPage3">
+                                <span>Заборгованість по заробітній платі</span>
+
+                            </label>
+                        </span>
+                        <span onClick="window.location = 'child_dates_debtors.html';">
+                            <input type="radio" tabindex="9" name="mainPages" id="radioPage4">
+                            <label for="radioPage4">
+                                <span>Боржники, що перешкоджають у побаченні з дитиною</span>
+                            </label>
+                        </span>
+                    </span>
+                </fieldset>
+            </form>
+        </div>
+
+    </div>
+
+    <div class="row">
+        <div class="grid-12">
+            <div class=" row row--align-center">
+                <div class="grid-8">
+                    <form class="labels-inline ">
+                        <fieldset>
+                            <label>Тип боржника:</label>
+
+                            <span class="radio">
+                                <span>
+                                    <input type="radio" tabindex="1" name="debtorType" id="radioPhysical" checked=""
+                                           value="physical">
+                                    <label for="radioPhysical">Фізична особа</label>
+                                </span>
+                            <span>
+                                <input type="radio" tabindex="2" name="debtorType" id="radioLegalEntity"
+                                       value="legal">
+                                <label for="radioLegalEntity">Юридична особа</label>
+                            </span>
+
+                            </span>
+                        </fieldset>
+                    </form>
+                </div>
+            </div>
+
+            <div>
+                <div id="physicalPage" class="">
+                    <form id="physicalForm">
+                        <ol class="columns columns-2-desktop">
+                            <li class="column">
+
+                                <fieldset class="invalid" id="surnameFieldset">
+                                    <label for="inputSurname">Прізвище:</label>
+                                    <input type="text" id="inputSurname" placeholder="Прізвище"
+                                           tabindex="5" autocomplete="off">
+                                </fieldset>
+
+                                <fieldset class="invalid" id="nameFieldset">
+                                    <label for="inputName">Ім’я:</label>
+                                    <input type="text" id="inputName" placeholder="Ім’я" tabindex="6"
+                                           autocomplete="off">
+                                </fieldset>
+
+                                <fieldset>
+                                    <label for="inputPatro">По батькові (за наявності):</label>
+                                    <input type="text" id="inputPatro"
+                                           placeholder="По батькові (за наявності)" tabindex="7"
+                                           data-ng-model="vm.data.filter.MiddleName" autocomplete="off"
+                                           class="ng-pristine ng-untouched ng-valid ng-empty">
+                                </fieldset>
+
+                                <fieldset>
+                                    <label for="inputBirthDate">Дата народження:</label>
+                                    <input type="date" id="inputBirthDate"
+                                           placeholder="Дата народження" tabindex="8"
+                                           autocomplete="off">
+                                </fieldset>
+
+                            </li>
+                            <li class="column">
+
+                                <fieldset class="invalid" id="codeFieldset">
+                                    <label for="inputPersonCode">Реєстраційний номер облікової картки
+                                        платника податків:</label>
+                                    <input type="text" id="inputPersonCode" placeholder="" tabindex="9">
+                                </fieldset>
+                                <fieldset class="ng-hide" id="inputPersonCodeWarning">
+                                    <label for="inputPersonCode">Увага, пошук буде проведено лише по полю
+                                        "Реєстраційний номер облікової картки платника податків"</label>
+                                </fieldset>
+
+                            </li>
+                        </ol>
+
+                        <fieldset>
+                            <label for="categorySelect_33">
+                                Категорія стягнення:
+                            </label>
+                            <span class="select">
+                                    <select id="categorySelect_33">
+                                        <option value="" selected="selected"></option>
+                                        <option label="стягнення коштів" value="01">стягнення коштів</option>
+                                        <option label="звернення стягнення на майно" value="02">звернення стягнення на майно</option>
+                                        <option label="стягнення аліментів" value="03">стягнення аліментів</option>
+                                        <option label="стягнення періодичних платежів (крім аліментів)" value="04">стягнення періодичних платежів (крім аліментів)</option><option
+                                            label="стягнення заборгованості із заробітної плати та інших платежів, пов’язаних з трудовими відносинами"
+                                            value="05">стягнення заборгованості із заробітної плати та інших платежів, пов’язаних з трудовими відносинами</option>
+                                        <option label="стягнення соціальних виплат" value="06">стягнення соціальних виплат</option>
+                                        <option label="стягнення заборгованості з оплати комунальних послуг" value="07">стягнення заборгованості з оплати комунальних послуг</option><option
+                                            label="стягнення штрафів у справах про адміністративні правопорушення"
+                                            value="08">стягнення штрафів у справах про адміністративні правопорушення</option>
+                                        <option label="стягнення штрафів у справах про адміністративні правопорушення у сфері безпеки дорожнього руху"
+                                                value="09">стягнення штрафів у справах про адміністративні правопорушення у сфері безпеки дорожнього руху</option>
+                                        <option label="забезпечення позову" value="10">забезпечення позову</option>
+                                        <option label="зобов’язання вчинити певні дії або утриматися від їх вчинення"
+                                                value="11">зобов’язання вчинити певні дії або утриматися від їх вчинення</option>
+                                        <option label="поновлення на роботі" value="12">поновлення на роботі</option>
+                                        <option label="вселення стягувача"
+                                                value="13">вселення стягувача</option>
+                                        <option label="виселення" value="14">виселення</option><option
+                                            label="відібрання дитини" value="15">відібрання дитини</option>
+                                        <option label="заборона вчиняти певні дії"
+                                                value="16">заборона вчиняти певні дії</option>
+                                        <option label="конфіскація майна" value="17">конфіскація майна</option>
+                                        <option label="конфіскація майна, вилученого митними органами" value="18">конфіскація майна, вилученого митними органами</option>
+                                        <option label="конфіскація майна засуджених" value="18.1">конфіскація майна засуджених</option>
+                                        <option label="конфіскація коштів та майна за вчинення корупційного та пов’язаного з корупцією правопорушення"
+                                                value="19">конфіскація коштів та майна за вчинення корупційного та пов’язаного з корупцією правопорушення</option>
+                                        <option label="оплатне вилучення" value="20">оплатне вилучення</option>
+                                        <option label="передача стягувачу предметів, зазначених у виконавчому документі"
+                                                value="21">передача стягувачу предметів, зазначених у виконавчому документі</option><option
+                                            label="стягнення коштів на користь держави" value="22">стягнення коштів на користь держави</option>
+                                        <option label="рішення Європейського суду з прав людини"
+                                                value="23">рішення Європейського суду з прав людини</option>
+                                        <option label="стягнення виконавчого збору"
+                                                value="24">стягнення виконавчого збору</option>
+                                        <option label="стягнення витрат виконавчого провадження"
+                                                value="25">стягнення витрат виконавчого провадження</option>
+                                        <option label="стягнення штрафів, накладених державним, приватним виконавцем"
+                                                value="26">стягнення штрафів, накладених державним, приватним виконавцем</option>
+                                        <option label="стягнення основної винагороди приватного виконавця" value="27">стягнення основної винагороди приватного виконавця</option>
+                                        <option label="усунення перешкод у побаченні з дитиною, встановлення побачення з дитиною"
+                                                value="28">усунення перешкод у побаченні з дитиною, встановлення побачення з дитиною</option>
+                                    </select>
+                                </span>
+                        </fieldset>
+
+                        <div class="row row--align-right ">
+                            <button class="btn btn--color-info" tabindex="10" id="cleanFormPhysical">
+                                Очистити
+                            </button>
+                            <button class="btn btn--color-info ng" tabindex="11">
+                                Сформувати документ
+                            </button>
+                            <button class="btn btn--color-info" type="submit" tabindex="13" id="searchBtnPhysical"
+                                    disabled>
+                                Шукати
+                            </button>
+                        </div>
+                    </form>
+
+                    <div id="physicalResultsMessage" class="row row--align-right ng-hide">
+                        <p class="message message--color-negative ng">
+                            Записів не знайдено. Уточніть умови пошуку
+                        </p>
+                    </div>
+
+
+                    <table class="ng-hide" id="physicalResultsTable">
+                        <thead>
+                        <tr>
+                            <th colspan="7">
+                                Результат пошуку фізичних осіб.
+                                <small id="physicalSearchDateTime"></small>
+                            </th>
+                        </tr>
+                        <tr>
+                            <th scope="col">Прізвище, ім’я, по батькові</th>
+                            <th scope="col">Дата народження</th>
+                            <th scope="col">Документ виданий</th>
+                            <th scope="col">Виконавець</th>
+                            <th scope="col">Номер ВП</th>
+                            <th scope="col">Категорія стягнення</th>
+                            <th scope="col">Дія</th>
+                            <th scope="col"></th>
+                        </tr>
+                        </thead>
+                        <tbody id="physicalResults">
+
+                        </tbody>
+                    </table>
+                </div>
+
+                <div id="legalPage" class="ng-hide">
+
+                    <div class="row">
+                        <div class="grid-12">
+                            <div class="section">
+                                <div>
+                                    <form class="labels-inline" id="legalForm">
+                                        <fieldset>
+                                            <label for="inputFirmName">Найменування:</label>
+                                            <input type="text" name="debtorType" id="inputFirmName" tabindex="3"
+                                                   autocomplete="off">
+                                        </fieldset>
+
+                                        <fieldset>
+                                            <label for="inputFirmCode">Ідентифікаційний код юридичної
+                                                особи:</label>
+                                            <input type="text" name="debtorType" id="inputFirmCode" tabindex="4"
+                                                   autocomplete="off">
+                                        </fieldset>
+
+                                        <fieldset>
+                                            <label for="categorySelect_164">
+                                                Категорія стягнення:
+                                            </label>
+                                            <span class="select">
+                                                    <select id="categorySelect_164">
+                                                        <option value="" class="" selected="selected"></option>
+                                                        <option label="стягнення коштів"
+                                                                value="01">стягнення коштів</option>
+                                                        <option label="звернення стягнення на майно" value="02">звернення стягнення на майно</option>
+                                                        <option label="стягнення аліментів" value="03">стягнення аліментів</option>
+                                                        <option label="стягнення періодичних платежів (крім аліментів)"
+                                                                value="04">стягнення періодичних платежів (крім аліментів)</option>
+                                                        <option label="стягнення заборгованості із заробітної плати та інших платежів, пов’язаних з трудовими відносинами"
+                                                                value="05">стягнення заборгованості із заробітної плати та інших платежів, пов’язаних з трудовими відносинами</option>
+                                                        <option label="стягнення соціальних виплат" value="06">стягнення соціальних виплат</option>
+                                                        <option label="стягнення заборгованості з оплати комунальних послуг"
+                                                                value="07">стягнення заборгованості з оплати комунальних послуг</option>
+                                                        <option label="стягнення штрафів у справах про адміністративні правопорушення"
+                                                                value="08">стягнення штрафів у справах про адміністративні правопорушення</option>
+                                                        <option label="стягнення штрафів у справах про адміністративні правопорушення у сфері безпеки дорожнього руху"
+                                                                value="09">стягнення штрафів у справах про адміністративні правопорушення у сфері безпеки дорожнього руху</option>
+                                                        <option label="забезпечення позову" value="10">забезпечення позову</option>
+                                                        <option label="зобов’язання вчинити певні дії або утриматися від їх вчинення"
+                                                                value="11">зобов’язання вчинити певні дії або утриматися від їх вчинення</option>
+                                                        <option label="поновлення на роботі" value="12">поновлення на роботі</option>
+                                                        <option label="вселення стягувача"
+                                                                value="13">вселення стягувача</option>
+                                                        <option label="виселення" value="14">виселення</option><option
+                                                            label="відібрання дитини"
+                                                            value="15">відібрання дитини</option>
+                                                        <option label="заборона вчиняти певні дії" value="16">заборона вчиняти певні дії</option>
+                                                        <option label="конфіскація майна"
+                                                                value="17">конфіскація майна</option>
+                                                        <option label="конфіскація майна, вилученого митними органами"
+                                                                value="18">конфіскація майна, вилученого митними органами</option>
+
+                                                        <option label="конфіскація майна засуджених" value="18.1">конфіскація майна засуджених</option>
+                                                        <option label="конфіскація коштів та майна за вчинення корупційного та пов’язаного з корупцією правопорушення"
+                                                                value="19">конфіскація коштів та майна за вчинення корупційного та пов’язаного з корупцією правопорушення</option>
+                                                        <option label="оплатне вилучення"
+                                                                value="20">оплатне вилучення</option>
+                                                        <option label="передача стягувачу предметів, зазначених у виконавчому документі"
+                                                                value="21">передача стягувачу предметів, зазначених у виконавчому документі</option>
+                                                        <option label="стягнення коштів на користь держави" value="22">стягнення коштів на користь держави</option>
+                                                        <option label="рішення Європейського суду з прав людини"
+                                                                value="23">рішення Європейського суду з прав людини</option>
+                                                        <option label="стягнення виконавчого збору"
+                                                                value="24">стягнення виконавчого збору</option>
+                                                        <option label="стягнення витрат виконавчого провадження"
+                                                                value="25">стягнення витрат виконавчого провадження</option>
+                                                        <option label="стягнення штрафів, накладених державним, приватним виконавцем"
+                                                                value="26">стягнення штрафів, накладених державним, приватним виконавцем</option>
+                                                        <option label="стягнення основної винагороди приватного виконавця"
+                                                                value="27">стягнення основної винагороди приватного виконавця</option>
+                                                        <option label="усунення перешкод у побаченні з дитиною, встановлення побачення з дитиною"
+                                                                value="28">усунення перешкод у побаченні з дитиною, встановлення побачення з дитиною</option>
+                                                    </select>
+                                                </span>
+                                        </fieldset>
+                                        <div class="row row--align-right ">
+                                            <button class="btn btn--color-info" id="cleanFormLegal">
+                                                Очистити
+                                            </button>
+                                            <button class="btn btn--color-info ng">
+                                                Сформувати документ
+                                            </button>
+                                            <button class="btn btn--color-info" id="searchBtnLegal" disabled="disabled">
+                                                Шукати
+                                            </button>
+                                        </div>
+                                    </form>
+
+                                    <div id="legalResultsMessage" class="row row--align-right ng-hide">
+                                        <p class="message message--color-negative ">
+                                            Записів не знайдено. Уточніть умови пошуку
+                                        </p>
+                                    </div>
+
+                                </div>
+
+                                <table class="ng-hide" id="legalResultsTable">
+                                    <thead>
+                                    <tr>
+                                        <th colspan="6">
+                                            Результат пошуку юридичних осіб.
+                                            <small id="legalSearchDateTime"></small>
+                                        </th>
+                                    </tr>
+                                    <tr>
+                                        <th scope="col">Найменування</th>
+                                        <th scope="col">Документ виданий</th>
+                                        <th scope="col">Зв'язок з виконавцем</th>
+                                        <th scope="col">Номер виконавчого провадження</th>
+                                        <th scope="col">Категорія стягнення</th>
+                                        <th scope="col"></th>
+                                    </tr>
+                                    </thead>
+                                    <tbody id="legalResults">
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- The Modal -->
+                <div id="deleteModal" class="modal">
+
+                    <!-- Modal content -->
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <span class="closeModal">&times;</span>
+                            <br>
+                            <h2>Видалення запису</h2>
+                        </div>
+                        <div class="modal-body">
+                            <p>Ви впевнені, що хочете видалити цей запис?</p>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn--color-negative" id="confirmDeleteBtn">Так</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script src="js/search_debtor.js"></script>
+</body>
+</html>

@@ -1,0 +1,38 @@
+@media print {
+
+    body {
+        background: white;
+        font-size: 12pt;
+    }
+
+    td {
+        font-size: 11pt;
+        border-top: thin dashed black;
+        border-bottom: thin dashed black;
+        text-align: left;
+    }
+
+    td.wide-column {
+        width: 50%;
+    }
+
+    td:empty {
+        font-size: smaller;
+    }
+
+    td:empty:before {
+        content: '(відсутне)'
+    }
+
+    .print-hide {
+        display: none;
+    }
+
+    .print-page-break {
+        page-break-after: always;
+    }
+
+    .print-no-page-break {
+        page-break-inside: avoid;
+    }
+}
