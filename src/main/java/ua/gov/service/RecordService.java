@@ -16,6 +16,7 @@ import ua.gov.repository.RecordRepository;
 
 import javax.transaction.Transactional;
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -103,5 +104,17 @@ public class RecordService {
         obligor.setIsLegalEntity(dto.getIsLegalEntity());
 
         return obligor;
+    }
+
+    public void deleteById(Long id){
+        Record record = repository.findById(id).orElseGet(null);
+        if(record != null){
+            record.setIsActive(false);
+            repository.save(record);
+        }
+    }
+
+    public List<Record> getRecords(){
+        return repository.findAll();
     }
 }

@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <title>Єдиний реєстр боржників</title>
     <link rel="icon" href="img/logo_min_just.png" type="image/png">
@@ -11,6 +12,8 @@
     <link rel="stylesheet" type="text/css" href="css/pikaday.css">
     <link rel="stylesheet" type="text/css" href="css/print.css"/>
     <link rel="stylesheet" type="text/css" href="css/main.css"/>
+
+
 </head>
 
 <body>
@@ -31,7 +34,6 @@
         </div>
     </div>
 </header>
-
 
 <div class="content-area">
     <div class="row" id="adminMode">
@@ -83,7 +85,7 @@
                         </label>
                     </span>
                     <span onClick="window.location = 'alimony_debtors.html';">
-                        <input type="radio" tabindex="7" name="mainPages" id="radioPage2" value="2">
+                        <input type="radio" tabindex="7" name="mainPages" id="radioPage2"    value="2">
                         <label for="radioPage2">
                             <span>Заборгованість по аліментах</span>
                         </label>
@@ -115,82 +117,83 @@
                 </span>
                 </fieldset>
             </form>
-
         </div>
+
     </div>
-    <div class="row">
-        <div class="grid-12">
-            <div class=" row row--align-center">
-                    <span>
-                        <h3 class="text-center">Створення профілю реєстратора</h3>
-                        <div id="message"></div>
-                    </span>
-            </div>
 
-            <div>
-                <form id="createForm">
-                    <fieldset>
-                        <label for="fullName">ПІБ реєстратора:</label>
-                        <input type="text" id="fullName"
-                               placeholder="Прізвище Ім'я По-батькові" tabindex="1"
-                               autocomplete="off" required>
-                    </fieldset>
+    <div>
+        <div>
+            <br>
+            <div class="row row--align-center"><strong>Кількість профілів в реєстрі: 2</strong></div>
 
-                    <fieldset>
-                        <label for="stateAgency">Назва державного органу, для якого створюється профіль
-                            реєстратора:</label>
-                        <input type="text" id="stateAgency" placeholder="Назва державного органу"
-                               tabindex="2" autocomplete="off" required>
-                    </fieldset>
+            <table>
+                <thead>
+                    <tr>
+                    <th scope="col"></th>
+                    <th scope="col">Прізвище, ім’я, по батькові</th>
+                    <th scope="col">Назва державного органу, для якого створений профіль</th>
+                    <th scope="col">Електронна адреса</th>
+                    <th scope="col">Номер телефону</th>
+                    <th scope="col">Пароль профіля</th>
+                    <th scope="col">Статус</th>
+                    <th scope="col">Дія</th>
+                </tr>
+                </thead>
 
-
-                    <fieldset>
-                        <label for="email">Електронна адреса реєстратора:</label>
-                        <input type="email" id="email"
-                               placeholder="Електронна адреса" tabindex="3"
-                               autocomplete="off" required>
-                    </fieldset>
-
-                    <fieldset>
-                        <label for="phoneNumber">Номер телефону реєстратора:</label>
-                        <input type="text" id="phoneNumber"
-                               placeholder="Номер телефону " tabindex="4"
-                               autocomplete="off" required>
-                    </fieldset>
-
-                    <fieldset>
-                        <label for="password">Пароль для профілю реєстратора:</label>
-                        <input type="password" id="password"
-                               placeholder="Пароль" tabindex="5"
-                               autocomplete="off" required>
-                    </fieldset>
-
-                    <div class="row row--align-right ">
-                        <button class="btn btn--color-info" tabindex="6" id="cancelCreate">
-                            Відмінити
+                <tr class="print-no-page-break">
+                    <td data-title="№"><span class="cell-content">1</span></td>
+                    <td>Вороніна Вероніка Анатоліївна</td>
+                    <td>Шосткинський міськрайонний відділ державної виконавчої служби Північно-Східного міжрегіонального
+                        управління Міністерства юстиції (м. Суми)
+                    </td>
+                    <td>some.email@gmail.com</td>
+                    <td>+38058089956</td>
+                    <td>qwerty123456</td>
+                    <td>Активований</td>
+                    <td>
+<!--                        <button class="btn btn&#45;&#45;color-positive " tabindex="6">-->
+<!--                            Активувати профіль-->
+<!--                        </button>-->
+                        <button class="btn btn--color-negative " tabindex="7">
+                            Деактивувати профіль
                         </button>
-                        <button class="btn btn--color-info" tabindex="7" id="cleanForm">
-                            Очистити
-                        </button>
-                        <button class="btn btn--color-positive" tabindex="8" id="submitCreate">
-                            Зберегти
-                        </button>
-                    </div>
-                </form>
-            </div>
 
-            <div class="row">
-                <div class="grid-12 footer"></div>
-            </div>
+                        <button type="button" class="btn btn--color-warning"
+                                onclick="window.location='update_profile.html'">Редагувати
+                        </button>
+                    </td>
+                </tr>
+                <tr class="print-no-page-break">
+                    <td data-title="№"><span class="cell-content">2</span></td>
+                    <td>Парасоцький Олексій Юрійович</td>
+                    <td>суд загальної юрисдикції Автозаводський р/с
+                    </td>
+                    <td> info.dvskr@krm.pl.minjust.gov.ua</td>
+                    <td>096-816-76-00</td>
+                    <td>someparol123456789</td>
+                    <td>Деактивований</td>
+                    <td>
+                        <button class="btn btn--color-positive " tabindex="6">
+                            Активувати профіль
+                        </button>
+                        <button class="btn btn--color-negative " tabindex="7">
+                            Деактивувати профіль
+                        </button>
+
+                        <button type="button" class="btn btn--color-warning"
+                                onclick="window.location='update_profile.html'">Редагувати
+                        </button>
+                    </td>
+                </tr>
+
+                </tbody>
+            </table>
         </div>
     </div>
 </div>
 
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-<script src="js/create_profile.js"></script>
-<script src="js/logout.js"></script>
-
-
 </body>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script src="js/logout.js"></script>
 
 </html>

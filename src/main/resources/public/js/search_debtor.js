@@ -1,168 +1,88 @@
-$(document).ready(function () {
-    let queryString = window.location.search;
-    let urlParams = new URLSearchParams(queryString);
-    let id = urlParams.get('id');
-    let identification_code = urlParams.get('id_code');
-    let fullname = urlParams.get('fullname');
-    let type = urlParams.get('type');
+let queryString = window.location.search;
+let urlParams = new URLSearchParams(queryString);
+let id = urlParams.get('id');
+let identification_code = urlParams.get('id_code');
+let fullname = urlParams.get('fullname');
+let type = urlParams.get('type');
 
-    if ((fullname || identification_code) && type) {
+if ((fullname || identification_code) && type) {
 
-        if (type === 'physical') {
-            if (fullname) {
-                let fullname_parts = fullname.split(' ');
+    if (type === 'physical') {
+        if (fullname) {
+            let fullname_parts = fullname.split(' ');
 
-                $("#inputSurname").val(fullname_parts[0]).trigger('keyup');
-                $("#inputName").val(fullname_parts[1]).trigger('keyup');
-                $("#inputPatro").val(fullname_parts[2]);
-            }
-            if (identification_code) {
-                $("#inputPersonCode").val(identification_code).trigger('keyup');
-            }
-
-            $("#radioPhysical").prop('checked', 'checked');
-            $('#searchBtnPhysical').trigger('click');
-
-        } else if (type === 'legal') {
-
-            if (identification_code) {
-                $("#inputFirmCode").val(identification_code).trigger('keyup');
-            }
-
-            $('input:radio[name="debtorType"]').trigger('change');
-
-            $("#radioLegalEntity").prop('checked', 'checked');
-            $('#searchBtnLegal').trigger('click');
+            $("#inputSurname").val(fullname_parts[0]).trigger('keyup');
+            $("#inputName").val(fullname_parts[1]).trigger('keyup');
+            $("#inputPatro").val(fullname_parts[2]);
         }
-    } else if (id) {
+        if (identification_code) {
+            $("#inputPersonCode").val(identification_code).trigger('keyup');
+        }
 
+        $("#radioPhysical").prop('checked', 'checked');
+        $('#searchBtnPhysical').trigger('click');
 
+    } else if (type === 'legal') {
+
+        if (identification_code) {
+            $("#inputFirmCode").val(identification_code).trigger('keyup');
+        }
+
+        $('input:radio[name="debtorType"]').trigger('change');
+
+        $("#radioLegalEntity").prop('checked', 'checked');
+        $('#searchBtnLegal').trigger('click');
     }
-});
+} else if (id) {
 
-function setEntitiesById(id) {
-    //TODO
-    //запрос на сервер за інф. про боржника
-    let debtorData = {
-        full_name: 'Хтото',
-        is_legal_entity: true,
-        identification_code: "7536483398"
-    };
-    //запрос на сервер за боргами цього боржника
-    if( debtorData.is_legal_entity === true)
-        setLegalEntities(debtorData.full_name,debtorData.identification_code, null);
+    setEntitiesById(id);
+}
+
+async function setEntitiesById(id) {
+
+    let debtorData = await getDebtorInfo(id);
+
+    if (debtorData.isLegalEntity === true)
+        setLegalEntities(debtorData.fullName, debtorData.identificationCode, null);
     else
-        setPhysicalEntities(debtorData.full_name, null, debtorData.identification_code, null);
+        setPhysicalEntities(debtorData.fullName, null, debtorData.identificationCode, null);
 
 
 }
 
-function setPhysicalEntities(fullname, birthday, identification_code, chargeback_category) {
-    //TODO
-    //запрос на сервер по всім полям пошуку фіз.особи
+function getDebtorInfo(id){
+    console.log(`id: ${id}`);
+    return $.ajax({
+             url: `/api/search-debtor/${id}`,
+             type: 'get',
+             success: function(data, textStatus, xhr) {
+                 console.log(xhr.status);
+                 console.log(data);
+             }
+         });
+}
 
-    let dataArray = [
-        {
-            "id": "1",
-            "full_name": "Вороніна Вероніка Анатоліївна",
-            "birth_date": "09.10.1987",
-            "executive_document_reciever": "інший орган, посадова особа Корабельний РВ ДВС м Херсон",
-            "issuer_state_agency": "Переяслав-Хмельницький міськрайонний відділ державної виконавчої служби Центрального міжрегіонального управління Міністерства юстиції (м. Київ)",
-            "issuer_full_name": "Марченко Ярослав Олександрович",
-            "issuer_email": "pr_xmdvs@ukr.net",
-            "issuer_phone_number": "045677-23-35",
-            "executive_document_number_of_issue": "60217212",
-            "chargeback_category": "стягнення коштів на користь держави"
-        },
-        {
-            "id": "2",
-            "full_name": "Петренко Оксана Петрівна",
-            "birth_date": "08.08.1973",
-            "executive_document_reciever": "господарський суд Господарський суд Одеської області , суддя Демешин О.А.",
-            "issuer_state_agency": "Лиманський районний відділ державної виконавчої служби Головного територіального управління юстиції в Одеській області",
-            "issuer_full_name": "Баловнєва Оксана Сергіївна (не діє)",
-            "issuer_email": "info@km.od.dvs.gov.ua",
-            "issuer_phone_number": "57277648",
-            "executive_document_number_of_issue": "60217212",
-            "chargeback_category": "стягнення коштів"
-        },
-        {
-            "id": "3",
-            "full_name": "Петренко Оксана Петрівна",
-            "birth_date": "08.08.1973",
-            "executive_document_reciever": "господарський суд Господарський суд Одеської області , суддя Демешин О.А.",
-            "issuer_state_agency": "Лиманський районний відділ державної виконавчої служби Головного територіального управління юстиції в Одеській області",
-            "issuer_full_name": "Баловнєва Оксана Сергіївна (не діє)",
-            "issuer_email": "info@km.od.dvs.gov.ua",
-            "issuer_phone_number": "57277648",
-            "executive_document_number_of_issue": "60217212",
-            "chargeback_category": "стягнення коштів"
-        },
-        {
-            "id": "4",
-            "full_name": "Петренко Оксана Петрівна",
-            "birth_date": "08.08.1973",
-            "executive_document_reciever": "господарський суд Господарський суд Одеської області , суддя Демешин О.А.",
-            "issuer_state_agency": "Лиманський районний відділ державної виконавчої служби Головного територіального управління юстиції в Одеській області",
-            "issuer_full_name": "Баловнєва Оксана Сергіївна (не діє)",
-            "issuer_email": "info@km.od.dvs.gov.ua",
-            "issuer_phone_number": "57277648",
-            "executive_document_number_of_issue": "60217212",
-            "chargeback_category": "стягнення коштів"
-        }
-    ];
-    let testData = "[\n" +
-        "        {\n" +
-        "            \"id\": \"1\",\n" +
-        "            \"full_name\": \"Вороніна Вероніка Анатоліївна\",\n" +
-        "            \"birth_date\": \"09.10.1987\",\n" +
-        "            \"executive_document_reciever\": \"інший орган, посадова особа Корабельний РВ ДВС м Херсон\",\n" +
-        "            \"issuer_state_agency\": \"Переяслав-Хмельницький міськрайонний відділ державної виконавчої служби Центрального міжрегіонального управління Міністерства юстиції (м. Київ)\",\n" +
-        "            \"issuer_full_name\": \"Марченко Ярослав Олександрович\",\n" +
-        "            \"issuer_email\": \"pr_xmdvs@ukr.net\",\n" +
-        "            \"issuer_phone_number\": \"045677-23-35\",\n" +
-        "            \"executive_document_number_of_issue\": \"60217212\",\n" +
-        "            \"chargeback_category\": \"стягнення коштів на користь держави\"\n" +
-        "        },\n" +
-        "        {\n" +
-        "            \"id\": \"2\",\n" +
-        "            \"full_name\": \"Петренко Оксана Петрівна\",\n" +
-        "            \"birth_date\": \"08.08.1973\",\n" +
-        "            \"executive_document_reciever\": \"господарський суд Господарський суд Одеської області , суддя Демешин О.А.\",\n" +
-        "            \"issuer_state_agency\": \"Лиманський районний відділ державної виконавчої служби Головного територіального управління юстиції в Одеській області\",\n" +
-        "            \"issuer_full_name\": \"Баловнєва Оксана Сергіївна (не діє)\",\n" +
-        "            \"issuer_email\": \"info@km.od.dvs.gov.ua\",\n" +
-        "            \"issuer_phone_number\": \"57277648\",\n" +
-        "            \"executive_document_number_of_issue\": \"60217212\",\n" +
-        "            \"chargeback_category\": \"стягнення коштів\"\n" +
-        "        },\n" +
-        "        {\n" +
-        "            \"id\": \"3\",\n" +
-        "            \"full_name\": \"Петренко Оксана Петрівна\",\n" +
-        "            \"birth_date\": \"08.08.1973\",\n" +
-        "            \"executive_document_reciever\": \"господарський суд Господарський суд Одеської області , суддя Демешин О.А.\",\n" +
-        "            \"issuer_state_agency\": \"Лиманський районний відділ державної виконавчої служби Головного територіального управління юстиції в Одеській області\",\n" +
-        "            \"issuer_full_name\": \"Баловнєва Оксана Сергіївна (не діє)\",\n" +
-        "            \"issuer_email\": \"info@km.od.dvs.gov.ua\",\n" +
-        "            \"issuer_phone_number\": \"57277648\",\n" +
-        "            \"executive_document_number_of_issue\": \"60217212\",\n" +
-        "            \"chargeback_category\": \"стягнення коштів\"\n" +
-        "        },\n" +
-        "        {\n" +
-        "            \"id\": \"4\",\n" +
-        "            \"full_name\": \"Петренко Оксана Петрівна\",\n" +
-        "            \"birth_date\": \"08.08.1973\",\n" +
-        "            \"executive_document_reciever\": \"господарський суд Господарський суд Одеської області , суддя Демешин О.А.\",\n" +
-        "            \"issuer_state_agency\": \"Лиманський районний відділ державної виконавчої служби Головного територіального управління юстиції в Одеській області\",\n" +
-        "            \"issuer_full_name\": \"Баловнєва Оксана Сергіївна (не діє)\",\n" +
-        "            \"issuer_email\": \"info@km.od.dvs.gov.ua\",\n" +
-        "            \"issuer_phone_number\": \"57277648\",\n" +
-        "            \"executive_document_number_of_issue\": \"60217212\",\n" +
-        "            \"chargeback_category\": \"стягнення коштів\"\n" +
-        "        }\n" +
-        "    ]";
+async function setPhysicalEntities(fullname, birthday, identification_code, chargeback_category) {
 
-    let parsed_data = JSON.parse(testData);
+    let data = await getData(fullname, identification_code, chargeback_category, false);
+
+    let parsed_data = data.map(el => ({
+                                 id: el.id,
+                                 full_name: el.obligor.fullName,
+                                 birth_date: el.obligor.birthDate,
+                                 executive_document_receiver: el.executiveDocumentReceiver,
+                                 issuer_state_agency: el.executiveDocumentIssuer.stateAgency,
+                                 issuer_full_name: el.executiveDocumentIssuer.fullName,
+                                 issuer_email: el.executiveDocumentIssuer.email,
+                                 issuer_phone_number: el.executiveDocumentIssuer.phoneNumber,
+                                 executive_document_number_of_issue: el.executiveDocumentNumberOfIssue,
+                                 chargeback_category: el.chargebackCategory.title
+                        }));
+
+    console.log("parsed_data:");
+    console.log(parsed_data);
+
+//    let parsed_data = JSON.parse(testData);
 
     let resTable = $('#physicalResultsTable');
 
@@ -180,7 +100,7 @@ function setPhysicalEntities(fullname, birthday, identification_code, chargeback
         let entityElement = `<tr class="print-no-page-break">
                             <td>${entity.full_name}</td>
                             <td>${entity.birth_date}</td>
-                            <td>${entity.executive_document_reciever}</td>
+                            <td>${entity.executive_document_receiver}</td>
                             <td class="wide-column">${entity.issuer_state_agency}
                                 <br>
                                 <br> ${entity.issuer_full_name}
@@ -228,279 +148,24 @@ function setPhysicalEntities(fullname, birthday, identification_code, chargeback
     }, 1000);
 }
 
-function setLegalEntities(firmname, identification_code, chargeback_category) {
-    //TODO
-    //запрос на сервер по всім полям пошуку юр.особи
-    let testData = "[\n" +
-        "                {\n" +
-        "                    \"id\": \"13\",\n" +
-        "                    \"full_name\": \"14307423 АТ \\\"ЗАВОД \\\"МАЯК\\\"\",\n" +
-        "                    \"executive_document_reciever\": \"комісія по трудових спорах Комісія по трудових спорах АТ \\\"Завод \\\"Маяк\\\"\",\n" +
-        "                    \"issuer_state_agency\": \"Оболонський районний відділ державної виконавчої служби у місті Києві Центрального міжрегіонального управління Міністерства юстиції (м. Київ)\",\n" +
-        "                    \"issuer_full_name\": \"Манасерян Айкуі Арамівна\",\n" +
-        "                    \"issuer_email\": \"vdvs.obolon@ukr.net\",\n" +
-        "                    \"issuer_phone_number\": \"426-62-70\",\n" +
-        "                    \"executive_document_number_of_issue\": \"59653780\",\n" +
-        "                    \"chargeback_category\": \"стягнення коштів на користь держави\"\n" +
-        "                },\n" +
-        "                {\n" +
-        "                    \"id\": \"12\",\n" +
-        "                    \"full_name\": \"14307423 АТ \\\"ЗАВОД \\\"МАЯК\\\"\",\n" +
-        "                    \"executive_document_reciever\": \"комісія по трудових спорах Комісія по трудових спорах АТ \\\"Завод \\\"Маяк\\\"\",\n" +
-        "                    \"issuer_state_agency\": \"Оболонський районний відділ державної виконавчої служби у місті Києві Центрального міжрегіонального управління Міністерства юстиції (м. Київ)\",\n" +
-        "                    \"issuer_full_name\": \"Манасерян Айкуі Арамівна\",\n" +
-        "                    \"issuer_email\": \"vdvs.obolon@ukr.net\",\n" +
-        "                    \"issuer_phone_number\": \"426-62-70\",\n" +
-        "                    \"executive_document_number_of_issue\": \"59653780\",\n" +
-        "                    \"chargeback_category\": \"стягнення коштів на користь держави\"\n" +
-        "                },\n" +
-        "                {\n" +
-        "                    \"id\": \"11\",\n" +
-        "                    \"full_name\": \"14307423 АТ \\\"ЗАВОД \\\"МАЯК\\\"\",\n" +
-        "                    \"executive_document_reciever\": \"комісія по трудових спорах Комісія по трудових спорах АТ \\\"Завод \\\"Маяк\\\"\",\n" +
-        "                    \"issuer_state_agency\": \"Оболонський районний відділ державної виконавчої служби у місті Києві Центрального міжрегіонального управління Міністерства юстиції (м. Київ)\",\n" +
-        "                    \"issuer_full_name\": \"Манасерян Айкуі Арамівна\",\n" +
-        "                    \"issuer_email\": \"vdvs.obolon@ukr.net\",\n" +
-        "                    \"issuer_phone_number\": \"426-62-70\",\n" +
-        "                    \"executive_document_number_of_issue\": \"59653780\",\n" +
-        "                    \"chargeback_category\": \"стягнення коштів на користь держави\"\n" +
-        "                },\n" +
-        "                {\n" +
-        "                    \"id\": \"10\",\n" +
-        "                    \"full_name\": \"14307423 АТ \\\"ЗАВОД \\\"МАЯК\\\"\",\n" +
-        "                    \"executive_document_reciever\": \"комісія по трудових спорах Комісія по трудових спорах АТ \\\"Завод \\\"Маяк\\\"\",\n" +
-        "                    \"issuer_state_agency\": \"Оболонський районний відділ державної виконавчої служби у місті Києві Центрального міжрегіонального управління Міністерства юстиції (м. Київ)\",\n" +
-        "                    \"issuer_full_name\": \"Манасерян Айкуі Арамівна\",\n" +
-        "                    \"issuer_email\": \"vdvs.obolon@ukr.net\",\n" +
-        "                    \"issuer_phone_number\": \"426-62-70\",\n" +
-        "                    \"executive_document_number_of_issue\": \"59653780\",\n" +
-        "                    \"chargeback_category\": \"стягнення коштів на користь держави\"\n" +
-        "                },\n" +
-        "                {\n" +
-        "                    \"id\": \"9\",\n" +
-        "                    \"full_name\": \"14307423 АТ \\\"ЗАВОД \\\"МАЯК\\\"\",\n" +
-        "                    \"executive_document_reciever\": \"комісія по трудових спорах Комісія по трудових спорах АТ \\\"Завод \\\"Маяк\\\"\",\n" +
-        "                    \"issuer_state_agency\": \"Оболонський районний відділ державної виконавчої служби у місті Києві Центрального міжрегіонального управління Міністерства юстиції (м. Київ)\",\n" +
-        "                    \"issuer_full_name\": \"Манасерян Айкуі Арамівна\",\n" +
-        "                    \"issuer_email\": \"vdvs.obolon@ukr.net\",\n" +
-        "                    \"issuer_phone_number\": \"426-62-70\",\n" +
-        "                    \"executive_document_number_of_issue\": \"59653780\",\n" +
-        "                    \"chargeback_category\": \"стягнення коштів на користь держави\"\n" +
-        "                },\n" +
-        "                {\n" +
-        "                    \"id\": \"8\",\n" +
-        "                    \"full_name\": \"14307423 АТ \\\"ЗАВОД \\\"МАЯК\\\"\",\n" +
-        "                    \"executive_document_reciever\": \"комісія по трудових спорах Комісія по трудових спорах АТ \\\"Завод \\\"Маяк\\\"\",\n" +
-        "                    \"issuer_state_agency\": \"Оболонський районний відділ державної виконавчої служби у місті Києві Центрального міжрегіонального управління Міністерства юстиції (м. Київ)\",\n" +
-        "                    \"issuer_full_name\": \"Манасерян Айкуі Арамівна\",\n" +
-        "                    \"issuer_email\": \"vdvs.obolon@ukr.net\",\n" +
-        "                    \"issuer_phone_number\": \"426-62-70\",\n" +
-        "                    \"executive_document_number_of_issue\": \"59653780\",\n" +
-        "                    \"chargeback_category\": \"стягнення коштів на користь держави\"\n" +
-        "                },\n" +
-        "                {\n" +
-        "                    \"id\": \"7\",\n" +
-        "                    \"full_name\": \"14307423 АТ \\\"ЗАВОД \\\"МАЯК\\\"\",\n" +
-        "                    \"executive_document_reciever\": \"комісія по трудових спорах Комісія по трудових спорах АТ \\\"Завод \\\"Маяк\\\"\",\n" +
-        "                    \"issuer_state_agency\": \"Оболонський районний відділ державної виконавчої служби у місті Києві Центрального міжрегіонального управління Міністерства юстиції (м. Київ)\",\n" +
-        "                    \"issuer_full_name\": \"Манасерян Айкуі Арамівна\",\n" +
-        "                    \"issuer_email\": \"vdvs.obolon@ukr.net\",\n" +
-        "                    \"issuer_phone_number\": \"426-62-70\",\n" +
-        "                    \"executive_document_number_of_issue\": \"59653780\",\n" +
-        "                    \"chargeback_category\": \"стягнення коштів на користь держави\"\n" +
-        "                },\n" +
-        "                {\n" +
-        "                    \"id\": \"6\",\n" +
-        "                    \"full_name\": \"14307423 АТ \\\"ЗАВОД \\\"МАЯК\\\"\",\n" +
-        "                    \"executive_document_reciever\": \"комісія по трудових спорах Комісія по трудових спорах АТ \\\"Завод \\\"Маяк\\\"\",\n" +
-        "                    \"issuer_state_agency\": \"Оболонський районний відділ державної виконавчої служби у місті Києві Центрального міжрегіонального управління Міністерства юстиції (м. Київ)\",\n" +
-        "                    \"issuer_full_name\": \"Манасерян Айкуі Арамівна\",\n" +
-        "                    \"issuer_email\": \"vdvs.obolon@ukr.net\",\n" +
-        "                    \"issuer_phone_number\": \"426-62-70\",\n" +
-        "                    \"executive_document_number_of_issue\": \"59653780\",\n" +
-        "                    \"chargeback_category\": \"стягнення коштів на користь держави\"\n" +
-        "                },\n" +
-        "                {\n" +
-        "                    \"id\": \"5\",\n" +
-        "                    \"full_name\": \"14307423 АТ \\\"ЗАВОД \\\"МАЯК\\\"\",\n" +
-        "                    \"executive_document_reciever\": \"комісія по трудових спорах Комісія по трудових спорах АТ \\\"Завод \\\"Маяк\\\"\",\n" +
-        "                    \"issuer_state_agency\": \"Оболонський районний відділ державної виконавчої служби у місті Києві Центрального міжрегіонального управління Міністерства юстиції (м. Київ)\",\n" +
-        "                    \"issuer_full_name\": \"Манасерян Айкуі Арамівна\",\n" +
-        "                    \"issuer_email\": \"vdvs.obolon@ukr.net\",\n" +
-        "                    \"issuer_phone_number\": \"426-62-70\",\n" +
-        "                    \"executive_document_number_of_issue\": \"59653780\",\n" +
-        "                    \"chargeback_category\": \"стягнення коштів на користь держави\"\n" +
-        "                },\n" +
-        "                {\n" +
-        "                    \"id\": \"4\",\n" +
-        "                    \"full_name\": \"14307423 АТ \\\"ЗАВОД \\\"МАЯК\\\"\",\n" +
-        "                    \"executive_document_reciever\": \"комісія по трудових спорах Комісія по трудових спорах АТ \\\"Завод \\\"Маяк\\\"\",\n" +
-        "                    \"issuer_state_agency\": \"Оболонський районний відділ державної виконавчої служби у місті Києві Центрального міжрегіонального управління Міністерства юстиції (м. Київ)\",\n" +
-        "                    \"issuer_full_name\": \"Манасерян Айкуі Арамівна\",\n" +
-        "                    \"issuer_email\": \"vdvs.obolon@ukr.net\",\n" +
-        "                    \"issuer_phone_number\": \"426-62-70\",\n" +
-        "                    \"executive_document_number_of_issue\": \"59653780\",\n" +
-        "                    \"chargeback_category\": \"стягнення коштів на користь держави\"\n" +
-        "                },\n" +
-        "                {\n" +
-        "                    \"id\": \"3\",\n" +
-        "                    \"full_name\": \"14307423 АТ \\\"ЗАВОД \\\"МАЯК\\\"\",\n" +
-        "                    \"executive_document_reciever\": \"комісія по трудових спорах Комісія по трудових спорах АТ \\\"Завод \\\"Маяк\\\"\",\n" +
-        "                    \"issuer_state_agency\": \"Оболонський районний відділ державної виконавчої служби у місті Києві Центрального міжрегіонального управління Міністерства юстиції (м. Київ)\",\n" +
-        "                    \"issuer_full_name\": \"Манасерян Айкуі Арамівна\",\n" +
-        "                    \"issuer_email\": \"vdvs.obolon@ukr.net\",\n" +
-        "                    \"issuer_phone_number\": \"426-62-70\",\n" +
-        "                    \"executive_document_number_of_issue\": \"59653780\",\n" +
-        "                    \"chargeback_category\": \"стягнення коштів на користь держави\"\n" +
-        "                },\n" +
-        "                {\n" +
-        "                    \"id\": \"2\",\n" +
-        "                    \"full_name\": \"14307423 АТ \\\"ЗАВОД \\\"МАЯК\\\"\",\n" +
-        "                    \"executive_document_reciever\": \"комісія по трудових спорах Комісія по трудових спорах АТ \\\"Завод \\\"Маяк\\\"\",\n" +
-        "                    \"issuer_state_agency\": \"Оболонський районний відділ державної виконавчої служби у місті Києві Центрального міжрегіонального управління Міністерства юстиції (м. Київ)\",\n" +
-        "                    \"issuer_full_name\": \"Манасерян Айкуі Арамівна\",\n" +
-        "                    \"issuer_email\": \"vdvs.obolon@ukr.net\",\n" +
-        "                    \"issuer_phone_number\": \"426-62-70\",\n" +
-        "                    \"executive_document_number_of_issue\": \"59653780\",\n" +
-        "                    \"chargeback_category\": \"стягнення коштів на користь держави\"\n" +
-        "                }\n" +
-        "            ]";
-    let dataArray = [
-        {
-            "id": "13",
-            "full_name": "14307423 АТ \"ЗАВОД \"МАЯК\"",
-            "executive_document_reciever": "комісія по трудових спорах Комісія по трудових спорах АТ \"Завод \"Маяк\"",
-            "issuer_state_agency": "Оболонський районний відділ державної виконавчої служби у місті Києві Центрального міжрегіонального управління Міністерства юстиції (м. Київ)",
-            "issuer_full_name": "Манасерян Айкуі Арамівна",
-            "issuer_email": "vdvs.obolon@ukr.net",
-            "issuer_phone_number": "426-62-70",
-            "executive_document_number_of_issue": "59653780",
-            "chargeback_category": "стягнення коштів на користь держави"
-        },
-        {
-            "id": "12",
-            "full_name": "14307423 АТ \"ЗАВОД \"МАЯК\"",
-            "executive_document_reciever": "комісія по трудових спорах Комісія по трудових спорах АТ \"Завод \"Маяк\"",
-            "issuer_state_agency": "Оболонський районний відділ державної виконавчої служби у місті Києві Центрального міжрегіонального управління Міністерства юстиції (м. Київ)",
-            "issuer_full_name": "Манасерян Айкуі Арамівна",
-            "issuer_email": "vdvs.obolon@ukr.net",
-            "issuer_phone_number": "426-62-70",
-            "executive_document_number_of_issue": "59653780",
-            "chargeback_category": "стягнення коштів на користь держави"
-        },
-        {
-            "id": "11",
-            "full_name": "14307423 АТ \"ЗАВОД \"МАЯК\"",
-            "executive_document_reciever": "комісія по трудових спорах Комісія по трудових спорах АТ \"Завод \"Маяк\"",
-            "issuer_state_agency": "Оболонський районний відділ державної виконавчої служби у місті Києві Центрального міжрегіонального управління Міністерства юстиції (м. Київ)",
-            "issuer_full_name": "Манасерян Айкуі Арамівна",
-            "issuer_email": "vdvs.obolon@ukr.net",
-            "issuer_phone_number": "426-62-70",
-            "executive_document_number_of_issue": "59653780",
-            "chargeback_category": "стягнення коштів на користь держави"
-        },
-        {
-            "id": "10",
-            "full_name": "14307423 АТ \"ЗАВОД \"МАЯК\"",
-            "executive_document_reciever": "комісія по трудових спорах Комісія по трудових спорах АТ \"Завод \"Маяк\"",
-            "issuer_state_agency": "Оболонський районний відділ державної виконавчої служби у місті Києві Центрального міжрегіонального управління Міністерства юстиції (м. Київ)",
-            "issuer_full_name": "Манасерян Айкуі Арамівна",
-            "issuer_email": "vdvs.obolon@ukr.net",
-            "issuer_phone_number": "426-62-70",
-            "executive_document_number_of_issue": "59653780",
-            "chargeback_category": "стягнення коштів на користь держави"
-        },
-        {
-            "id": "9",
-            "full_name": "14307423 АТ \"ЗАВОД \"МАЯК\"",
-            "executive_document_reciever": "комісія по трудових спорах Комісія по трудових спорах АТ \"Завод \"Маяк\"",
-            "issuer_state_agency": "Оболонський районний відділ державної виконавчої служби у місті Києві Центрального міжрегіонального управління Міністерства юстиції (м. Київ)",
-            "issuer_full_name": "Манасерян Айкуі Арамівна",
-            "issuer_email": "vdvs.obolon@ukr.net",
-            "issuer_phone_number": "426-62-70",
-            "executive_document_number_of_issue": "59653780",
-            "chargeback_category": "стягнення коштів на користь держави"
-        },
-        {
-            "id": "8",
-            "full_name": "14307423 АТ \"ЗАВОД \"МАЯК\"",
-            "executive_document_reciever": "комісія по трудових спорах Комісія по трудових спорах АТ \"Завод \"Маяк\"",
-            "issuer_state_agency": "Оболонський районний відділ державної виконавчої служби у місті Києві Центрального міжрегіонального управління Міністерства юстиції (м. Київ)",
-            "issuer_full_name": "Манасерян Айкуі Арамівна",
-            "issuer_email": "vdvs.obolon@ukr.net",
-            "issuer_phone_number": "426-62-70",
-            "executive_document_number_of_issue": "59653780",
-            "chargeback_category": "стягнення коштів на користь держави"
-        },
-        {
-            "id": "7",
-            "full_name": "14307423 АТ \"ЗАВОД \"МАЯК\"",
-            "executive_document_reciever": "комісія по трудових спорах Комісія по трудових спорах АТ \"Завод \"Маяк\"",
-            "issuer_state_agency": "Оболонський районний відділ державної виконавчої служби у місті Києві Центрального міжрегіонального управління Міністерства юстиції (м. Київ)",
-            "issuer_full_name": "Манасерян Айкуі Арамівна",
-            "issuer_email": "vdvs.obolon@ukr.net",
-            "issuer_phone_number": "426-62-70",
-            "executive_document_number_of_issue": "59653780",
-            "chargeback_category": "стягнення коштів на користь держави"
-        },
-        {
-            "id": "6",
-            "full_name": "14307423 АТ \"ЗАВОД \"МАЯК\"",
-            "executive_document_reciever": "комісія по трудових спорах Комісія по трудових спорах АТ \"Завод \"Маяк\"",
-            "issuer_state_agency": "Оболонський районний відділ державної виконавчої служби у місті Києві Центрального міжрегіонального управління Міністерства юстиції (м. Київ)",
-            "issuer_full_name": "Манасерян Айкуі Арамівна",
-            "issuer_email": "vdvs.obolon@ukr.net",
-            "issuer_phone_number": "426-62-70",
-            "executive_document_number_of_issue": "59653780",
-            "chargeback_category": "стягнення коштів на користь держави"
-        },
-        {
-            "id": "5",
-            "full_name": "14307423 АТ \"ЗАВОД \"МАЯК\"",
-            "executive_document_reciever": "комісія по трудових спорах Комісія по трудових спорах АТ \"Завод \"Маяк\"",
-            "issuer_state_agency": "Оболонський районний відділ державної виконавчої служби у місті Києві Центрального міжрегіонального управління Міністерства юстиції (м. Київ)",
-            "issuer_full_name": "Манасерян Айкуі Арамівна",
-            "issuer_email": "vdvs.obolon@ukr.net",
-            "issuer_phone_number": "426-62-70",
-            "executive_document_number_of_issue": "59653780",
-            "chargeback_category": "стягнення коштів на користь держави"
-        },
-        {
-            "id": "4",
-            "full_name": "14307423 АТ \"ЗАВОД \"МАЯК\"",
-            "executive_document_reciever": "комісія по трудових спорах Комісія по трудових спорах АТ \"Завод \"Маяк\"",
-            "issuer_state_agency": "Оболонський районний відділ державної виконавчої служби у місті Києві Центрального міжрегіонального управління Міністерства юстиції (м. Київ)",
-            "issuer_full_name": "Манасерян Айкуі Арамівна",
-            "issuer_email": "vdvs.obolon@ukr.net",
-            "issuer_phone_number": "426-62-70",
-            "executive_document_number_of_issue": "59653780",
-            "chargeback_category": "стягнення коштів на користь держави"
-        },
-        {
-            "id": "3",
-            "full_name": "14307423 АТ \"ЗАВОД \"МАЯК\"",
-            "executive_document_reciever": "комісія по трудових спорах Комісія по трудових спорах АТ \"Завод \"Маяк\"",
-            "issuer_state_agency": "Оболонський районний відділ державної виконавчої служби у місті Києві Центрального міжрегіонального управління Міністерства юстиції (м. Київ)",
-            "issuer_full_name": "Манасерян Айкуі Арамівна",
-            "issuer_email": "vdvs.obolon@ukr.net",
-            "issuer_phone_number": "426-62-70",
-            "executive_document_number_of_issue": "59653780",
-            "chargeback_category": "стягнення коштів на користь держави"
-        },
-        {
-            "id": "2",
-            "full_name": "14307423 АТ \"ЗАВОД \"МАЯК\"",
-            "executive_document_reciever": "комісія по трудових спорах Комісія по трудових спорах АТ \"Завод \"Маяк\"",
-            "issuer_state_agency": "Оболонський районний відділ державної виконавчої служби у місті Києві Центрального міжрегіонального управління Міністерства юстиції (м. Київ)",
-            "issuer_full_name": "Манасерян Айкуі Арамівна",
-            "issuer_email": "vdvs.obolon@ukr.net",
-            "issuer_phone_number": "426-62-70",
-            "executive_document_number_of_issue": "59653780",
-            "chargeback_category": "стягнення коштів на користь держави"
-        }
-    ];
+async function setLegalEntities(fullname, identification_code, chargeback_category) {
 
-    let parsed_data = JSON.parse(testData);
+    let data = await getData(fullname,identification_code, chargeback_category, true);
+
+    let parsed_data = data.map(el => ({
+                                 id: el.id,
+                                 full_name: el.obligor.fullName,
+                                 executive_document_receiver: el.executiveDocumentReceiver,
+                                 issuer_state_agency: el.executiveDocumentIssuer.stateAgency,
+                                 issuer_full_name: el.executiveDocumentIssuer.fullName,
+                                 issuer_email: el.executiveDocumentIssuer.email,
+                                 issuer_phone_number: el.executiveDocumentIssuer.phoneNumber,
+                                 executive_document_number_of_issue: el.executiveDocumentNumberOfIssue,
+                                 chargeback_category: el.chargebackCategory.title
+                        }));
+
+    console.log("parsed_data:");
+    console.log(parsed_data);
 
     let resTable = $('#legalResultsTable');
 
@@ -517,7 +182,7 @@ function setLegalEntities(firmname, identification_code, chargeback_category) {
     parsed_data.forEach(function (entity) {
         let entityElement = `<tr class="print-no-page-break">
                                         <td>${entity.full_name}</td>
-                                        <td>${entity.executive_document_reciever}</td>
+                                        <td>${entity.executive_document_receiver}</td>
                                         <td>${entity.issuer_state_agency}
                                             <br>
                                             <br> ${entity.issuer_full_name}
@@ -562,6 +227,22 @@ function setLegalEntities(firmname, identification_code, chargeback_category) {
     $('html, body').animate({
         scrollTop: resTable.offset().top
     }, 1000);
+}
+
+function getData(fullname, identification_code, chargeback_category, is_legal_entity){
+    console.log(`fullname: ${fullname}`);
+    console.log(`identification_code: ${identification_code}`);
+    console.log(`chargeback_category: ${chargeback_category}`);
+    console.log(`is_legal_entity: ${is_legal_entity}`);
+    return $.ajax({
+             url: '/api/search-debtor',
+             type: 'get',
+             data: $.param({fullName: fullname, identificationCode: identification_code, chargebackCategory: chargeback_category, isLegalEntity: is_legal_entity}),
+             success: function(data, textStatus, xhr) {
+                 console.log(xhr.status);
+                 console.log(data);
+             }
+         });
 }
 
 $('input:radio[name="debtorType"]').change(
@@ -659,6 +340,7 @@ $('#cleanFormPhysical').click(function (e) {
 $('#searchBtnPhysical').click(
     function (e) {
         e.preventDefault();
+        $('#physicalResults').empty();
 
         let surname = $("#inputSurname").val();
         let name = $("#inputName").val();
@@ -667,7 +349,7 @@ $('#searchBtnPhysical').click(
         if (identification_code !== '' || (name !== '' && surname !== '')) {
             let patro = $('#inputPatro').val();
             let birth_date = $('#inputBirthDate').val();
-            let chargeback_category = $('#categorySelect_33 option:selected').text();
+            let chargeback_category = $('#categorySelect_33 option:selected').val();
 
             let fullname = [name, surname, patro].join(' ');
 
@@ -718,12 +400,13 @@ $('#cleanFormLegal').click(function (e) {
 $('#searchBtnLegal').click(
     function (e) {
         e.preventDefault();
+        $('#legalResults').empty();
 
         let firmName = $("#inputFirmName").val().trim();
         let identification_code = $("#inputFirmCode").val().trim();
 
         if (identification_code !== '' || firmName !== '') {
-            let chargeback_category = $('#categorySelect_164 option:selected').text();
+            let chargeback_category = $('#categorySelect_164 option:selected').val();
 
             setLegalEntities(firmName, identification_code, chargeback_category);
         } else {
@@ -736,7 +419,7 @@ $('.closeModal').click(function () {
     $('#deleteModal').css('display', 'none');
 });
 
-$('#confirmDeleteBtn').click(function () {
+$('#confirmDeleteBtn').click(async function () {
     let id_to_delete = $(this).attr('data-delete_id');
 
     ($(`[data-id="${id_to_delete}"]`).closest('tr')).remove();
@@ -744,6 +427,10 @@ $('#confirmDeleteBtn').click(function () {
     $(this).attr('data-delete_id', '');
     $('#deleteModal').css('display', 'none');
 
-    //TODO
-    // запрос на видалення запису
+    console.log(`id to delete : ${id_to_delete}`);
+
+    await $.ajax({
+               url: `/api/record/${id_to_delete}`,
+               type: 'delete'
+           });
 });

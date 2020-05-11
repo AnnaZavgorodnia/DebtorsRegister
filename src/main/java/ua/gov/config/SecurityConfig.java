@@ -24,14 +24,14 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http        .authorizeRequests()
-                .antMatchers("/","/js/**", "/css/**","/img/**","/api/**").permitAll()
+                .antMatchers("/","/js/**", "/css/**","/img/**","/api/**","/alimony-debtors","/search-debtors").permitAll()
 //                .antMatchers("/masters","/create_app/{id}","/me/appointments").hasAuthority("CLIENT")
 //                .antMatchers("/all_appointments").hasAnyAuthority("ADMIN","MASTER")
 //                .antMatchers("/create_master","/all_masters").hasAuthority("ADMIN")
                 .anyRequest().authenticated()
                 .and()
                 .formLogin().loginPage("/login").permitAll()
-                .defaultSuccessUrl("/",true)
+                .defaultSuccessUrl("/")
                 .and()
                 .logout()
                 .clearAuthentication(true)

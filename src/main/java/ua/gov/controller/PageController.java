@@ -31,4 +31,19 @@ public class PageController {
     public String createRegistrator(){
         return "create_registers_profile";
     }
+
+    @GetMapping("/alimony-debtors")
+    public String alimonyDebtors(){
+        return "alimony_debtors";
+    }
+
+    @GetMapping("/child-dates-debtors")
+    public String childDatesDebtors(){
+        return "child_dates_debtors";
+    }
+
+    @GetMapping("/wages-debtors")
+    public String wagesDebtors(){
+        return "wages_debtors";
+    }
 }

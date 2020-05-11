@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Єдиний реєстр боржників</title>
+    <link rel="icon" href="img/logo_min_just.png" type="image/png">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no"/>
+    <link rel="stylesheet" type="text/css" href="css/amazium.css">
+    <link rel="stylesheet" type="text/css" href="css/custom.css">
+    <link rel="stylesheet" type="text/css" href="css/pikaday.css">
+    <link rel="stylesheet" type="text/css" href="css/print.css"/>
+    <link rel="stylesheet" type="text/css" href="css/main.css"/>
+
+
+</head>
+
+<body>
+
+<header class="header ">
+    <div class="row row--align-center">
+        <div class="grid-4 txt-center">
+            <img src="img/logo_min_just.png" class="img-left-my" width="160px">
+        </div>
+        <div class="grid-6">
+            <h2 class="header-text">Єдиний реєстр боржників</h2>
+        </div>
+        <div class="grid-2 txt-center">
+            <button type="button" onclick="location.href='login.html'" class="btn btn--size-l btn--color-none header-text">
+                Увійти
+            </button>
+        </div>
+    </div>
+</header>
+
+<div class="content-area">
+<!--    <div class="row" id="registerMode">-->
+<!--        <form action="javascript:void(0);">-->
+<!--            <fieldset class="hide-mobile">-->
+<!--                    <span class="radio toggle">-->
+<!--                        <span>-->
+<!--                            <label id="registersName">-->
+<!--                               Вітаємо, Олександр Сергійович Млекович!-->
+<!--                            </label>-->
+<!--                        </span>-->
+<!--                        <span>-->
+<!--                            <button type="button" class="btn btn&#45;&#45;color-positive" name="mainPages"-->
+<!--                                    id="createDebt" onClick="window.location = 'create_debt.html';">Створити запис про заборгованість</button>-->
+<!--                        </span>-->
+<!--                        <span>-->
+<!--                            <button type="button" class="btn btn&#45;&#45;color-info" name="mainPages"-->
+<!--                                    id="viewMyProfile">Переглянути особистий профіль</button>-->
+<!--                        </span>-->
+
+<!--                        <span>-->
+<!--                            <button type="button" class="btn btn&#45;&#45;color-negative" name="mainPages"-->
+<!--                                    id="exitRegister">Вийти</button>-->
+<!--                        </span>-->
+
+<!--                    </span>-->
+<!--            </fieldset>-->
+<!--        </form>-->
+<!--    </div>-->
+
+<!--    <div class="row" id="adminMode">-->
+<!--        <form action="javascript:void(0);">-->
+<!--            <fieldset class="hide-mobile">-->
+<!--                    <span class="radio toggle">-->
+<!--                        <span>-->
+<!--                            <label id="adminName">-->
+<!--                               Вітаємо, Олександр Сергійович Млекович( адмін )!-->
+<!--                            </label>-->
+<!--                        </span>-->
+
+<!--                        <span>-->
+<!--                            <button type="button" class="btn btn&#45;&#45;color-positive" name="mainPages"-->
+<!--                                    id="createProfile" onClick="window.location = 'create_registers_profile.html';">Створити профіль реєстратора</button>-->
+<!--                        </span>-->
+
+<!--                        <span>-->
+<!--                            <button type="button" class="btn btn&#45;&#45;color-info" name="mainPages"-->
+<!--                                    id="searchProfile"-->
+<!--                                    onClick="window.location = 'search_registers_profile.html';">Пошук реєстраторa</button>-->
+<!--                        </span>-->
+
+<!--                        <span>-->
+<!--                            <button type="button" class="btn btn&#45;&#45;color-info" name="mainPages"-->
+<!--                                    id="viewProfiles"-->
+<!--                                    onClick="window.location = 'all_profiles.html';">Переглянути всіх реєстраторів</button>-->
+<!--                        </span>-->
+
+<!--                        <span>-->
+<!--                            <button type="button" class="btn btn&#45;&#45;color-negative" name="mainPages"-->
+<!--                                    id="exitAdmin">Вийти</button>-->
+<!--                        </span>-->
+
+<!--                    </span>-->
+<!--            </fieldset>-->
+<!--        </form>-->
+<!--    </div>-->
+
+    <div class="div-border-bottom">
+        <div class="row grid-12 ">
+            <form action="javascript:void(0);">
+                <fieldset class="hide-mobile">
+                <span class="radio toggle">
+                    <span onClick="window.location = 'search-debtor';">
+                        <input type="radio" tabindex="6" name="mainPages" id="radioPage1" value="1">
+                        <label for="radioPage1">
+                            <span>Пошук боржника</span>
+                        </label>
+                    </span>
+                    <span onClick="window.location = 'alimony-debtors';">
+                        <input type="radio" tabindex="7" name="mainPages" id="radioPage2" value="2">
+                        <label for="radioPage2">
+                            <span>Заборгованість по аліментах</span>
+                        </label>
+                    </span>
+                    <span onClick="window.location = 'wages-debtors';">
+                        <input type="radio" tabindex="8" name="mainPages" id="radioPage3" checked="checked" value="3">
+                        <label for="radioPage3">
+                            <span>Заборгованість по заробітній платі</span>
+
+                        </label>
+                    </span>
+                    <span onClick="window.location = 'child-dates-debtors';">
+                        <input type="radio" tabindex="9" name="mainPages" id="radioPage4" value="4">
+                        <label for="radioPage4">
+                            <span>Боржники, що перешкоджають у побаченні з дитиною</span>
+
+                        </label>
+                    </span>
+                </span>
+                </fieldset>
+                <fieldset class="show-mobile">
+                <span class="select">
+                  <select>
+                    <option value="1">Пошук боржників</option>
+                    <option value="2">Заборгованість по аліментах</option>
+                    <option value="3">Заборгованість по заробітній платі</option>
+                    <option value="4">Боржники, що перешкоджають у побаченні з дитиною</option>
+                  </select>
+                </span>
+                </fieldset>
+            </form>
+        </div>
+        <div class="print-hide row">
+            <div class="grid-12 txt-center">
+                <button class="btn btn--style-ghost btn btn--size-s" onClick="window.location = 'search-debtor';">
+                    Пошук
+                </button>
+                <button class="btn btn--style-ghost btn btn--size-s btn--hoverColor-info float-right" id="showInfo">
+                    <i class="txt--fontSize-m">i</i>
+                </button>
+            </div>
+
+            <div class="grid-12 txt-center ng-hide" id="info">
+                <figure>
+                    <blockquote>
+                        <p>
+                            Здійснити пошук за найменуванням та ідентифікаційним кодом юридичної особи для ЮО, ПІБ,
+                            датою
+                            народження, реєстраційному номеру облікової картки платника податків для ФОП та отримати
+                            більш
+                            детальну інформацію по відкритих виконавчих провадженнях боржника можливо безпосередньо з
+                            Єдиного реєстру боржників.
+                        </p>
+                        <p>
+                            До переліку боржників, що мають заборгованість по заробітній платі, включено всіх юридичних
+                            осіб
+                            та фізичних осіб-підприємців, щодо яких відкрито хоча б одне виконавче провадження з
+                            категорією
+                            стягнення "стягнення заборгованості із заробітної плати та інших платежів, пов’язаних з
+                            трудовими відносинами".
+                        </p>
+                    </blockquote>
+                    <figcaption>
+                        Перелік впорядковано за сумою заборгованості (від найбільшої до найменшої).
+                    </figcaption>
+                </figure>
+
+            </div>
+        </div><!---->
+
+
+    </div>
+
+    <div >
+        <div>
+            <br>
+            <div class="row row--align-center"><strong id = 'numberOfRecords'></strong></div>
+            <table>
+                <thead>
+                <tr>
+                    <th scope="col">&nbsp;</th>
+                    <th scope="col">Ідентифікаційний номер</th>
+                    <th scope="col">Найменування боржника</th>
+                    <th scope="col">Загальна сума заборгованості</th>
+                    <th scope="col">Кількість відкритих ВП</th>
+                    <th scope="col">&nbsp;</th>
+                </tr>
+                </thead>
+                <tbody id="results">
+
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+</div>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script src="js/wages_debtors.js"></script>
+<script src="js/logout.js"></script>
+
+</body>
+
+</html>

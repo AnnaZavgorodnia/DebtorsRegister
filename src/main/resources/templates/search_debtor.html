@@ -28,10 +28,10 @@
             <h2 class="header-text">Єдиний реєстр боржників</h2>
         </div>
         <div class="grid-2 txt-center">
-            <button type="button" onclick="location.href='login.html'"
-                    class="btn btn--size-l btn--color-none header-text">
-                Увійти
-            </button>
+            <!--            <button type="button" onclick="location.href='login.html'"-->
+            <!--                    class="btn btn&#45;&#45;size-l btn&#45;&#45;color-none header-text">-->
+            <!--                Увійти-->
+            <!--            </button>-->
         </div>
     </div>
 </header>
@@ -72,7 +72,7 @@
                     <span class="radio toggle">
                         <span>
                             <label id="adminName">
-                               Вітаємо, Олександр Сергійович Млекович( адмін )!
+                               Вітаємо, Василь Григорович Петренко (Адміністратор)!
                             </label>
                         </span>
 
@@ -108,26 +108,26 @@
             <form action="javascript:void(0);">
                 <fieldset class="hide-mobile">
                     <span class="radio toggle">
-                        <span onClick="window.location = 'search_debtor.html';">
+                        <span onClick="window.location = 'search-debtor';">
                             <input type="radio" tabindex="6" name="mainPages" id="radioPage1" checked="checked">
                             <label for="radioPage1">
                                 <span>Пошук боржника</span>
                             </label>
                         </span>
-                        <span onClick="window.location = 'alimony_debtors.html';">
+                        <span onClick="window.location = 'alimony-debtors';">
                             <input type="radio" tabindex="7" name="mainPages" id="radioPage2">
                             <label for="radioPage2">
                                 <span>Заборгованість по аліментах</span>
                             </label>
                         </span>
-                        <span onClick="window.location = 'wages_debtors.html';">
+                        <span onClick="window.location = 'wages-debtors';">
                             <input type="radio" tabindex="8" name="mainPages" id="radioPage3">
                             <label for="radioPage3">
                                 <span>Заборгованість по заробітній платі</span>
 
                             </label>
                         </span>
-                        <span onClick="window.location = 'child_dates_debtors.html';">
+                        <span onClick="window.location = 'child-dates-debtors';">
                             <input type="radio" tabindex="9" name="mainPages" id="radioPage4">
                             <label for="radioPage4">
                                 <span>Боржники, що перешкоджають у побаченні з дитиною</span>
@@ -221,38 +221,45 @@
                             </label>
                             <span class="select">
                                     <select id="categorySelect_33">
-                                        <option value="" selected="selected"></option>
-                                        <option label="стягнення коштів" value="01">стягнення коштів</option>
-                                        <option label="звернення стягнення на майно" value="02">звернення стягнення на майно</option>
-                                        <option label="стягнення аліментів" value="03">стягнення аліментів</option>
-                                        <option label="стягнення періодичних платежів (крім аліментів)" value="04">стягнення періодичних платежів (крім аліментів)</option><option
-                                            label="стягнення заборгованості із заробітної плати та інших платежів, пов’язаних з трудовими відносинами"
-                                            value="05">стягнення заборгованості із заробітної плати та інших платежів, пов’язаних з трудовими відносинами</option>
-                                        <option label="стягнення соціальних виплат" value="06">стягнення соціальних виплат</option>
-                                        <option label="стягнення заборгованості з оплати комунальних послуг" value="07">стягнення заборгованості з оплати комунальних послуг</option><option
-                                            label="стягнення штрафів у справах про адміністративні правопорушення"
-                                            value="08">стягнення штрафів у справах про адміністративні правопорушення</option>
+                                        <option value="" class="" selected="selected"></option>
+                                        <option label="стягнення коштів"
+                                                value="1">стягнення коштів</option>
+                                        <option label="звернення стягнення на майно" value="2">звернення стягнення на майно</option>
+                                        <option label="стягнення аліментів" value="3">стягнення аліментів</option>
+                                        <option label="стягнення періодичних платежів (крім аліментів)"
+                                                value="4">стягнення періодичних платежів (крім аліментів)</option>
+                                        <option label="стягнення заборгованості із заробітної плати та інших платежів, пов’язаних з трудовими відносинами"
+                                                value="5">стягнення заборгованості із заробітної плати та інших платежів, пов’язаних з трудовими відносинами</option>
+                                        <option label="стягнення соціальних виплат" value="6">стягнення соціальних виплат</option>
+                                        <option label="стягнення заборгованості з оплати комунальних послуг"
+                                                value="7">стягнення заборгованості з оплати комунальних послуг</option>
+                                        <option label="стягнення штрафів у справах про адміністративні правопорушення"
+                                                value="08">стягнення штрафів у справах про адміністративні правопорушення</option>
                                         <option label="стягнення штрафів у справах про адміністративні правопорушення у сфері безпеки дорожнього руху"
-                                                value="09">стягнення штрафів у справах про адміністративні правопорушення у сфері безпеки дорожнього руху</option>
+                                                value="9">стягнення штрафів у справах про адміністративні правопорушення у сфері безпеки дорожнього руху</option>
                                         <option label="забезпечення позову" value="10">забезпечення позову</option>
                                         <option label="зобов’язання вчинити певні дії або утриматися від їх вчинення"
                                                 value="11">зобов’язання вчинити певні дії або утриматися від їх вчинення</option>
                                         <option label="поновлення на роботі" value="12">поновлення на роботі</option>
                                         <option label="вселення стягувача"
                                                 value="13">вселення стягувача</option>
-                                        <option label="виселення" value="14">виселення</option><option
-                                            label="відібрання дитини" value="15">відібрання дитини</option>
+                                        <option label="виселення" value="14">виселення</option>
+                                        <option label="відібрання дитини"
+                                                value="15">відібрання дитини</option>
                                         <option label="заборона вчиняти певні дії"
                                                 value="16">заборона вчиняти певні дії</option>
-                                        <option label="конфіскація майна" value="17">конфіскація майна</option>
-                                        <option label="конфіскація майна, вилученого митними органами" value="18">конфіскація майна, вилученого митними органами</option>
-                                        <option label="конфіскація майна засуджених" value="18.1">конфіскація майна засуджених</option>
+                                        <option label="конфіскація майна"
+                                                value="17">конфіскація майна</option>
+                                        <option label="конфіскація майна, вилученого митними органами"
+                                                value="18">конфіскація майна, вилученого митними органами</option>
+
                                         <option label="конфіскація коштів та майна за вчинення корупційного та пов’язаного з корупцією правопорушення"
                                                 value="19">конфіскація коштів та майна за вчинення корупційного та пов’язаного з корупцією правопорушення</option>
-                                        <option label="оплатне вилучення" value="20">оплатне вилучення</option>
+                                        <option label="оплатне вилучення"
+                                                value="20">оплатне вилучення</option>
                                         <option label="передача стягувачу предметів, зазначених у виконавчому документі"
-                                                value="21">передача стягувачу предметів, зазначених у виконавчому документі</option><option
-                                            label="стягнення коштів на користь держави" value="22">стягнення коштів на користь держави</option>
+                                                value="21">передача стягувачу предметів, зазначених у виконавчому документі</option>
+                                        <option label="стягнення коштів на користь держави" value="22">стягнення коштів на користь держави</option>
                                         <option label="рішення Європейського суду з прав людини"
                                                 value="23">рішення Європейського суду з прав людини</option>
                                         <option label="стягнення виконавчого збору"
@@ -261,9 +268,11 @@
                                                 value="25">стягнення витрат виконавчого провадження</option>
                                         <option label="стягнення штрафів, накладених державним, приватним виконавцем"
                                                 value="26">стягнення штрафів, накладених державним, приватним виконавцем</option>
-                                        <option label="стягнення основної винагороди приватного виконавця" value="27">стягнення основної винагороди приватного виконавця</option>
+                                        <option label="стягнення основної винагороди приватного виконавця"
+                                                value="27">стягнення основної винагороди приватного виконавця</option>
                                         <option label="усунення перешкод у побаченні з дитиною, встановлення побачення з дитиною"
                                                 value="28">усунення перешкод у побаченні з дитиною, встановлення побачення з дитиною</option>
+                                        <option label="конфіскація майна засуджених" value="29">конфіскація майна засуджених</option>
                                     </select>
                                 </span>
                         </fieldset>
@@ -272,9 +281,9 @@
                             <button class="btn btn--color-info" tabindex="10" id="cleanFormPhysical">
                                 Очистити
                             </button>
-                            <button class="btn btn--color-info ng" tabindex="11">
-                                Сформувати документ
-                            </button>
+                            <!--                            <button class="btn btn&#45;&#45;color-info ng" tabindex="11">-->
+                            <!--                                Сформувати документ-->
+                            <!--                            </button>-->
                             <button class="btn btn--color-info" type="submit" tabindex="13" id="searchBtnPhysical"
                                     disabled>
                                 Шукати
@@ -342,20 +351,20 @@
                                                     <select id="categorySelect_164">
                                                         <option value="" class="" selected="selected"></option>
                                                         <option label="стягнення коштів"
-                                                                value="01">стягнення коштів</option>
-                                                        <option label="звернення стягнення на майно" value="02">звернення стягнення на майно</option>
-                                                        <option label="стягнення аліментів" value="03">стягнення аліментів</option>
+                                                                value="1">стягнення коштів</option>
+                                                        <option label="звернення стягнення на майно" value="2">звернення стягнення на майно</option>
+                                                        <option label="стягнення аліментів" value="3">стягнення аліментів</option>
                                                         <option label="стягнення періодичних платежів (крім аліментів)"
-                                                                value="04">стягнення періодичних платежів (крім аліментів)</option>
+                                                                value="4">стягнення періодичних платежів (крім аліментів)</option>
                                                         <option label="стягнення заборгованості із заробітної плати та інших платежів, пов’язаних з трудовими відносинами"
-                                                                value="05">стягнення заборгованості із заробітної плати та інших платежів, пов’язаних з трудовими відносинами</option>
-                                                        <option label="стягнення соціальних виплат" value="06">стягнення соціальних виплат</option>
+                                                                value="5">стягнення заборгованості із заробітної плати та інших платежів, пов’язаних з трудовими відносинами</option>
+                                                        <option label="стягнення соціальних виплат" value="6">стягнення соціальних виплат</option>
                                                         <option label="стягнення заборгованості з оплати комунальних послуг"
-                                                                value="07">стягнення заборгованості з оплати комунальних послуг</option>
+                                                                value="7">стягнення заборгованості з оплати комунальних послуг</option>
                                                         <option label="стягнення штрафів у справах про адміністративні правопорушення"
                                                                 value="08">стягнення штрафів у справах про адміністративні правопорушення</option>
                                                         <option label="стягнення штрафів у справах про адміністративні правопорушення у сфері безпеки дорожнього руху"
-                                                                value="09">стягнення штрафів у справах про адміністративні правопорушення у сфері безпеки дорожнього руху</option>
+                                                                value="9">стягнення штрафів у справах про адміністративні правопорушення у сфері безпеки дорожнього руху</option>
                                                         <option label="забезпечення позову" value="10">забезпечення позову</option>
                                                         <option label="зобов’язання вчинити певні дії або утриматися від їх вчинення"
                                                                 value="11">зобов’язання вчинити певні дії або утриматися від їх вчинення</option>
@@ -371,7 +380,6 @@
                                                         <option label="конфіскація майна, вилученого митними органами"
                                                                 value="18">конфіскація майна, вилученого митними органами</option>
 
-                                                        <option label="конфіскація майна засуджених" value="18.1">конфіскація майна засуджених</option>
                                                         <option label="конфіскація коштів та майна за вчинення корупційного та пов’язаного з корупцією правопорушення"
                                                                 value="19">конфіскація коштів та майна за вчинення корупційного та пов’язаного з корупцією правопорушення</option>
                                                         <option label="оплатне вилучення"
@@ -391,6 +399,7 @@
                                                                 value="27">стягнення основної винагороди приватного виконавця</option>
                                                         <option label="усунення перешкод у побаченні з дитиною, встановлення побачення з дитиною"
                                                                 value="28">усунення перешкод у побаченні з дитиною, встановлення побачення з дитиною</option>
+                                                        <option label="конфіскація майна засуджених" value="29">конфіскація майна засуджених</option>
                                                     </select>
                                                 </span>
                                         </fieldset>
@@ -406,31 +415,30 @@
                                             </button>
                                         </div>
                                     </form>
+                                </div>
 
-                                    <div id="legalResultsMessage" class="row row--align-right ng-hide">
-                                        <p class="message message--color-negative ">
-                                            Записів не знайдено. Уточніть умови пошуку
-                                        </p>
-                                    </div>
-
+                                <div id="legalResultsMessage" class="row row--align-right ng-hide">
+                                    <p class="message message--color-negative ">
+                                        Записів не знайдено. Уточніть умови пошуку
+                                    </p>
                                 </div>
 
                                 <table class="ng-hide" id="legalResultsTable">
                                     <thead>
-                                    <tr>
-                                        <th colspan="6">
-                                            Результат пошуку юридичних осіб.
-                                            <small id="legalSearchDateTime"></small>
-                                        </th>
-                                    </tr>
-                                    <tr>
-                                        <th scope="col">Найменування</th>
-                                        <th scope="col">Документ виданий</th>
-                                        <th scope="col">Зв'язок з виконавцем</th>
-                                        <th scope="col">Номер виконавчого провадження</th>
-                                        <th scope="col">Категорія стягнення</th>
-                                        <th scope="col"></th>
-                                    </tr>
+                                        <tr>
+                                            <th colspan="6">
+                                                Результат пошуку юридичних осіб.
+                                                <small id="legalSearchDateTime"></small>
+                                            </th>
+                                        </tr>
+                                        <tr>
+                                            <th scope="col">Найменування</th>
+                                            <th scope="col">Документ виданий</th>
+                                            <th scope="col">Зв'язок з виконавцем</th>
+                                            <th scope="col">Номер виконавчого провадження</th>
+                                            <th scope="col">Категорія стягнення</th>
+                                            <th scope="col"></th>
+                                        </tr>
                                     </thead>
                                     <tbody id="legalResults">
                                     </tbody>
@@ -465,5 +473,7 @@
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <script src="js/search_debtor.js"></script>
+<script src="js/logout.js"></script>
+
 </body>
 </html>

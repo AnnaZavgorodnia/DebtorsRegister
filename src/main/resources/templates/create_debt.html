@@ -1,0 +1,475 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Єдиний реєстр боржників</title>
+    <link rel="icon" href="img/logo_min_just.png" type="image/png">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no"/>
+    <link rel="stylesheet" type="text/css" href="css/amazium.css">
+    <link rel="stylesheet" type="text/css" href="css/custom.css">
+    <link rel="stylesheet" type="text/css" href="css/pikaday.css">
+    <link rel="stylesheet" type="text/css" href="css/print.css"/>
+    <link rel="stylesheet" type="text/css" href="css/main.css"/>
+</head>
+
+<body>
+
+<header class="header ">
+    <div class="row row--align-center">
+        <div class="grid-4 txt-center">
+            <img src="img/logo_min_just.png" class="img-left-my" width="160px">
+        </div>
+        <div class="grid-6">
+            <h2 class="header-text">Єдиний реєстр боржників</h2>
+        </div>
+        <div class="grid-2 txt-center">
+            <button type="button" onclick="location.href='login.html'"
+                    class="btn btn--size-l btn--color-none header-text">
+                Увійти
+            </button>
+        </div>
+    </div>
+</header>
+
+
+<div class="content-area">
+    <div class="row" id="registerMode">
+        <form action="javascript:void(0);">
+            <fieldset class="hide-mobile">
+                    <span class="radio toggle">
+                        <span>
+                            <label id="registersName">
+                               Вітаємо, Олександр Сергійович Млекович!
+                            </label>
+                        </span>
+                        <span>
+                            <button type="button" class="btn btn--color-positive" name="mainPages"
+                                    id="createDebt" onClick="window.location = 'create_debt.html';">Створити запис про заборгованість</button>
+                        </span>
+                        <span>
+                            <button type="button" class="btn btn--color-info" name="mainPages"
+                                    id="viewMyProfile">Переглянути особистий профіль</button>
+                        </span>
+
+                        <span>
+                            <button type="button" class="btn btn--color-negative" name="mainPages"
+                                    id="exitRegister">Вийти</button>
+                        </span>
+
+                    </span>
+            </fieldset>
+        </form>
+    </div>
+
+    <div class="div-border-bottom">
+        <div class="row grid-12 ">
+            <form action="javascript:void(0);">
+                <fieldset class="hide-mobile">
+                <span class="radio toggle">
+                    <span onClick="window.location = 'search_debtor.html';">
+                        <input type="radio" tabindex="6" name="mainPages" id="radioPage1" value="1">
+                        <label for="radioPage1">
+                            <span>Пошук боржника</span>
+                        </label>
+                    </span>
+                    <span onClick="window.location = 'alimony_debtors.html';">
+                        <input type="radio" tabindex="7" name="mainPages" id="radioPage2" value="2">
+                        <label for="radioPage2">
+                            <span>Заборгованість по аліментах</span>
+                        </label>
+                    </span>
+                    <span onClick="window.location = 'wages_debtors.html';">
+                        <input type="radio" tabindex="8" name="mainPages" id="radioPage3" value="3">
+                        <label for="radioPage3">
+                            <span>Заборгованість по заробітній платі</span>
+
+                        </label>
+                    </span>
+                    <span onClick="window.location = 'child_dates_debtors.html';">
+                        <input type="radio" tabindex="9" name="mainPages" id="radioPage4" value="4">
+                        <label for="radioPage4">
+                            <span>Боржники, що перешкоджають у побаченні з дитиною</span>
+
+                        </label>
+                    </span>
+                </span>
+                </fieldset>
+                <fieldset class="show-mobile">
+                <span class="select">
+                  <select>
+                    <option value="1">Пошук боржників</option>
+                    <option value="2">Заборгованість по аліментах</option>
+                    <option value="3">Заборгованість по заробітній платі</option>
+                    <option value="4">Боржники, що перешкоджають у побаченні з дитиною</option>
+                  </select>
+                </span>
+                </fieldset>
+            </form>
+
+        </div>
+    </div>
+    <div id="page1">
+        <div class="row">
+            <div class="grid-12">
+                <div class=" row row--align-center">
+                    <span>
+                        <h3 class="text-center">Створення запису про  заборгованість</h3>
+                    </span>
+                    <div class=" row row--align-center">
+                        <div class="grid-8">
+                            <form class="labels-inline">
+                                <fieldset>
+                                    <label>Тип боржника:</label>
+
+                                    <span class="radio">
+                                        <span>
+                                            <input type="radio" tabindex="1" name="debtorType" id="radioPhysical"
+                                                   checked="" value="physical">
+                                            <label for="radioPhysical">Фізична особа</label>
+                                        </span>
+                                        <span>
+                                            <input type="radio" tabindex="2" name="debtorType" id="radioLegal"
+                                                   value="legal">
+                                            <label for="radioLegal">Юридична особа</label>
+                                        </span>
+                                     </span>
+
+                                </fieldset>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
+                <div>
+                    <div>
+                        <form id="createForm">
+
+                            <fieldset>
+                                <label class="physicalLabel " for="fullName">ПIБ боржника:</label>
+                                <label class="legalLabel ng-hide" for="fullName">Найменування:</label>
+                                <input type="text" id="fullName" placeholder="Прізвище"
+                                       tabindex="1" autocomplete="off" required>
+                            </fieldset>
+
+                            <fieldset id="physicalDebtor">
+                                <fieldset>
+                                    <label for="birthDate">Дата народження боржника:</label>
+                                    <input type="date" id="birthDate"
+                                           placeholder="Дата народження" tabindex="2"
+                                           autocomplete="off">
+                                </fieldset>
+
+                                <fieldset>
+                                    <label for="passportNumber">Реєстраційний номер облікової картки платника
+                                        податків або серія та номер паспорта боржника:</label>
+                                    <input type="text" id="passportNumber"
+                                           placeholder="Реєстраційний номер облікової картки платника податків або серія та номер паспорта боржника"
+                                           tabindex="5"
+                                           autocomplete="off">
+                                </fieldset>
+                            </fieldset>
+
+                            <fieldset>
+                                <label class="physicalLabel" for="identificationCode">Ідентифікаційний код
+                                    боржника:</label>
+                                <label class="legalLabel ng-hide" for="identificationCode">Ідентифікаційний код
+                                    юридичної
+                                    особи:</label>
+                                <input type="text" id="identificationCode"
+                                       placeholder="Ідентифікаційний код" tabindex="4"
+                                       autocomplete="off" required>
+                            </fieldset>
+
+                            <fieldset>
+                                <label for="categorySelect_33">
+                                    Категорія стягнення:
+                                </label>
+                                <span class="select">
+                                    <select id="categorySelect_33" tabindex="3">
+                                        <option value="" class=""
+                                                selected="selected"></option>
+                                        <option label="стягнення коштів"
+                                                value="1">стягнення коштів</option>
+                                        <option label="звернення стягнення на майно" value="2">звернення стягнення на майно</option>
+                                        <option label="стягнення аліментів" value="3">стягнення аліментів</option>
+                                        <option label="стягнення періодичних платежів (крім аліментів)"
+                                                value="4">стягнення періодичних платежів (крім аліментів)</option>
+                                        <option label="стягнення заборгованості із заробітної плати та інших платежів, пов’язаних з трудовими відносинами"
+                                                value="5">стягнення заборгованості із заробітної плати та інших платежів, пов’язаних з трудовими відносинами</option>
+                                        <option label="стягнення соціальних виплат" value="6">стягнення соціальних виплат</option>
+                                        <option label="стягнення заборгованості з оплати комунальних послуг"
+                                                value="7">стягнення заборгованості з оплати комунальних послуг</option>
+                                        <option label="стягнення штрафів у справах про адміністративні правопорушення"
+                                                value="08">стягнення штрафів у справах про адміністративні правопорушення</option>
+                                        <option label="стягнення штрафів у справах про адміністративні правопорушення у сфері безпеки дорожнього руху"
+                                                value="9">стягнення штрафів у справах про адміністративні правопорушення у сфері безпеки дорожнього руху</option>
+                                        <option label="забезпечення позову" value="10">забезпечення позову</option>
+                                        <option label="зобов’язання вчинити певні дії або утриматися від їх вчинення"
+                                                value="11">зобов’язання вчинити певні дії або утриматися від їх вчинення</option>
+                                        <option label="поновлення на роботі" value="12">поновлення на роботі</option>
+                                        <option label="вселення стягувача"
+                                                value="13">вселення стягувача</option>
+                                        <option label="виселення" value="14">виселення</option><option
+                                            label="відібрання дитини"
+                                            value="15">відібрання дитини</option>
+                                        <option label="заборона вчиняти певні дії"
+                                                value="16">заборона вчиняти певні дії</option>
+                                        <option label="конфіскація майна"
+                                                value="17">конфіскація майна</option>
+                                        <option label="конфіскація майна, вилученого митними органами"
+                                                value="18">конфіскація майна, вилученого митними органами</option>
+                                        <option label="конфіскація коштів та майна за вчинення корупційного та пов’язаного з корупцією правопорушення"
+                                                value="19">конфіскація коштів та майна за вчинення корупційного та пов’язаного з корупцією правопорушення</option>
+                                        <option label="оплатне вилучення"
+                                                value="20">оплатне вилучення</option>
+                                        <option label="передача стягувачу предметів, зазначених у виконавчому документі"
+                                                value="21">передача стягувачу предметів, зазначених у виконавчому документі</option>
+                                        <option label="стягнення коштів на користь держави" value="22">стягнення коштів на користь держави</option>
+                                        <option label="рішення Європейського суду з прав людини"
+                                                value="23">рішення Європейського суду з прав людини</option>
+                                        <option label="стягнення виконавчого збору"
+                                                value="24">стягнення виконавчого збору</option>
+                                        <option label="стягнення витрат виконавчого провадження"
+                                                value="25">стягнення витрат виконавчого провадження</option>
+                                        <option label="стягнення штрафів, накладених державним, приватним виконавцем"
+                                                value="26">стягнення штрафів, накладених державним, приватним виконавцем</option>
+                                        <option label="стягнення основної винагороди приватного виконавця"
+                                                value="27">стягнення основної винагороди приватного виконавця</option>
+                                        <option label="усунення перешкод у побаченні з дитиною, встановлення побачення з дитиною"
+                                                value="28">усунення перешкод у побаченні з дитиною, встановлення побачення з дитиною</option>
+                                        <option label="конфіскація майна засуджених" value="29">конфіскація майна засуджених</option>
+                                    </select>
+                                </span>
+                            </fieldset>
+
+                            <fieldset>
+                                <label for="debtorBankAccountNumber">Реквізити рахунків боржника(за
+                                    наявності):</label>
+                                <input type="text" id="debtorBankAccountNumber"
+                                       placeholder="Реквізити рахунків боржника" tabindex="6"
+                                       autocomplete="off">
+                            </fieldset>
+
+                            <fieldset>
+                                <label for="debtorPhoneNumber">Номер телефону боржника(за наявності):</label>
+                                <input type="text" id="debtorPhoneNumber"
+                                       placeholder="Номер телефону боржника" tabindex="7"
+                                       autocomplete="off">
+                            </fieldset>
+
+                            <fieldset>
+                                <label for="debtorFaxNumber">Номер факсу боржника(за
+                                    наявності):</label>
+                                <input type="text" id="debtorFaxNumber"
+                                       placeholder="Номер факсу боржника" tabindex="8"
+                                       autocomplete="off">
+                            </fieldset>
+                            <fieldset>
+
+                                <label for="debtorEmail">Адреса електронної пошти боржника:</label>
+                                <input type="email" id="debtorEmail"
+                                       placeholder="Адреса електронної пошти боржника" tabindex="9"
+                                       autocomplete="off">
+                            </fieldset>
+
+
+                            <fieldset>
+                                <label for="contractorFullname">ПІБ стягувача:</label>
+                                <input type="text" id="contractorFullname"
+                                       placeholder="ПІБ стягувача"
+                                       autocomplete="off">
+                            </fieldset>
+
+                            <fieldset>
+                                <label for="contractorBankAccountNumber">Реквізити рахунків стягувача(за
+                                    наявності):</label>
+                                <input type="text" id="contractorBankAccountNumber"
+                                       placeholder="Реквізити рахунків стягувача" tabindex="10"
+                                       autocomplete="off">
+                            </fieldset>
+
+
+                            <fieldset>
+                                <label for="contractorPhoneNumber">Номер телефону стягувача(за
+                                    наявності):</label>
+                                <input type="text" id="contractorPhoneNumber"
+                                       placeholder="Номер телефону стягувача" tabindex="11"
+                                       autocomplete="off">
+                            </fieldset>
+
+                            <fieldset>
+                                <label for="contractorFaxNumber">Номер факсу стягувача(за
+                                    наявності):</label>
+                                <input type="text" id="contractorFaxNumber"
+                                       placeholder="Номер факсу стягувача" tabindex="12"
+                                       autocomplete="off">
+                            </fieldset>
+
+                            <fieldset>
+                                <label for="contractorEmail">Адреса електронної пошти стягувача:</label>
+                                <input type="email" id="contractorEmail"
+                                       placeholder="Адреса електронної пошти стягувача" tabindex="13"
+                                       autocomplete="off">
+                            </fieldset>
+
+                            <fieldset>
+                                <label for="executiveDocumentArrivalDate">Дата надходження виконавчого
+                                    документу:</label>
+                                <input type="date" id="executiveDocumentArrivalDate"
+                                       placeholder="Дата надходження виконавчого документу" tabindex="14"
+                                       autocomplete="off">
+                            </fieldset>
+
+                            <fieldset>
+                                <label for="executiveDocumentReceiver">Найменування органу державної виконавчої
+                                    служби або ПІБ приватного
+                                    виконавця, до якого надійшов виконавчий
+                                    документ:</label>
+                                <input type="text" id="executiveDocumentReceiver"
+                                       placeholder="Найменування органу державної виконавчої служби або ПІБ приватного виконавця"
+                                       tabindex=15""
+                                       autocomplete="off">
+                            </fieldset>
+
+                            <fieldset>
+                                <div class="checkbox">
+                                    <input type="checkbox" id="coverLetterPresent"
+                                           tabindex="16">
+                                    <label for="coverLetterPresent"
+                                           style="margin-left: 30px;margin-top: -3px;">
+                                        Виконавчий документ надійшов без заяви
+                                        (супровідного листа)</label>
+                                </div>
+                            </fieldset>
+
+
+                            <fieldset id="coverLetterInfo">
+
+                                <fieldset>
+                                    <label for="coverLetterCorrespondent">Кореспондент заяви (супровідного листа)
+                                        про відкриття виконавчого провадження :</label>
+                                    <input type="text" id="coverLetterCorrespondent"
+                                           placeholder="Кореспондент заяви (супровідного листа)" tabindex="17"
+                                           autocomplete="off">
+                                </fieldset>
+
+                                <fieldset>
+                                    <label for="coverLetterCreationDate">Дата створення заяви (супровідного листа)
+                                        про відкриття виконавчого провадження:</label>
+                                    <input type="date" id="coverLetterCreationDate"
+                                           placeholder="Дата створення заяви (супровідного листа)" tabindex="18"
+                                           autocomplete="off">
+                                </fieldset>
+
+                                <fieldset>
+                                    <label for="coverLetterNumber">Номер заяви (супровідного листа)
+                                        про відкриття виконавчого провадження:</label>
+                                    <input type="text" id="coverLetterNumber"
+                                           placeholder="Номер заяви (супровідного листа)" tabindex="19"
+                                           autocomplete="off">
+                                </fieldset>
+
+                            </fieldset>
+
+
+                            <fieldset>
+                                <label for="executiveDocumentTitle">Назва виконавчого документу:</label>
+                                <input type="text" id="executiveDocumentTitle"
+                                       placeholder="Назва виконавчого документу" tabindex="20"
+                                       autocomplete="off">
+                            </fieldset>
+
+                            <fieldset>
+                                <label for="executiveDocumentDate">Дата видачі виконавчого документу:</label>
+                                <input type="date" id="executiveDocumentDate"
+                                       placeholder="Дата видачі виконавчого документу" tabindex="21"
+                                       autocomplete="off">
+                            </fieldset>
+
+                            <fieldset>
+                                <label for="executiveDocumentNumber">Номер виконавчого документу:</label>
+                                <input type="text" id="executiveDocumentNumber"
+                                       placeholder="Номер виконавчого документу" tabindex="22"
+                                       autocomplete="off">
+                            </fieldset>
+
+                            <fieldset>
+                                <label for="issuerStateAgency">Найменування органу, що видав документ:</label>
+                                <input type="text" id="issuerStateAgency"
+                                       placeholder="Найменування органу, що видав документ" tabindex="23"
+                                       autocomplete="off">
+                            </fieldset>
+
+                            <fieldset>
+                                <label for="issuerFullname">ПІБ посадової особи, що видав(ла) документ:</label>
+                                <input type="text" id="issuerFullname"
+                                       placeholder="ПІБ посадової особи, що видав(ла) документ" tabindex="24"
+                                       autocomplete="off">
+                            </fieldset>
+
+                            <fieldset>
+                                <label for="issuerPosition">Посада посадової особи, що видав(ла)
+                                    документ:</label>
+                                <input type="text" id="issuerPosition"
+                                       placeholder="Посада посадової особи, що видав(ла) документ" tabindex="25"
+                                       autocomplete="off">
+                            </fieldset>
+
+                            <fieldset>
+                                <label for="documentDateOfEntryIntoForce">Дата набрання рішенням законної
+                                    (юридичної) сили:</label>
+                                <input type="date" id="documentDateOfEntryIntoForce"
+                                       placeholder="Дата набрання рішенням законної
+                                            (юридичної) сили" tabindex="26"
+                                       autocomplete="off">
+                            </fieldset>
+
+                            <fieldset>
+                                <label for="amountOfMoneyToBeRecovered">Резолютивна частина рішення (у тому
+                                    числі сума грошових коштів,
+                                    яка підлягає стягненню за виконавчим документом):</label>
+                                <input type="text" id="amountOfMoneyToBeRecovered"
+                                       placeholder="Резолютивна частина рішення" tabindex=27""
+                                       autocomplete="off">
+                            </fieldset>
+
+                            <fieldset>
+                                <label for="decisionImplementationDetails">Відомості про негайне виконання
+                                    рішення (за наявності):</label>
+                                <input type="text" id="decisionImplementationDetails"
+                                       placeholder="Відомості про негайне виконання рішення" tabindex="28"
+                                       autocomplete="off">
+                            </fieldset>
+
+                            <div class="row row--align-right ">
+                                <button class="btn btn--color-info" tabindex="29" id="cancelCreate">
+                                    Відмінити
+                                </button>
+                                <button class="btn btn--color-info" tabindex="30" id="cleanForm">
+                                    Очистити
+                                </button>
+                                <button type="submit" class="btn btn--color-positive" tabindex="31" id="submitCreate">
+                                    Зберегти
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+
+                    <div class="row">
+                        <div class="grid-12 footer"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script src="js/create_debt.js"></script>
+<script src="js/logout.js"></script>
+
+</body>
+
+</html>

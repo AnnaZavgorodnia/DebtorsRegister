@@ -118,78 +118,84 @@
 
         </div>
     </div>
-    <div class="row">
-        <div class="grid-12">
-            <div class=" row row--align-center">
+    <div>
+        <div class="row">
+            <div class="grid-12">
+                <div class=" row row--align-center">
                     <span>
-                        <h3 class="text-center">Створення профілю реєстратора</h3>
-                        <div id="message"></div>
+                        <h3 class="text-center">Редагування профілю реєстратора</h3>
                     </span>
-            </div>
+                </div>
 
-            <div>
-                <form id="createForm">
-                    <fieldset>
-                        <label for="fullName">ПІБ реєстратора:</label>
-                        <input type="text" id="fullName"
-                               placeholder="Прізвище Ім'я По-батькові" tabindex="1"
-                               autocomplete="off" required>
-                    </fieldset>
+                <div>
+                    <div>
+                        <form>
+                            <fieldset>
+                                <label for="fullName">ПІБ реєстратора:</label>
+                                <input type="text" id="fullName"
+                                       placeholder="Прізвище Ім'я По-батькові" tabindex="1"
+                                       autocomplete="off">
+                            </fieldset>
 
-                    <fieldset>
-                        <label for="stateAgency">Назва державного органу, для якого створюється профіль
-                            реєстратора:</label>
-                        <input type="text" id="stateAgency" placeholder="Назва державного органу"
-                               tabindex="2" autocomplete="off" required>
-                    </fieldset>
+                            <fieldset>
+                                <label for="stateAgency">Назва державного органу, для якого створюється профіль
+                                    реєстратора:</label>
+                                <input type="text" id="stateAgency" placeholder="Назва державного органу"
+                                       tabindex="2" autocomplete="off">
+                            </fieldset>
 
 
-                    <fieldset>
-                        <label for="email">Електронна адреса реєстратора:</label>
-                        <input type="email" id="email"
-                               placeholder="Електронна адреса" tabindex="3"
-                               autocomplete="off" required>
-                    </fieldset>
+                            <fieldset>
+                                <label for="email">Електронна адреса реєстратора:</label>
+                                <input type="email" id="email"
+                                       placeholder="Електронна адреса" tabindex="3"
+                                       autocomplete="off">
+                            </fieldset>
 
-                    <fieldset>
-                        <label for="phoneNumber">Номер телефону реєстратора:</label>
-                        <input type="text" id="phoneNumber"
-                               placeholder="Номер телефону " tabindex="4"
-                               autocomplete="off" required>
-                    </fieldset>
+                            <fieldset>
+                                <label for="phoneNumber">Номер телефону реєстратора:</label>
+                                <input type="text" id="phoneNumber"
+                                       placeholder="Номер телефону " tabindex="4"
+                                       autocomplete="off">
+                            </fieldset>
 
-                    <fieldset>
-                        <label for="password">Пароль для профілю реєстратора:</label>
-                        <input type="password" id="password"
-                               placeholder="Пароль" tabindex="5"
-                               autocomplete="off" required>
-                    </fieldset>
+                            <fieldset>
+                                <label for="password">Пароль для профілю реєстратора:</label>
+                                <input type="password" id="password"
+                                       placeholder="Пароль" tabindex="5"
+                                       autocomplete="off">
+                            </fieldset>
+                        </form>
+                    </div>
+
+                    <div class="row row--align-left ">
+<!--                        <button class="btn btn&#45;&#45;color-positive " tabindex="6">-->
+<!--                            Активувати профіль-->
+<!--                        </button>-->
+                        <button class="btn btn--color-negative " tabindex="7">
+                            Деактивувати профіль
+                        </button>
+                    </div>
 
                     <div class="row row--align-right ">
-                        <button class="btn btn--color-info" tabindex="6" id="cancelCreate">
+                        <button class="btn btn--color-info" tabindex="8">
                             Відмінити
                         </button>
-                        <button class="btn btn--color-info" tabindex="7" id="cleanForm">
-                            Очистити
-                        </button>
-                        <button class="btn btn--color-positive" tabindex="8" id="submitCreate">
+                        <button class="btn btn--color-positive" tabindex="9">
                             Зберегти
                         </button>
                     </div>
-                </form>
-            </div>
 
-            <div class="row">
-                <div class="grid-12 footer"></div>
+                    <div class="row">
+                        <div class="grid-12 footer"></div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
 </div>
-
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-<script src="js/create_profile.js"></script>
 <script src="js/logout.js"></script>
-
 
 </body>
 

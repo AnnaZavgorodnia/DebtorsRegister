@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <title>Єдиний реєстр боржників</title>
     <link rel="icon" href="img/logo_min_just.png" type="image/png">
@@ -11,6 +12,8 @@
     <link rel="stylesheet" type="text/css" href="css/pikaday.css">
     <link rel="stylesheet" type="text/css" href="css/print.css"/>
     <link rel="stylesheet" type="text/css" href="css/main.css"/>
+
+
 </head>
 
 <body>
@@ -32,15 +35,42 @@
     </div>
 </header>
 
-
 <div class="content-area">
-    <div class="row" id="adminMode">
+    <div class="row" id="registerMode">
         <form action="javascript:void(0);">
             <fieldset class="hide-mobile">
                     <span class="radio toggle">
                         <span>
                             <label id="registersName">
-                               Вітаємо, Василь Григорович Петренко (Адміністратор)!
+                               Вітаємо, Олександр Сергійович Млекович!
+                            </label>
+                        </span>
+                        <span>
+                            <button type="button" class="btn btn--color-positive" name="mainPages"
+                                    id="createDebt" onClick="window.location = 'create_debt.html';">Створити запис про заборгованість</button>
+                        </span>
+                        <span>
+                            <button type="button" class="btn btn--color-info" name="mainPages"
+                                    id="viewMyProfile">Переглянути особистий профіль</button>
+                        </span>
+
+                        <span>
+                            <button type="button" class="btn btn--color-negative" name="mainPages"
+                                    id="exitRegister">Вийти</button>
+                        </span>
+
+                    </span>
+            </fieldset>
+        </form>
+    </div>
+
+    <div class="row" id="adminMode">
+        <form action="javascript:void(0);">
+            <fieldset class="hide-mobile">
+                    <span class="radio toggle">
+                        <span>
+                            <label id="adminName">
+                               Вітаємо, Олександр Сергійович Млекович( адмін )!
                             </label>
                         </span>
 
@@ -63,7 +93,7 @@
 
                         <span>
                             <button type="button" class="btn btn--color-negative" name="mainPages"
-                                    id="exit">Вийти</button>
+                                    id="exitAdmin">Вийти</button>
                         </span>
 
                     </span>
@@ -76,27 +106,27 @@
             <form action="javascript:void(0);">
                 <fieldset class="hide-mobile">
                 <span class="radio toggle">
-                    <span onClick="window.location = 'search_debtor.html';">
+                    <span onClick="window.location = 'search-debtor';">
                         <input type="radio" tabindex="6" name="mainPages" id="radioPage1" value="1">
                         <label for="radioPage1">
                             <span>Пошук боржника</span>
                         </label>
                     </span>
-                    <span onClick="window.location = 'alimony_debtors.html';">
+                    <span onClick="window.location = 'alimony-debtors';">
                         <input type="radio" tabindex="7" name="mainPages" id="radioPage2" value="2">
                         <label for="radioPage2">
                             <span>Заборгованість по аліментах</span>
                         </label>
                     </span>
-                    <span onClick="window.location = 'wages_debtors.html';">
+                    <span onClick="window.location = 'wages-debtors';">
                         <input type="radio" tabindex="8" name="mainPages" id="radioPage3" value="3">
                         <label for="radioPage3">
                             <span>Заборгованість по заробітній платі</span>
 
                         </label>
                     </span>
-                    <span onClick="window.location = 'child_dates_debtors.html';">
-                        <input type="radio" tabindex="9" name="mainPages" id="radioPage4" value="4">
+                    <span onClick="window.location = 'child-dates-debtors';">
+                        <input type="radio" tabindex="9" name="mainPages" id="radioPage4" checked="checked" value="4">
                         <label for="radioPage4">
                             <span>Боржники, що перешкоджають у побаченні з дитиною</span>
 
@@ -115,81 +145,68 @@
                 </span>
                 </fieldset>
             </form>
-
         </div>
-    </div>
-    <div class="row">
-        <div class="grid-12">
-            <div class=" row row--align-center">
-                    <span>
-                        <h3 class="text-center">Створення профілю реєстратора</h3>
-                        <div id="message"></div>
-                    </span>
+        <div class="print-hide row">
+            <div class="grid-12 txt-center">
+                <button class="btn btn--style-ghost btn btn--size-s" onClick="window.location = 'search-debtor';">
+                    Пошук
+                </button>
+                <button class="btn btn--style-ghost btn btn--size-s btn--hoverColor-info float-right" id="showInfo">
+                    <i class="txt--fontSize-m">i</i>
+                </button>
             </div>
 
-            <div>
-                <form id="createForm">
-                    <fieldset>
-                        <label for="fullName">ПІБ реєстратора:</label>
-                        <input type="text" id="fullName"
-                               placeholder="Прізвище Ім'я По-батькові" tabindex="1"
-                               autocomplete="off" required>
-                    </fieldset>
+            <div class="grid-12 txt-center ng-hide" id="info">
+                <figure>
+                    <blockquote>
+                        <p>
+                            Здійснити пошук за ПІБ, датою народження, реєстраційному номеру облікової картки платника
+                            податків
+                            та отримати більш детальну інформацію по відкритих виконавчих провадженнях боржника можливо
+                            безпосередньо з Єдиного реєстру боржників.
+                        </p>
+                        <p>
+                            До переліку боржників, що перешкоджають у побаченні з дитиною, включено всіх фізичних осіб,
+                            щодо
+                            яких відкрито виконавче провадження з категорією стягнення "усунення перешкод у побаченні з
+                            дитиною, встановлення побачення з дитиною" та винесено постанову про накладення штрафу на
+                            боржника
+                        </p>
+                    </blockquote>
+                    <figcaption>
+                        Перелік впорядковано за терміном відкриття виконавчого провадження (від старих до нових).
+                    </figcaption>
+                </figure>
 
-                    <fieldset>
-                        <label for="stateAgency">Назва державного органу, для якого створюється профіль
-                            реєстратора:</label>
-                        <input type="text" id="stateAgency" placeholder="Назва державного органу"
-                               tabindex="2" autocomplete="off" required>
-                    </fieldset>
-
-
-                    <fieldset>
-                        <label for="email">Електронна адреса реєстратора:</label>
-                        <input type="email" id="email"
-                               placeholder="Електронна адреса" tabindex="3"
-                               autocomplete="off" required>
-                    </fieldset>
-
-                    <fieldset>
-                        <label for="phoneNumber">Номер телефону реєстратора:</label>
-                        <input type="text" id="phoneNumber"
-                               placeholder="Номер телефону " tabindex="4"
-                               autocomplete="off" required>
-                    </fieldset>
-
-                    <fieldset>
-                        <label for="password">Пароль для профілю реєстратора:</label>
-                        <input type="password" id="password"
-                               placeholder="Пароль" tabindex="5"
-                               autocomplete="off" required>
-                    </fieldset>
-
-                    <div class="row row--align-right ">
-                        <button class="btn btn--color-info" tabindex="6" id="cancelCreate">
-                            Відмінити
-                        </button>
-                        <button class="btn btn--color-info" tabindex="7" id="cleanForm">
-                            Очистити
-                        </button>
-                        <button class="btn btn--color-positive" tabindex="8" id="submitCreate">
-                            Зберегти
-                        </button>
-                    </div>
-                </form>
-            </div>
-
-            <div class="row">
-                <div class="grid-12 footer"></div>
             </div>
         </div>
+
     </div>
+
+    <div>
+        <br>
+        <div class="row row--align-center"><strong id='numberOfRecords'></strong></div>
+        <table>
+            <thead>
+                <tr>
+                    <th scope="col"></th>
+                    <th scope="col">Прізвище, ім’я, по батькові</th>
+                    <th scope="col">Дата народження</th>
+                    <th scope="col">Детально</th>
+                </tr>
+            </thead>
+
+            <tbody id="results">
+            </tbody>
+        </table>
+
+    </div>
+
 </div>
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-<script src="js/create_profile.js"></script>
+<script src="js/child_dates_debtors.js"></script>
 <script src="js/logout.js"></script>
-
 
 </body>
 
