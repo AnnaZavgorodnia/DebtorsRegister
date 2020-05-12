@@ -1,5 +1,7 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
 
 <head>
     <title>Єдиний реєстр боржників</title>
@@ -12,6 +14,7 @@
     <link rel="stylesheet" type="text/css" href="css/pikaday.css">
     <link rel="stylesheet" type="text/css" href="css/print.css"/>
     <link rel="stylesheet" type="text/css" href="css/main.css"/>
+    <object th:remove="tag" th:include="partials/scripts :: header" />
 
 
 </head>
@@ -27,78 +30,13 @@
             <h2 class="header-text">Єдиний реєстр боржників</h2>
         </div>
         <div class="grid-2 txt-center">
-            <button type="button" onclick="location.href='login.html'"
-                    class="btn btn--size-l btn--color-none header-text">
-                Увійти
-            </button>
+            <div class="grid-2 txt-center" id="loginBtn"></div>
         </div>
     </div>
 </header>
 
 <div class="content-area">
-    <div class="row" id="registerMode">
-        <form action="javascript:void(0);">
-            <fieldset class="hide-mobile">
-                    <span class="radio toggle">
-                        <span>
-                            <label id="registersName">
-                               Вітаємо, Олександр Сергійович Млекович!
-                            </label>
-                        </span>
-                        <span>
-                            <button type="button" class="btn btn--color-positive" name="mainPages"
-                                    id="createDebt" onClick="window.location = 'create_debt.html';">Створити запис про заборгованість</button>
-                        </span>
-                        <span>
-                            <button type="button" class="btn btn--color-info" name="mainPages"
-                                    id="viewMyProfile">Переглянути особистий профіль</button>
-                        </span>
-
-                        <span>
-                            <button type="button" class="btn btn--color-negative" name="mainPages"
-                                    id="exitRegister">Вийти</button>
-                        </span>
-
-                    </span>
-            </fieldset>
-        </form>
-    </div>
-    <div class="row" id="adminMode">
-        <form action="javascript:void(0);">
-            <fieldset class="hide-mobile">
-                    <span class="radio toggle">
-                        <span>
-                            <label id="adminName">
-                               Вітаємо, Олександр Сергійович Млекович( адмін )!
-                            </label>
-                        </span>
-
-                        <span>
-                            <button type="button" class="btn btn--color-positive" name="mainPages"
-                                    id="createProfile" onClick="window.location = 'create_registers_profile.html';">Створити профіль реєстратора</button>
-                        </span>
-
-                        <span>
-                            <button type="button" class="btn btn--color-info" name="mainPages"
-                                    id="searchProfile"
-                                    onClick="window.location = 'search_registers_profile.html';">Пошук реєстраторa</button>
-                        </span>
-
-                        <span>
-                            <button type="button" class="btn btn--color-info" name="mainPages"
-                                    id="viewProfiles"
-                                    onClick="window.location = 'all_profiles.html';">Переглянути всіх реєстраторів</button>
-                        </span>
-
-                        <span>
-                            <button type="button" class="btn btn--color-negative" name="mainPages"
-                                    id="exitAdmin">Вийти</button>
-                        </span>
-
-                    </span>
-            </fieldset>
-        </form>
-    </div>
+    <div id="mode"></div>
 
     <div class="section div-border-bottom">
         <div class="row grid-12 ">
@@ -203,7 +141,7 @@
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <script src="js/alimony_debtors.js"></script>
-<script src="js/logout.js"></script>
+<script src="js/user.js"></script>
 </body>
 
 </html>

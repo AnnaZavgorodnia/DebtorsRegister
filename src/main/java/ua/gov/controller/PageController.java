@@ -27,11 +27,6 @@ public class PageController {
         return "search_debtor";
     }
 
-    @GetMapping("/register")
-    public String createRegistrator(){
-        return "create_registers_profile";
-    }
-
     @GetMapping("/alimony-debtors")
     public String alimonyDebtors(){
         return "alimony_debtors";
@@ -45,5 +40,45 @@ public class PageController {
     @GetMapping("/wages-debtors")
     public String wagesDebtors(){
         return "wages_debtors";
+    }
+
+    @GetMapping("/create-debt")
+    public String createDebt(){
+        return "create_debt";
+    }
+
+    @GetMapping("/detailed-record-info")
+    public String detailedRecordInfo(){
+        return "detailed_record_info";
+    }
+
+    @GetMapping("/all-profiles")
+    public String allProfiles(){
+        return "all_profiles";
+    }
+
+    @GetMapping("/create-registers-profile")
+    public String createRegProfile(){
+        return "create_registers_profile";
+    }
+
+    @GetMapping("/profile")
+    public String profile(){
+        return "profile";
+    }
+
+    @GetMapping("/search-registers-profile")
+    public String searchRegistersProfile(){
+        return "search_registers_profile";
+    }
+
+    @GetMapping("/update-debt")
+    public String updateDebt(){
+        return "update_debt";
+    }
+
+    @GetMapping("/update-profile")
+    public String updateProfile(){
+        return "update_profile";
     }
 }

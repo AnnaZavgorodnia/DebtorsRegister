@@ -84,7 +84,9 @@ public class Record {
     @Column
     private String informationAboutImplementationOfDecision;
 
-    //todo creator user
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name="user_id", nullable=false)
+    private User user;
 
     @Column
     private LocalDateTime createdAt;

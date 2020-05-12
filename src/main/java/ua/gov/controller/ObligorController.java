@@ -31,7 +31,7 @@ import java.util.stream.Collectors;
         produces="application/json")
 @CrossOrigin(origins="*")
 @RequiredArgsConstructor
-public class DebtorController {
+public class ObligorController {
 
     private final ObligorService service;
 

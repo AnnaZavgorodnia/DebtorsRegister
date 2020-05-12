@@ -1,79 +1,62 @@
-$(document).ready(function () {
+$(document).ready(async function () {
     const queryString = window.location.search;
     const urlParams = new URLSearchParams(queryString);
     const id = urlParams.get('id');
 
     if (queryString) {
         if (id) {
-            //TODO request get record by id
 
-            let testData = {
-                "full_name": "full_name",
-                "birth_date": "birth_date",
-                "passport_number": "passport_number",
-                "identification_code": "identification_code",
-                "chargeback_category": "chargeback_category",
-                "debtor_bank_account_number": "debtor_bank_account_number",
-                "debtor_phone_number": "debtor_phone_number",
-                "debtor_fax_number": "debtor_fax_number",
-                "debtor_email": "debtor_email",
-                "contractor_bank_account_number": "contractor_bank_account_number",
-                "contractor_phone_number": "contractor_phone_number",
-                "contractor_fax_number": "contractor_fax_number",
-                "contractor_email": "contractor_email",
-                "executive_document_arrival_date": "executive_document_arrival_date",
-                "cover_letter_present": false,
-                "cover_letter_correspondent": "cover_letter_correspondent",
-                "cover_letter_creation_date": "cover_letter_creation_date",
-                "cover_letter_number": "cover_letter_number",
-                "executive_document_title": "executive_document_title",
-                "executive_document_reciever": "executive_document_reciever",
-                "executive_document_date": "executive_document_date",
-                "executiveDocumentNumber": "executiveDocumentNumber",
-                "issuer_state_agency": "issuer_state_agency",
-                "issuer_full_name": "issuer_full_name",
-                "issuer_position": "issuer_position",
-                "document_date_of_entry_into_force": "document_date_of_entry_into_force",
-                "amount_of_money_to_be_recovered": "amount_of_money_to_be_recovered",
-                "decision_implementation_details": "decision_implementation_details",
-                "is_legal_entity": true
-            };
+            let datag = await $.ajax({
+                url: `/api/record/${id}`,
+                type: 'get',
+                success: function(data, textStatus, xhr) {
+                    console.log(xhr.status);
+                    console.log(data);
+                },
+                error: function(){
+                    let debtInfoHtml1 = `<div>
+                             <fieldset>
+                                <label class="physicalLabel">Помилка</label>
+                            </fieldset>
+                    </div>`;
+                    $('#debtInfo').append(debtInfoHtml1);
+                }
+            });
 
-            let data = "{\n" +
-                "                \"full_name\": \"Вороніна Вероніка Анатоліївна\",\n" +
-                "                \"birth_date\": \"09.10.1987\",\n" +
-                "                \"passport_number\": \"АВ233246242435\",\n" +
-                "                \"identification_code\": \"87643562962369\",\n" +
-                "                \"chargeback_category\": \"стягнення коштів на користь держави\",\n" +
-                "                \"debtor_bank_account_number\": \"25482753287792\",\n" +
-                "                \"debtor_phone_number\": \"+380939393939\",\n" +
-                "                \"debtor_fax_number\": \"4432885\",\n" +
-                "                \"debtor_email\": \"debtor@gmail.com\",\n" +
-                "                \"contractor_bank_account_number\": \"53454363462\",\n" +
-                "                \"contractor_phone_number\": \"+380535353535\",\n" +
-                "                \"contractor_fax_number\": \"6345663\",\n" +
-                "                \"contractor_email\": \"contractor@gmail.com\",\n" +
-                "                \"executive_document_arrival_date\": \"12.12.2019\",\n" +
-                "                \"executive_document_receiver\": \"інший орган, посадова особа Корабельний РВ ДВС м Херсон\",\n" +
-                "                \"cover_letter_present\": false,\n" +
-                "                \"cover_letter_correspondent\": \"cover_letter_correspondent\",\n" +
-                "                \"cover_letter_creation_date\": \"cover_letter_creation_date\",\n" +
-                "                \"cover_letter_number\": \"cover_letter_number\",\n" +
-                "                \"executive_document_title\": \"Назва виконавчого документу\",\n" +
-                "                \"executive_document_date\": \"01.01.2019\",\n" +
-                "                \"executiveDocumentNumber\": \"4234342\",\n" +
-                "                \"issuer_state_agency\": \"Переяслав-Хмельницький міськрайонний відділ державної виконавчої служби Центрального міжрегіонального управління Міністерства юстиції (м. Київ)\",\n" +
-                "                \"issuer_full_name\": \"Марченко Ярослав Олександрович\",\n" +
-                "                \"issuer_position\": \"Секретар\",\n" +
-                "                \"document_date_of_entry_into_force\": \"01.02.2019\",\n" +
-                "                \"amount_of_money_to_be_recovered\": \"35435345\",\n" +
-                "                \"decision_implementation_details\": \"Не надано інформації\",\n" +
-                "                \"is_legal_entity\":true\n" +
-                "            }";
+            let parsed_data = {
+                full_name: datag.obligor.fullName,
+                birth_date: datag.obligor.birthDate,
+                passport_number: datag.obligor.passportNumber,
+                identification_code: datag.obligor.identificationCode,
+                chargeback_category: datag.chargebackCategory.title,
+                debtor_bank_account_number: datag.obligor.bankAccountNumber,
+                debtor_phone_number: datag.obligor.phoneNumber,
+                debtor_fax_number: datag.obligor.faxNumber,
+                debtor_email: datag.obligor.email,
+                contractor_bank_account_number: datag.contractor.bankAccountNumber,
+                contractor_phone_number: datag.contractor.phoneNumber,
+                contractor_fax_number: datag.contractor.faxNumber,
+                contractor_email: datag.contractor.email,
+                executive_document_arrival_date: datag.executiveDocumentArrivalDate,
+                cover_letter_present: datag.coverLetterPresence,
+                cover_letter_correspondent: datag.coverLetterCorrespondent,
+                cover_letter_creation_date: datag.coverLetterCreationDate,
+                cover_letter_number: datag.coverLetterNumber,
+                executive_document_title: datag.executiveDocumentTitle,
+                executive_document_reciever: datag.executiveDocumentReceiver,
+                executive_document_date: datag.executiveDocumentDate,
+                executiveDocumentNumber: datag.executiveDocumentNumberOfIssue,
+                issuer_state_agency: datag.executiveDocumentIssuer.stateAgency,
+                issuer_full_name: datag.executiveDocumentIssuer.fullName,
+                issuer_position: datag.executiveDocumentIssuer.position,
+                document_date_of_entry_into_force: datag.documentDateOfEntryIntoForce,
+                amount_of_money_to_be_recovered: datag.moneyAmountToBeRecovered,
+                decision_implementation_details: datag.informationAboutImplementationOfDecision,
+                is_legal_entity: datag.obligor.isLegalEntity
+            }
 
-
-            let parsed_data = JSON.parse(data);
-
+            console.log("parsed_data:");
+            console.log(parsed_data);
 
             let debtInfoHtml = `<div>
                              <fieldset>
@@ -259,7 +242,7 @@ $(document).ready(function () {
 
         } else {
             //invalid query
-            window.location = 'search_debtor.html';
+            window.location = 'search-debtor';
         }
 
     }

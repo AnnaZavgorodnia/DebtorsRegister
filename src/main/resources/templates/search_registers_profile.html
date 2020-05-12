@@ -1,5 +1,7 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
 <head>
     <title>Єдиний реєстр боржників</title>
     <link rel="icon" href="img/logo_min_just.png" type="image/png">
@@ -11,6 +13,7 @@
     <link rel="stylesheet" type="text/css" href="css/pikaday.css">
     <link rel="stylesheet" type="text/css" href="css/print.css"/>
     <link rel="stylesheet" type="text/css" href="css/main.css"/>
+    <object th:remove="tag" th:include="partials/scripts :: header" />
 </head>
 
 <body>
@@ -25,77 +28,39 @@
             <h2 class="header-text">Єдиний реєстр боржників</h2>
         </div>
         <div class="grid-2 txt-center">
-            <button type="button" onclick="location.href='login.html'"
-                    class="btn btn--size-l btn--color-none header-text">
-                Увійти
-            </button>
+            <div class="grid-2 txt-center" id="loginBtn"></div>
         </div>
     </div>
 </header>
 
 <div class="content-area">
-    <div class="row" id="adminMode">
-        <form action="javascript:void(0);">
-            <fieldset class="hide-mobile">
-                    <span class="radio toggle">
-                        <span>
-                            <label id="registersName">
-                               Вітаємо, Василь Григорович Петренко (Адміністратор)!
-                            </label>
-                        </span>
-
-                        <span>
-                            <button type="button" class="btn btn--color-positive" name="mainPages"
-                                    id="createProfile" onClick="window.location = 'create_registers_profile.html';">Створити профіль реєстратора</button>
-                        </span>
-
-                        <span>
-                            <button type="button" class="btn btn--color-info" name="mainPages"
-                                    id="searchProfile"
-                                    onClick="window.location = 'search_registers_profile.html';">Пошук реєстраторa</button>
-                        </span>
-
-                        <span>
-                            <button type="button" class="btn btn--color-info" name="mainPages"
-                                    id="viewProfiles"
-                                    onClick="window.location = 'all_profiles.html';">Переглянути всіх реєстраторів</button>
-                        </span>
-
-                        <span>
-                            <button type="button" class="btn btn--color-negative" name="mainPages"
-                                    id="exit">Вийти</button>
-                        </span>
-
-                    </span>
-            </fieldset>
-        </form>
-    </div>
+    <div id="mode"></div>
 
     <div class=" div-border-bottom">
         <div class="row grid-12 ">
             <form action="javascript:void(0);">
                 <fieldset class="hide-mobile">
                     <span class="radio toggle">
-                        <span onClick="window.location = 'search_debtor.html';">
+                        <span onClick="window.location = 'search-debtor';">
                             <input type="radio" tabindex="6" name="mainPages" id="radioPage1">
                             <label for="radioPage1">
                                 <span>Пошук боржника</span>
                             </label>
                         </span>
-                        <span onClick="window.location = 'alimony_debtors.html';">
+                        <span onClick="window.location = 'alimony-debtors';">
                             <input type="radio" tabindex="7" name="mainPages" id="radioPage2">
                             <label for="radioPage2">
                                 <span>Заборгованість по аліментах</span>
                             </label>
                         </span>
-                        <span onClick="window.location = 'wages_debtors.html';">
+                        <span onClick="window.location = 'wages-debtors';">
                             <input type="radio" tabindex="8" name="mainPages" id="radioPage3">
                             <label for="radioPage3">
                                 <span>Заборгованість по заробітній платі</span>
 
                             </label>
                         </span>
-                        <span onClick="window.location = 'child_dates_debtors.html';">
+                        <span onClick="window.location = 'child-dates-debtors';">
                             <input type="radio" tabindex="9" name="mainPages" id="radioPage4">
                             <label for="radioPage4">
                                 <span>Боржники, що перешкоджають у побаченні з дитиною</span>
@@ -117,7 +82,7 @@
                     </span>
             </div>
             <div>
-                <form>
+                <form id="searchForm">
                     <fieldset>
                         <label for="email">Електронна адреса реєстратора:</label>
                         <input type="email" id="email" placeholder="Електронна адреса"
@@ -135,7 +100,7 @@
                         <button class="btn btn--color-info" tabindex="3" id="cleanForm">
                             Очистити
                         </button>
-                        <button class="btn btn--color-info" tabindex="4" id="searchBtn">
+                        <button class="btn btn--color-info" tabindex="4" id="searchBtn" disabled>
                             Шукати
                         </button>
                     </div>
@@ -178,14 +143,13 @@
                 <div class="modal-header">
                     <span class="closeModal">&times;</span>
                     <br>
-                    <h2>Видалення запису</h2>
                 </div>
                 <div class="modal-body">
-                    <p id="activateQuestion">Ви впевнені, що хочете активувати цей профіль?</p>
-                    <p id="deactivateQuestion">Ви впевнені, що хочете деактивувати цей профіль?</p>
+                    <p  class="ng-hide" id="activateQuestion">Ви впевнені, що хочете активувати цей профіль?</p>
+                    <p  class="ng-hide" id="deactivateQuestion">Ви впевнені, що хочете деактивувати цей профіль?</p>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn--color-negative" id="confirmDeleteBtn">Так</button>
+                    <button type="button" class="btn btn--color-negative" id="confirmChangeStatusBtn">Так</button>
                 </div>
             </div>
         </div>
@@ -193,7 +157,7 @@
 </div>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <script src="js/search_register_profile.js"></script>
-<script src="js/logout.js"></script>
+<script src="js/user.js"></script>
 
 </body>
 </html>

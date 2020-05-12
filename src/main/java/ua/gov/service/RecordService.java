@@ -1,6 +1,7 @@
 package ua.gov.service;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 import ua.gov.dto.RecordDTO;
 import ua.gov.model.ChargebackCategory;
@@ -8,15 +9,19 @@ import ua.gov.model.Contractor;
 import ua.gov.model.Issuer;
 import ua.gov.model.Obligor;
 import ua.gov.model.Record;
+import ua.gov.model.User;
 import ua.gov.repository.ChargebackCategoryRepository;
 import ua.gov.repository.ContractorRepository;
 import ua.gov.repository.IssuerRepository;
 import ua.gov.repository.ObligorRepository;
 import ua.gov.repository.RecordRepository;
+import ua.gov.repository.UserRepository;
 
 import javax.transaction.Transactional;
+import java.security.Principal;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Optional;
 
 @Service
@@ -27,11 +32,16 @@ public class RecordService {
     private final IssuerRepository issuerRepository;
     private final ContractorRepository contractorRepository;
     private final ChargebackCategoryRepository chargebackCategoryRepository;
+    private final UserRepository userRepository;
 
     @Transactional
     public Long create(RecordDTO dto){
         Optional<Obligor> existingO = obligorRepository.findByFullName(dto.getObligorFullName());
         Obligor obligor = existingO.orElseGet(()->obligorRepository.save(getObligorFromRecordDTO(dto)));
+
+        User user = userRepository.findByEmailAndIsActive(dto.getUserEmail(), true).orElseGet(null);
+        dto.setIssuerEmail(user.getEmail());
+        dto.setIssuerPhoneNumber(user.getPhoneNumber());
 
         Optional<Issuer> existingI = issuerRepository.findByFullName(dto.getIssuerFullName());
         Issuer issuer = existingI.orElseGet(()->issuerRepository.save(getIssuerFromRecordDTO(dto)));
@@ -40,6 +50,7 @@ public class RecordService {
         Contractor contractor = existingC.orElseGet(()->contractorRepository.save(getContractorFromRecordDTO(dto)));
 
         ChargebackCategory category = chargebackCategoryRepository.getOne(dto.getChargebackCategory());
+
 
         Record record = new Record();
         record.setExecutiveDocumentArrivalDate(dto.getExecutiveDocumentArrivalDate());
@@ -60,6 +71,7 @@ public class RecordService {
         record.setChargebackCategory(category);
         record.setCreatedAt(LocalDateTime.now());
         record.setIsActive(true);
+        record.setUser(user);
 
         return repository.save(record).getId();
     }
@@ -82,10 +94,8 @@ public class RecordService {
         issuer.setFullName(dto.getIssuerFullName());
         issuer.setPosition(dto.getIssuerPosition());
         issuer.setStateAgency(dto.getIssuerStateAgency());
-
-        //todo phoneNumber and email from regestrator(logged in user)
-        issuer.setEmail("email");
-        issuer.setPhoneNumber("phone number");
+        issuer.setEmail(dto.getIssuerEmail());
+        issuer.setPhoneNumber(dto.getIssuerPhoneNumber());
 
         return issuer;
     }
@@ -116,5 +126,9 @@ public class RecordService {
 
     public List<Record> getRecords(){
         return repository.findAll();
+    }
+
+    public Record getById(Long id){
+        return repository.findByIdAndIsActive(id, true).orElseThrow(()->new NoSuchElementException("record not found"));
     }
 }

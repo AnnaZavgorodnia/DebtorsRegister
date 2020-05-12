@@ -1,5 +1,7 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
 
 <head>
     <title>Єдиний реєстр боржників</title>
@@ -12,6 +14,7 @@
     <link rel="stylesheet" type="text/css" href="css/pikaday.css">
     <link rel="stylesheet" type="text/css" href="css/print.css"/>
     <link rel="stylesheet" type="text/css" href="css/main.css"/>
+    <object th:remove="tag" th:include="partials/scripts :: header" />
 
 
 </head>
@@ -27,77 +30,39 @@
             <h2 class="header-text">Єдиний реєстр боржників</h2>
         </div>
         <div class="grid-2 txt-center">
-            <button type="button" onclick="location.href='login.html'"
-                    class="btn btn--size-l btn--color-none header-text">
-                Увійти
-            </button>
+            <div class="grid-2 txt-center" id="loginBtn"></div>
         </div>
     </div>
 </header>
 
 <div class="content-area">
-    <div class="row" id="adminMode">
-        <form action="javascript:void(0);">
-            <fieldset class="hide-mobile">
-                    <span class="radio toggle">
-                        <span>
-                            <label id="registersName">
-                               Вітаємо, Василь Григорович Петренко (Адміністратор)!
-                            </label>
-                        </span>
-
-                        <span>
-                            <button type="button" class="btn btn--color-positive" name="mainPages"
-                                    id="createProfile" onClick="window.location = 'create_registers_profile.html';">Створити профіль реєстратора</button>
-                        </span>
-
-                        <span>
-                            <button type="button" class="btn btn--color-info" name="mainPages"
-                                    id="searchProfile"
-                                    onClick="window.location = 'search_registers_profile.html';">Пошук реєстраторa</button>
-                        </span>
-
-                        <span>
-                            <button type="button" class="btn btn--color-info" name="mainPages"
-                                    id="viewProfiles"
-                                    onClick="window.location = 'all_profiles.html';">Переглянути всіх реєстраторів</button>
-                        </span>
-
-                        <span>
-                            <button type="button" class="btn btn--color-negative" name="mainPages"
-                                    id="exit">Вийти</button>
-                        </span>
-
-                    </span>
-            </fieldset>
-        </form>
-    </div>
+    <div id="mode"></div>
 
     <div class="div-border-bottom">
         <div class="row grid-12 ">
             <form action="javascript:void(0);">
                 <fieldset class="hide-mobile">
                 <span class="radio toggle">
-                    <span onClick="window.location = 'search_debtor.html';">
+                    <span onClick="window.location = 'search-debtor';">
                         <input type="radio" tabindex="6" name="mainPages" id="radioPage1" value="1">
                         <label for="radioPage1">
                             <span>Пошук боржника</span>
                         </label>
                     </span>
-                    <span onClick="window.location = 'alimony_debtors.html';">
+                    <span onClick="window.location = 'alimony-debtors';">
                         <input type="radio" tabindex="7" name="mainPages" id="radioPage2"    value="2">
                         <label for="radioPage2">
                             <span>Заборгованість по аліментах</span>
                         </label>
                     </span>
-                    <span onClick="window.location = 'wages_debtors.html';">
+                    <span onClick="window.location = 'wages-debtors';">
                         <input type="radio" tabindex="8" name="mainPages" id="radioPage3" value="3">
                         <label for="radioPage3">
                             <span>Заборгованість по заробітній платі</span>
 
                         </label>
                     </span>
-                    <span onClick="window.location = 'child_dates_debtors.html';">
+                    <span onClick="window.location = 'child-dates-debtors';">
                         <input type="radio" tabindex="9" name="mainPages" id="radioPage4" value="4">
                         <label for="radioPage4">
                             <span>Боржники, що перешкоджають у побаченні з дитиною</span>
@@ -122,78 +87,33 @@
     </div>
 
     <div>
-        <div>
-            <br>
-            <div class="row row--align-center"><strong>Кількість профілів в реєстрі: 2</strong></div>
+        <br>
+        <div class="row row--align-center"><strong id="numberOfProfiles"></strong></div>
 
-            <table>
-                <thead>
-                    <tr>
-                    <th scope="col"></th>
-                    <th scope="col">Прізвище, ім’я, по батькові</th>
-                    <th scope="col">Назва державного органу, для якого створений профіль</th>
-                    <th scope="col">Електронна адреса</th>
-                    <th scope="col">Номер телефону</th>
-                    <th scope="col">Пароль профіля</th>
-                    <th scope="col">Статус</th>
-                    <th scope="col">Дія</th>
-                </tr>
-                </thead>
+        <table>
+            <thead>
+            <tr>
+                <th scope="col"></th>
+                <th scope="col">Прізвище, ім’я, по батькові</th>
+                <th scope="col">Назва державного органу, для якого створений профіль</th>
+                <th scope="col">Електронна адреса</th>
+                <th scope="col">Номер телефону</th>
+                <th scope="col">Пароль профіля</th>
+                <th scope="col">Статус</th>
+                <th scope="col">Дія</th>
+            </tr>
+            </thead>
 
-                <tr class="print-no-page-break">
-                    <td data-title="№"><span class="cell-content">1</span></td>
-                    <td>Вороніна Вероніка Анатоліївна</td>
-                    <td>Шосткинський міськрайонний відділ державної виконавчої служби Північно-Східного міжрегіонального
-                        управління Міністерства юстиції (м. Суми)
-                    </td>
-                    <td>some.email@gmail.com</td>
-                    <td>+38058089956</td>
-                    <td>qwerty123456</td>
-                    <td>Активований</td>
-                    <td>
-<!--                        <button class="btn btn&#45;&#45;color-positive " tabindex="6">-->
-<!--                            Активувати профіль-->
-<!--                        </button>-->
-                        <button class="btn btn--color-negative " tabindex="7">
-                            Деактивувати профіль
-                        </button>
-
-                        <button type="button" class="btn btn--color-warning"
-                                onclick="window.location='update_profile.html'">Редагувати
-                        </button>
-                    </td>
-                </tr>
-                <tr class="print-no-page-break">
-                    <td data-title="№"><span class="cell-content">2</span></td>
-                    <td>Парасоцький Олексій Юрійович</td>
-                    <td>суд загальної юрисдикції Автозаводський р/с
-                    </td>
-                    <td> info.dvskr@krm.pl.minjust.gov.ua</td>
-                    <td>096-816-76-00</td>
-                    <td>someparol123456789</td>
-                    <td>Деактивований</td>
-                    <td>
-                        <button class="btn btn--color-positive " tabindex="6">
-                            Активувати профіль
-                        </button>
-                        <button class="btn btn--color-negative " tabindex="7">
-                            Деактивувати профіль
-                        </button>
-
-                        <button type="button" class="btn btn--color-warning"
-                                onclick="window.location='update_profile.html'">Редагувати
-                        </button>
-                    </td>
-                </tr>
-
-                </tbody>
-            </table>
-        </div>
+            <tbody id="results">
+            </tbody>
+        </table>
     </div>
+
 </div>
 
 </body>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-<script src="js/logout.js"></script>
+<script src="js/all_profiles.js"></script>
+<script src="js/user.js"></script>
 
 </html>

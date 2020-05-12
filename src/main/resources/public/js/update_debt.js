@@ -131,7 +131,7 @@ if (queryString) {
 
     } else {
         //invalid query
-        window.location = 'search_debtor.html';
+        window.location = 'search-debtor';
     }
 
 }
@@ -147,7 +147,7 @@ $('#cancelUpdate').click(function (e) {
     e.preventDefault();
 
     let type = $('.legalLabel').hasClass('ng-hide') ? 'physical' : 'legal';
-    window.location = `search_debtor.html?id_code=${id_code}&type=${type}`;
+    window.location = `search-debtor?id_code=${id_code}&type=${type}`;
 });
 
 $('#updateForm').submit(function (e) {
@@ -223,7 +223,13 @@ $('#updateForm').submit(function (e) {
     //TODO
     // запрос на апдейт
 
-    window.location = `detailed_record_info.html?id=${ID}`;
+    let response = {};
+
+    if (!response.message) {
+        window.location = `detailed-record-info?id=${ID}`;
+    } else {
+        $("#message").html("Виникла помилка.!" + response.message);
+    }
 
 });
 
@@ -244,9 +250,10 @@ $('#confirmDeleteBtn').click(function () {
     let ok = true;
 
     if (ok) {
-        window.location = `search_debtor.html`;
+        window.location = `search-debtor`;
     } else {
         $("#message").html("Виникла помилка. Не вдалося видалити запис!");
     }
 
 });
+

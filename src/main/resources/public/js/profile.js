@@ -1,30 +1,41 @@
-$(document).ready(function () {
+$(document).ready(async function () {
     const queryString = window.location.search;
     const urlParams = new URLSearchParams(queryString);
     const id = urlParams.get('id');
 
     if (queryString) {
         if (id) {
-            //TODO request get profile by id
 
-            let testData = {
-                "fullName": "Анатолій Сергійович Санжаровський",
-                "stateAgency": "Кропивницький районний участок чого то там",
-                "email": "cool_email#@mail.ru",
-                "phoneNumber": "+380939393093",
-                "password": "qwerty123456"
-            };
+        let parsed_data = await $.ajax({
+                url: `/api/user/${id}`,
+                type: 'get',
+                success: function(data, textStatus, xhr) {
+                    console.log(xhr.status);
+                    console.log(data);
+                },
+                error: function(){
+                    alert("error");
+                }
+            });
 
-            let data = "{\n" +
-                "   \"fullName\":\"Олександр Сергійович Млекович\",\n" +
-                "   \"stateAgency\":\"Кропивницький районний ....\",\n" +
-                "   \"email\":\"cool_email#@mail.ru\",\n" +
-                "   \"phoneNumber\":\"+380939393093\",\n" +
-                "   \"password\":\"qwerty123456\"\n" +
-                "}";
+            // let testData = {
+            //     "fullName": "Анатолій Сергійович Санжаровський",
+            //     "stateAgency": "Кропивницький районний участок чого то там",
+            //     "email": "cool_email#@mail.ru",
+            //     "phoneNumber": "+380939393093",
+            //     "password": "qwerty123456"
+            // };
+
+            // let data = "{\n" +
+            //     "   \"fullName\":\"Олександр Сергійович Млекович\",\n" +
+            //     "   \"stateAgency\":\"Кропивницький районний ....\",\n" +
+            //     "   \"email\":\"cool_email#@mail.ru\",\n" +
+            //     "   \"phoneNumber\":\"+380939393093\",\n" +
+            //     "   \"password\":\"qwerty123456\"\n" +
+            //     "}";
 
 
-            let parsed_data = JSON.parse(data);
+            // let parsed_data = JSON.parse(data);
 
 
             let profileInfoHtml = `<div>
@@ -60,7 +71,7 @@ $(document).ready(function () {
 
         } else {
             //invalid query
-            window.location = 'search_debtor.html';
+            window.location = 'search-debtor';
         }
 
     }

@@ -1,42 +1,43 @@
-let queryString = window.location.search;
-let urlParams = new URLSearchParams(queryString);
-let id = urlParams.get('id');
-let identification_code = urlParams.get('id_code');
-let fullname = urlParams.get('fullname');
-let type = urlParams.get('type');
+$( document ).ready(function () {
+    let queryString = window.location.search;
+    let urlParams = new URLSearchParams(queryString);
+    let id = urlParams.get('id');
+    let identification_code = urlParams.get('id_code');
+    let fullname = urlParams.get('fullname');
+    let type = urlParams.get('type');
 
-if ((fullname || identification_code) && type) {
+    if ((fullname || identification_code) && type) {
 
-    if (type === 'physical') {
-        if (fullname) {
-            let fullname_parts = fullname.split(' ');
+        if (type === 'physical') {
+            if (fullname) {
+                let fullname_parts = fullname.split(' ');
 
-            $("#inputSurname").val(fullname_parts[0]).trigger('keyup');
-            $("#inputName").val(fullname_parts[1]).trigger('keyup');
-            $("#inputPatro").val(fullname_parts[2]);
+                $("#inputSurname").val(fullname_parts[0]).trigger('keyup');
+                $("#inputName").val(fullname_parts[1]).trigger('keyup');
+                $("#inputPatro").val(fullname_parts[2]);
+            }
+            if (identification_code) {
+                $("#inputPersonCode").val(identification_code).trigger('keyup');
+            }
+
+            $("#radioPhysical").prop('checked', 'checked');
+            $('#searchBtnPhysical').trigger('click');
+
+        } else if (type === 'legal') {
+
+            if (identification_code) {
+                $("#inputFirmCode").val(identification_code).trigger('keyup');
+            }
+
+            $('input:radio[name="debtorType"]').trigger('change');
+
+            $("#radioLegalEntity").prop('checked', 'checked');
+            $('#searchBtnLegal').trigger('click');
         }
-        if (identification_code) {
-            $("#inputPersonCode").val(identification_code).trigger('keyup');
-        }
-
-        $("#radioPhysical").prop('checked', 'checked');
-        $('#searchBtnPhysical').trigger('click');
-
-    } else if (type === 'legal') {
-
-        if (identification_code) {
-            $("#inputFirmCode").val(identification_code).trigger('keyup');
-        }
-
-        $('input:radio[name="debtorType"]').trigger('change');
-
-        $("#radioLegalEntity").prop('checked', 'checked');
-        $('#searchBtnLegal').trigger('click');
+    } else if (id) {
+        setEntitiesById(id);
     }
-} else if (id) {
-
-    setEntitiesById(id);
-}
+});
 
 async function setEntitiesById(id) {
 
@@ -97,6 +98,20 @@ async function setPhysicalEntities(fullname, birthday, identification_code, char
 
 
     parsed_data.forEach(function (entity) {
+        let html_for_register = (MY_APP.user && MY_APP.user.role === 'REGISTER')
+            ? `<td>
+                   <button type="button" class="btn btn--color-negative delete-btn" data-id="${entity.id}" data-toggle="modal" data-target="#deleteModal">Видалити</button>
+                   <button type="button" class="btn btn--color-warning update-btn" data-id="${entity.id}">Редагувати</button>
+              </td>
+              <td data-title="Детально" >
+                                  <span class="cell-content">
+                                            <a href="detailed-record-info?id=${entity.id}">
+                                                Детальна інформація
+                                            </a>
+                                  </span>
+               </td>`
+            : '';
+
         let entityElement = `<tr class="print-no-page-break">
                             <td>${entity.full_name}</td>
                             <td>${entity.birth_date}</td>
@@ -112,17 +127,7 @@ async function setPhysicalEntities(fullname, birthday, identification_code, char
                             </td>
                             <td>${entity.executive_document_number_of_issue}</td>
                             <td>${entity.chargeback_category}</td>
-                            <td>
-                                <button type="button" class="btn btn--color-negative delete-btn" data-id="${entity.id}" data-toggle="modal" data-target="#deleteModal">Видалити</button>
-                                <button type="button" class="btn btn--color-warning update-btn" data-id="${entity.id}">Редагувати</button>
-                            </td>
-                            <td data-title="Детально" >
-                                  <span class="cell-content">
-                                            <a href="detailed_record_info.html?id=${entity.id}">
-                                                Детальна інформація
-                                            </a>
-                                  </span>
-                            </td>
+                            ${html_for_register}
                         </tr>`;
 
         $("#physicalResults").append(entityElement);
@@ -139,7 +144,7 @@ async function setPhysicalEntities(fullname, birthday, identification_code, char
     $('.update-btn').bind('click', function () {
         let entityId = $(this).attr('data-id');
 
-        window.location = `update_debt.html?id=${entityId}&type=physical`;
+        window.location = `update-debt?id=${entityId}&type=physical`;
     });
 
 
@@ -180,6 +185,20 @@ async function setLegalEntities(fullname, identification_code, chargeback_catego
 
 
     parsed_data.forEach(function (entity) {
+        let html_for_register = (MY_APP.user && MY_APP.user.role === 'REGISTER')
+            ? `<td >
+                                            <button type="button" class="btn btn--color-negative delete-btn" data-id="${entity.id}" data-toggle="modal" data-target="#deleteModal">Видалити</button>
+                                            <button type="button" class="btn btn--color-warning update-btn" data-id="${entity.id}">Редагувати</button>
+                                        </td>
+                                        <td data-title="Детально" >
+                                            <span class="cell-content">
+                                            <a href="detailed-record-info?id=${entity.id}">
+                                                Детальна інформація
+                                            </a>
+                                            </span>
+                                        </td>`
+            : '';
+
         let entityElement = `<tr class="print-no-page-break">
                                         <td>${entity.full_name}</td>
                                         <td>${entity.executive_document_receiver}</td>
@@ -193,17 +212,7 @@ async function setLegalEntities(fullname, identification_code, chargeback_catego
                                         </td>
                                         <td>${entity.executive_document_number_of_issue}</td>
                                         <td>${entity.chargeback_category}</td>
-                                        <td >
-                                            <button type="button" class="btn btn--color-negative delete-btn" data-id="${entity.id}" data-toggle="modal" data-target="#deleteModal">Видалити</button>
-                                            <button type="button" class="btn btn--color-warning update-btn" data-id="${entity.id}">Редагувати</button>
-                                        </td>
-                                        <td data-title="Детально" >
-                                            <span class="cell-content">
-                                            <a href="detailed_record_info.html?id=${entity.id}">
-                                                Детальна інформація
-                                            </a>
-                                            </span>
-                                        </td>
+                                        ${html_for_register}
                                      </tr>`;
 
         $("#legalResults").append(entityElement);
@@ -221,7 +230,7 @@ async function setLegalEntities(fullname, identification_code, chargeback_catego
     $('.update-btn').bind('click', function () {
         let entityId = $(this).attr('data-id');
 
-        window.location = `update_debt.html?id=${entityId}&type=legal`;
+        window.location = `update-debt?id=${entityId}&type=legal`;
     });
 
     $('html, body').animate({
@@ -354,8 +363,6 @@ $('#searchBtnPhysical').click(
             let fullname = [name, surname, patro].join(' ');
 
             setPhysicalEntities(fullname, birth_date, identification_code, chargeback_category);
-
-        } else {
 
         }
     }

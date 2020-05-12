@@ -32,10 +32,13 @@ public class RecordDTO {
     private String executiveDocumentTitle;
     private LocalDateTime executiveDocumentDate;
     private Long executiveDocumentNumber;
+    private String issuerPhoneNumber;
+    private String issuerEmail;
     private String issuerStateAgency;
     private String issuerFullName;
     private String issuerPosition;
     private LocalDateTime documentDateOfEntryIntoForce;
     private Long amountOfMoneyToBeRecovered;
     private String decisionImplementationDetails;
+    private String userEmail;
 }
