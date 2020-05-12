@@ -10,6 +10,7 @@ import ua.gov.repository.UserRepository;
 
 import javax.transaction.Transactional;
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Optional;
 
@@ -38,6 +39,28 @@ public class UserService {
     }
 
     public User getById(Long id) {
-        return repository.findByIdAndIsActive(id, true).orElseThrow(()->new NoSuchElementException("user not found"));
+        return repository.findById(id).orElseThrow(()->new NoSuchElementException("user not found"));
+    }
+
+    public List<User> getByEmailAndStateAgency(String email, String stateAgency) {
+        return repository.findAllByEmailAndStateAgency(email, stateAgency);
+    }
+
+    public List<User> findAll() {
+        return repository.findAll();
+    }
+
+    public void deleteById(Long id) {
+        User user = repository.findById(id).orElseGet(null);
+        if(user != null){
+            user.setIsActive(false);
+            repository.save(user);
+        }
+    }
+
+    public void makeActive(Long id) {
+        User user = repository.findById(id).orElseThrow(()->new NoSuchElementException("user not found"));
+        user.setIsActive(true);
+        repository.save(user);
     }
 }

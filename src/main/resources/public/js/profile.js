@@ -18,26 +18,6 @@ $(document).ready(async function () {
                 }
             });
 
-            // let testData = {
-            //     "fullName": "Анатолій Сергійович Санжаровський",
-            //     "stateAgency": "Кропивницький районний участок чого то там",
-            //     "email": "cool_email#@mail.ru",
-            //     "phoneNumber": "+380939393093",
-            //     "password": "qwerty123456"
-            // };
-
-            // let data = "{\n" +
-            //     "   \"fullName\":\"Олександр Сергійович Млекович\",\n" +
-            //     "   \"stateAgency\":\"Кропивницький районний ....\",\n" +
-            //     "   \"email\":\"cool_email#@mail.ru\",\n" +
-            //     "   \"phoneNumber\":\"+380939393093\",\n" +
-            //     "   \"password\":\"qwerty123456\"\n" +
-            //     "}";
-
-
-            // let parsed_data = JSON.parse(data);
-
-
             let profileInfoHtml = `<div>
                         <fieldset>
                             <label for="fullName">ПІБ реєстратора:</label>

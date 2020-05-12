@@ -9,32 +9,28 @@ if (queryString) {
     }
 }
 
-function setEntitiesById(id) {
-    //TODO
-    // запрос на сервер за профілем по id
+async function setEntitiesById(id) {
 
-    let data = [{
-        "id": "1",
-        "fullname": "Манасерян Айкуі Арамівна",
-        "stateAgency": "комісія по трудових спорах Комісія по трудових спорах АТ \"Завод \"Маяк\"",
-        "email": "vdvs.obolon@ukr.net",
-        "phoneNumber": " 426-62-70",
-        "password": "superparol123",
-        "is_active": false
+    let data = await $.ajax({
+        url: `/api/user/${id}`,
+        type: 'get',
+        success: function(data, textStatus, xhr) {
+            console.log(xhr.status);
+            console.log(data);
+        },
+        error: function(){
+            alert("error");
+        }
+    });
+
+    let parsed_data = [{
+                    id: data.id,
+                    fullname: data.fullName,
+                    stateAgency: data.stateAgency,
+                    email: data.email,
+                    phoneNumber: data.phoneNumber,
+                    is_active: data.isActive
     }];
-
-    let testData = "[{\n" +
-        "        \"id\" : \"1\",\n" +
-        "        \"fullname\": \"Манасерян Айкуі Арамівна\",\n" +
-        "        \"stateAgency\": \"комісія по трудових спорах Комісія по трудових спорах АТ \\\"Завод \\\"Маяк\\\"\",\n" +
-        "        \"email\": \"vdvs.obolon@ukr.net\",\n" +
-        "        \"phoneNumber\": \" 426-62-70\",\n" +
-        "        \"password\": \"superparol123\",\n" +
-        "        \"is_active\": true\n" +
-        "    }]";
-
-
-    let parsed_data = JSON.parse(testData);
 
     {
         let email = parsed_data[0].email;
@@ -112,32 +108,28 @@ function setEntitiesById(id) {
 
 }
 
-function setEntities(email, stateAgency) {
-    //TODO
-    // запрос на сервер за профілем по email i stateAgency
+async function setEntities(email, stateAgency) {
 
-    let data = [{
-        "id": "1",
-        "fullname": "Манасерян Айкуі Арамівна",
-        "stateAgency": "комісія по трудових спорах Комісія по трудових спорах АТ \"Завод \"Маяк\"",
-        "email": "vdvs.obolon@ukr.net",
-        "phoneNumber": " 426-62-70",
-        "password": "superparol123",
-        "is_active": false
-    }];
+    let data = await $.ajax({
+        url: `/api/user?email=${email}&stateAgency=${stateAgency}`,
+        type: 'get',
+        success: function(data, textStatus, xhr) {
+            console.log(xhr.status);
+            console.log(data);
+        },
+        error: function(){
+            alert("error");
+        }
+    });
 
-    let testData = "[{\n" +
-        "        \"id\" : \"1\",\n" +
-        "        \"fullname\": \"Манасерян Айкуі Арамівна\",\n" +
-        "        \"stateAgency\": \"комісія по трудових спорах Комісія по трудових спорах АТ \\\"Завод \\\"Маяк\\\"\",\n" +
-        "        \"email\": \"vdvs.obolon@ukr.net\",\n" +
-        "        \"phoneNumber\": \" 426-62-70\",\n" +
-        "        \"password\": \"superparol123\",\n" +
-        "        \"is_active\": true\n" +
-        "    }]";
-
-
-    let parsed_data = JSON.parse(testData);
+    let parsed_data = data.map(el=>({
+        id: el.id,
+        fullname: el.fullName,
+        stateAgency: el.stateAgency,
+        email: el.email,
+        phoneNumber: el.phoneNumber,
+        is_active: el.isActive
+    }));
 
     let resTable = $('#resultsTable');
 
@@ -196,7 +188,7 @@ function setEntities(email, stateAgency) {
     $('.update-btn').bind('click', function () {
         let profileId = $(this).attr('data-id');
 
-        window.location = `update_profile?id=${profileId}`;
+        window.location = `update-profile?id=${profileId}`;
     });
 
 
@@ -216,7 +208,7 @@ $('#searchBtn').click(function (e) {
     setEntities(email, stateAgency);
 });
 
-$('#confirmChangeStatusBtn').click(function () {
+$('#confirmChangeStatusBtn').click(async function () {
     let profileId = $(this).attr('data-id');
     let status = $(this).attr('data-status')
 
@@ -224,15 +216,32 @@ $('#confirmChangeStatusBtn').click(function () {
 
     console.log(status)
     if (status === 'activate') {
-        //TODO
-        // запрос на активацію профілю
 
-        response.message = 'Не вдалося активувати профіль тому, що....'
+        await $.ajax({
+            url: `/api/user/${profileId}`,
+            type: 'patch',
+            success: function(data, textStatus, xhr) {
+                console.log(xhr.status);
+                console.log(data);
+            },
+            error: function(){
+                response.message = 'Не вдалося активувати профіль';
+            }
+        });
 
     } else if (status === 'deactivate') {
-        //TODO
-        // запрос на деактивацію профілю
-        response.message = ''
+
+        await $.ajax({
+            url: `/api/user/${profileId}`,
+            type: 'delete',
+            success: function(data, textStatus, xhr) {
+                console.log(xhr.status);
+                console.log(data);
+            },
+            error: function(){
+                response.message = 'Не вдалося деактивувати профіль';
+            }
+        });
 
     } else {
         response.message = 'Помилка 505'
@@ -241,7 +250,7 @@ $('#confirmChangeStatusBtn').click(function () {
     if (response.message)
         $('#message').html('Виникла помилка. ' + response.message);
     else
-        window.location = `search-register-profile?id=${profileId}`;
+        window.location = `search-registers-profile?id=${profileId}`;
 
 
     $(this).attr('data-id', '').attr('data-status', '');
