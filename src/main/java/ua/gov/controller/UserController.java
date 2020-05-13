@@ -40,7 +40,9 @@ public class UserController {
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public Long createUser(@RequestBody UserDTO dto){
-        dto.setRole(RoleType.REGISTER);
+        if(dto.getRole() == null){
+            dto.setRole(RoleType.REGISTER);
+        }
         User user = service.save(dto);
         return user.getId();
     }
