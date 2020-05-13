@@ -13,6 +13,7 @@ $(document).ready(async function () {
                     console.log(xhr.status);
                     console.log(data);
                 },
+                //todo
                 error: function(){
                     let debtInfoHtml1 = `<div>
                              <fieldset>

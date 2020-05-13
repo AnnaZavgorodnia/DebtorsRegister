@@ -1,17 +1,3 @@
-// /*<![CDATA[*/
-// let MY_APP = {
-//     // user: {
-//     //     id : '1000',
-//     //     email: "gorodchenkoann@gmail.com",
-//     //     fullname: "Городченко Анна Володимирівна",
-//     //     phone_number: "+380636168056",
-//     //     state_agency: "Київський Політехнічний Інститут ім. Ігоря сікорського",
-//     //     password: "qwerty123",
-//     //     role: "register"
-//     // }
-// };
-// /*]]>*/
-
 $(document).ready(function () {
     setMode();
     showLoginBtn();
@@ -49,7 +35,7 @@ function setMode() {
                         </span>
 
                         <span>
-                            <button type="button" class="btn btn--color-negative exit-btn" name="mainPages"
+                            <button type="button" class="btn btn--color-negative exit-btn" name="mainPages" onClick="window.location = 'logout'"
                                     >Вийти</button>
                         </span>
                     </span>
@@ -76,7 +62,7 @@ function setMode() {
                         </span>
 
                         <span>
-                            <button type="button" class="btn btn--color-negative exit-btn" name="mainPages"
+                            <button type="button" class="btn btn--color-negative exit-btn" name="mainPages" onClick="window.location = 'logout'"
                                     >Вийти</button>
                         </span>
                     </span>
@@ -99,8 +85,3 @@ function showLoginBtn(){
     else
         $("#loginBtn").empty();
 }
-
-$('.exit-btn').click(function () {
-    alert("clicked");
-    window.location = 'logout';
-});

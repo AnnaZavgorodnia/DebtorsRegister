@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -25,6 +26,7 @@ import ua.gov.service.UserService;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping(path="/api/user",
@@ -56,7 +58,7 @@ public class UserController {
         if(email != null && stateAgency != null){
             return service.getByEmailAndStateAgency(email, stateAgency);
         }
-        return service.findAll();
+        return service.findAll().stream().filter(el->el.getRole()==RoleType.REGISTER).collect(Collectors.toList());
     }
 
     @ResponseStatus(HttpStatus.OK)
@@ -69,6 +71,12 @@ public class UserController {
     @PatchMapping("/{id}")
     public void activate(@PathVariable Long id){
         service.makeActive(id);
+    }
+
+    @ResponseStatus(HttpStatus.OK)
+    @PutMapping("/{id}")
+    public void updateById(@PathVariable Long id, @RequestBody UserDTO dto){
+        service.updateById(id, dto);
     }
 
     @ResponseStatus(HttpStatus.NOT_FOUND)

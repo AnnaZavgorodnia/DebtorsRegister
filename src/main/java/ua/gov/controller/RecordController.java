@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -52,8 +53,6 @@ public class RecordController {
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping
     public Long createRecord(@RequestBody RecordDTO dto, Principal principal){
-        Principal principal1 = principal;
-        String s = principal.getName();
         dto.setUserEmail(principal.getName());
         return service.create(dto);
     }
@@ -62,6 +61,13 @@ public class RecordController {
     @GetMapping("/{id}")
     public Record getRecordById(@PathVariable Long id){
         return service.getById(id);
+    }
+
+    @ResponseStatus(HttpStatus.OK)
+    @PutMapping("/{id}")
+    public void updateRecordById(@PathVariable Long id, @RequestBody RecordDTO dto, Principal principal){
+        dto.setUserEmail(principal.getName());
+        service.updateById(id, dto);
     }
 
     @ResponseStatus(HttpStatus.OK)

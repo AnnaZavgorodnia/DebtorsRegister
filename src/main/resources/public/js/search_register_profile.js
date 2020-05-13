@@ -221,7 +221,7 @@ $('#confirmChangeStatusBtn').click(async function () {
             url: `/api/user/${profileId}`,
             type: 'patch',
             success: function(data, textStatus, xhr) {
-                console.log(xhr.status);
+                console.log (xhr.status);
                 console.log(data);
             },
             error: function(){

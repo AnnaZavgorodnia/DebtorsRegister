@@ -33,7 +33,7 @@ public class Record {
     private Long id;
 
     @Column(nullable = false)
-    private LocalDateTime executiveDocumentArrivalDate;
+    private LocalDate executiveDocumentArrivalDate;
 
     @Column(nullable = false)
     private String executiveDocumentReceiver;
@@ -54,7 +54,7 @@ public class Record {
     private String executiveDocumentTitle;
 
     @Column(nullable = false)
-    private LocalDateTime executiveDocumentDate;
+    private LocalDate executiveDocumentDate;
 
     @Column(nullable = false)
     private Long executiveDocumentNumberOfIssue;
@@ -76,7 +76,7 @@ public class Record {
     private ChargebackCategory chargebackCategory;
 
     @Column(nullable = false)
-    private LocalDateTime documentDateOfEntryIntoForce;
+    private LocalDate documentDateOfEntryIntoForce;
 
     @Column(nullable = false)
     private Long moneyAmountToBeRecovered;
@@ -89,7 +89,7 @@ public class Record {
     private User user;
 
     @Column
-    private LocalDateTime createdAt;
+    private LocalDate createdAt;
 
     @Column
     private Boolean isActive;

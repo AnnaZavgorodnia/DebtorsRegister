@@ -19,6 +19,7 @@ import ua.gov.repository.UserRepository;
 
 import javax.transaction.Transactional;
 import java.security.Principal;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.NoSuchElementException;
@@ -36,7 +37,7 @@ public class RecordService {
 
     @Transactional
     public Long create(RecordDTO dto){
-        Optional<Obligor> existingO = obligorRepository.findByFullName(dto.getObligorFullName());
+        Optional<Obligor> existingO = obligorRepository.findByIdentificationCode(dto.getObligorIdentificationCode());
         Obligor obligor = existingO.orElseGet(()->obligorRepository.save(getObligorFromRecordDTO(dto)));
 
         User user = userRepository.findByEmailAndIsActive(dto.getUserEmail(), true).orElseGet(null);
@@ -69,7 +70,7 @@ public class RecordService {
         record.setExecutiveDocumentIssuer(issuer);
         record.setContractor(contractor);
         record.setChargebackCategory(category);
-        record.setCreatedAt(LocalDateTime.now());
+        record.setCreatedAt(LocalDate.now());
         record.setIsActive(true);
         record.setUser(user);
 
@@ -130,5 +131,78 @@ public class RecordService {
 
     public Record getById(Long id){
         return repository.findByIdAndIsActive(id, true).orElseThrow(()->new NoSuchElementException("record not found"));
+    }
+
+    public void updateById(Long id, RecordDTO dto) {
+        Record record = repository.findById(id).orElseThrow(()->new NoSuchElementException("record not found"));
+
+        Optional<Obligor> existingO = obligorRepository
+                .findByIdentificationCode(dto.getObligorIdentificationCode());
+        Obligor obligor;
+        if(existingO.isPresent()){
+            obligor = existingO.get();
+            obligor.setBirthDate(dto.getObligorBirthDate());
+            obligor.setPassportNumber(dto.getObligorPassportNumber());
+            obligor.setFullName(dto.getObligorFullName());
+            obligor.setBankAccountNumber(dto.getObligorBankAccountNumber());
+            obligor.setPhoneNumber(dto.getObligorPhoneNumber());
+            obligor.setFaxNumber(dto.getObligorFaxNumber());
+            obligor.setEmail(dto.getObligorEmail());
+            obligor.setIsLegalEntity(dto.getIsLegalEntity());
+            obligorRepository.save(obligor);
+        } else {
+            obligor = existingO.orElseGet(()->obligorRepository.save(getObligorFromRecordDTO(dto)));
+        }
+
+        User user = userRepository.findByEmailAndIsActive(dto.getUserEmail(), true).orElseGet(null);
+        dto.setIssuerEmail(user.getEmail());
+        dto.setIssuerPhoneNumber(user.getPhoneNumber());
+
+        Optional<Issuer> existingI = issuerRepository.findByFullName(dto.getIssuerFullName());
+        Issuer issuer;
+        if(existingI.isPresent()){
+            issuer = existingI.get();
+            issuer.setPosition(dto.getIssuerPosition());
+            issuer.setStateAgency(dto.getIssuerStateAgency());
+            issuer.setEmail(dto.getIssuerEmail());
+            issuer.setPhoneNumber(dto.getIssuerPhoneNumber());
+            issuerRepository.save(issuer);
+        } else {
+            issuer = existingI.orElseGet(()->issuerRepository.save(getIssuerFromRecordDTO(dto)));
+        }
+
+        Optional<Contractor> existingC = contractorRepository.findByFullName(dto.getContractorFullName());
+        Contractor contractor;
+        if(existingC.isPresent()){
+            contractor = existingC.get();
+        } else{
+            contractor = existingC.orElseGet(()->contractorRepository.save(getContractorFromRecordDTO(dto)));
+            contractor.setBankAccountNumber(dto.getContractorBankAccountNumber());
+            contractor.setPhoneNumber(dto.getContractorPhoneNumber());
+            contractor.setFaxNumber(dto.getContractorFaxNumber());
+            contractor.setEmail(dto.getContractorEmail());
+            contractorRepository.save(contractor);
+        }
+
+        ChargebackCategory category = chargebackCategoryRepository.getOne(dto.getChargebackCategory());
+
+        record.setExecutiveDocumentArrivalDate(dto.getExecutiveDocumentArrivalDate());
+        record.setCoverLetterPresence(dto.getCoverLetterPresent());
+        record.setCoverLetterCorrespondent(dto.getCoverLetterCorrespondent());
+        record.setCoverLetterCreationDate(dto.getCoverLetterCreationDate());
+        record.setCoverLetterNumber(dto.getCoverLetterNumber());
+        record.setExecutiveDocumentReceiver(dto.getExecutiveDocumentReceiver());
+        record.setExecutiveDocumentTitle(dto.getExecutiveDocumentTitle());
+        record.setExecutiveDocumentDate(dto.getExecutiveDocumentDate());
+        record.setExecutiveDocumentNumberOfIssue(dto.getExecutiveDocumentNumber());
+        record.setDocumentDateOfEntryIntoForce(dto.getDocumentDateOfEntryIntoForce());
+        record.setMoneyAmountToBeRecovered(dto.getAmountOfMoneyToBeRecovered());
+        record.setInformationAboutImplementationOfDecision(dto.getDecisionImplementationDetails());
+        record.setObligor(obligor);
+        record.setExecutiveDocumentIssuer(issuer);
+        record.setContractor(contractor);
+        record.setChargebackCategory(category);
+
+        repository.save(record);
     }
 }

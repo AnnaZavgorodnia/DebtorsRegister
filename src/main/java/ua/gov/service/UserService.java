@@ -63,4 +63,14 @@ public class UserService {
         user.setIsActive(true);
         repository.save(user);
     }
+
+    public void updateById(Long id, UserDTO dto) {
+        User user = repository.findById(id).orElseThrow(()->new NoSuchElementException("user not found"));
+        user.setFullName(dto.getFullName());
+        user.setEmail(dto.getEmail());
+        user.setPhoneNumber(dto.getPhoneNumber());
+        user.setStateAgency(dto.getStateAgency());
+        user.setPassword(passwordEncoder.encode(dto.getPassword()));
+        repository.save(user);
+    }
 }

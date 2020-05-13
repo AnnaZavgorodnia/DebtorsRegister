@@ -360,7 +360,7 @@ $('#searchBtnPhysical').click(
             let birth_date = $('#inputBirthDate').val();
             let chargeback_category = $('#categorySelect_33 option:selected').val();
 
-            let fullname = [name, surname, patro].join(' ');
+            let fullname = [surname, name, patro].join(' ');
 
             setPhysicalEntities(fullname, birth_date, identification_code, chargeback_category);
 

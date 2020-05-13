@@ -37,10 +37,10 @@ public class Issuer {
     @Column(name = "state_agency", nullable = false)
     private String stateAgency;
 
-    @Column(name = "full_name", nullable = false)
+    @Column(name = "full_name", nullable = false, unique = true)
     private String fullName;
 
-    @Column(name = "position", nullable = false, unique = true)
+    @Column(name = "position", nullable = false)
     private String position;
 
     @Column(name = "phone_number", nullable = false)

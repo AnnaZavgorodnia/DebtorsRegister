@@ -1,117 +1,143 @@
-const queryString = window.location.search;
-const urlParams = new URLSearchParams(queryString);
-const ID = urlParams.get('id');
+$(document).ready(async function () {
+    const queryString = window.location.search;
+    const urlParams = new URLSearchParams(queryString);
+    var ID = urlParams.get('id');
 
-let profile = {};
+    let profile = {};
 
-if (queryString && ID) {
-    //TODO
-    // запрос на отримання профілю по айді
+    if (queryString && ID) {
 
-    let testData = {
-        "fullname": "Анатолій Сергійович Санжаровський",
-        "stateAgency": "Кропивницький районний участок чого то там",
-        "email": "cool_email#@mail.ru",
-        "phoneNumber": "+380939393093",
-        "password": "qwerty123456",
-        "is_active": true
-    };
+        console.log(`id: ${ID}`);
 
-    let data = "{\n" +
-        "        \"fullname\": \"Анатолій Сергійович Санжаровський\",\n" +
-        "        \"stateAgency\": \"Кропивницький районний участок чого то там\",\n" +
-        "        \"email\": \"cool_email#@mail.ru\",\n" +
-        "        \"phoneNumber\": \"+380939393093\",\n" +
-        "        \"password\": \"qwerty123456\",\n" +
-        "        \"is_active\": true\n" +
-        "    }";
+        let parsed_data = await $.ajax({
+            url: `/api/user/${ID}`,
+            type: 'get',
+            success: function(data, textStatus, xhr) {
+                console.log(xhr.status);
+                console.log(data);
+            },
+            error: function(){
+                alert("error");
+            }
+        });
 
-    profile = JSON.parse(data);
+        let profile = {
+            id: parsed_data.id,
+            fullname: parsed_data.fullName,
+            stateAgency: parsed_data.stateAgency,
+            email: parsed_data.email,
+            phoneNumber: parsed_data.phoneNumber,
+            is_active: parsed_data.isActive
+        };
 
+        console.log("profile:");
+        console.log(profile);
 
-    $('#fullName').val(profile.fullname);
-    $('#stateAgency').val(profile.stateAgency);
-    $('#email').val(profile.email);
-    $('#phoneNumber').val(profile.phoneNumber);
-    $('#password').val(profile.password);
+        $('#fullName').val(profile.fullname);
+        $('#stateAgency').val(profile.stateAgency);
+        $('#email').val(profile.email);
+        $('#phoneNumber').val(profile.phoneNumber);
+        $('#password').val(profile.password);
 
-    if (profile.is_active)
-        $("#deactivateProfile").removeClass('ng-hide');
-    else
-        $("#activateProfile").removeClass('ng-hide');
-
-} else
-    window.location = 'search-registers-profile';
-
-$('#cancelUpdate').click(function (e) {
-    e.preventDefault();
-
-    window.location = `search-registers-profile?id=${ID}`;
-});
-
-$("#submitUpdate").click(function (e) {
-    e.preventDefault();
-
-    let full_name = $('#fullName').val();
-    let state_agency = $('#stateAgency').val();
-    let email = $('#email').val();
-    let phone_number = $('#phoneNumber').val();
-    let password = $('#password').val();
-
-    let data = {
-        id: ID,
-        full_name,
-        state_agency,
-        email,
-        phone_number,
-        password
-    };
-
-    //TODO
-    // запрос на апдейт профіля
-
-    let response = {};
-
-    if (response.message) {
-        $("#message").html(response.message);
-    } else {
-        window.location = `profile?id=${ID}`;
-    }
-});
-
-$("#activateProfile").click(function (e) {
-    e.preventDefault();
-
-    if (profile.is_active === false) {
-        //TODO
-        // запрос на активацію профіля по айді
-        let response = {};
-
-        profile.is_active = true;
-        if (response.message) {
-            $("#message").html(response.message);
-        } else {
-            $("#activateProfile").addClass('ng-hide');
+        if (profile.is_active)
             $("#deactivateProfile").removeClass('ng-hide');
-        }
-    }
-});
-
-$("#deactivateProfile").click(function (e) {
-    e.preventDefault();
-
-    if (profile.is_active === true) {
-        //TODO
-        // запрос на деактивацію профіля по айді
-
-        profile.is_active = false;
-        let response = {};
-
-        if (response.message)
-            $("#message").html(response.message);
-        else {
+        else
             $("#activateProfile").removeClass('ng-hide');
-            $("#deactivateProfile").addClass('ng-hide');
-        }
+
+    } else{
+        window.location = 'search-registers-profile';
     }
+
+    $('#cancelUpdate').click(function (e) {
+        e.preventDefault();
+
+        window.location = `search-registers-profile?id=${ID}`;
+    });
+
+    $("#submitUpdate").click(async function (e) {
+        e.preventDefault();
+
+        let full_name = $('#fullName').val();
+        let state_agency = $('#stateAgency').val();
+        let email = $('#email').val();
+        let phone_number = $('#phoneNumber').val();
+        let password = $('#password').val();
+
+        let data = {
+            fullName: full_name,
+            stateAgency: state_agency,
+            email: email,
+            phoneNumber: phone_number,
+            password: password
+        };
+
+        await $.ajax({
+            url: `/api/user/${ID}`,
+            type: 'put',
+            contentType: "application/json",
+            data: JSON.stringify(data),
+            success: function(data, textStatus, xhr) {
+                console.log(xhr.status);
+                console.log(data);
+                window.location = `profile?id=${ID}`;
+            },
+            error: function(xhr, ajaxOptions, thrownError){
+                $("#message").html(xhr.responseText);
+            }
+        });
+    });
+
+    //todo
+    $("#deactivateProfile").click(async function (e) {
+        e.preventDefault();
+
+        if (profile.is_active === true) {
+
+            await $.ajax({
+                url: `/api/user/${ID}`,
+                type: 'delete',
+                success: function(data, textStatus, xhr) {
+                    console.log(xhr.status);
+                    console.log(data);
+                    $("#activateProfile").removeClass('ng-hide');
+                    $("#deactivateProfile").addClass('ng-hide');
+                },
+                error: function(){
+                    response.message = 'Не вдалося деактивувати профіль';
+                    $("#message").html(response.message);
+                }
+            });
+
+            profile.is_active = false;
+        }
+    });
+
+    //todo
+    $("#activateProfile").click(async function (e) {
+        e.preventDefault();
+
+        if (profile.is_active === false) {
+
+            await $.ajax({
+                url: `/api/user/${ID}`,
+                type: 'patch',
+                success: function(data, textStatus, xhr) {
+                    console.log (xhr.status);
+                    console.log(data);
+                    $("#activateProfile").addClass('ng-hide');
+                    $("#deactivateProfile").removeClass('ng-hide');
+                },
+                error: function(){
+                    $("#message").html('Не вдалося активувати профіль');
+                }
+            });
+
+            profile.is_active = true;
+
+        }
+    });
 });
+
+
+
+

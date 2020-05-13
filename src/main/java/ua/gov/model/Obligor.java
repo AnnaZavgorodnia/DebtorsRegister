@@ -17,6 +17,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -38,7 +39,7 @@ public class Obligor {
     @JsonIgnore
     private List<Record> records;
 
-    @Column(nullable = false, name = "full_name", unique = true)
+    @Column(nullable = false, name = "full_name")
     private String fullName;
 
     @Column(nullable = false, name = "birth_date")
