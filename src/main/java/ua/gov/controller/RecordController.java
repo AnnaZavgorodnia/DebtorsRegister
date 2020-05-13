@@ -44,10 +44,10 @@ public class RecordController {
             @RequestParam(name = "chargebackCategory", required = false) Long chargebackCategory){
         if(chargebackCategory != null && chargebackCategory > 0){
             return service.getRecords().stream()
-                    .filter(el -> el.getChargebackCategory().getId().equals(chargebackCategory) && el.getIsActive())
+                    .filter(el -> el.getChargebackCategory().getId().equals(chargebackCategory))
                     .collect(Collectors.toList());
         }
-        return service.getRecords().stream().filter(Record::getIsActive).collect(Collectors.toList());
+        return service.getRecords();
     }
 
     @ResponseStatus(HttpStatus.CREATED)

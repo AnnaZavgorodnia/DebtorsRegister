@@ -130,7 +130,7 @@ public class RecordService {
     }
 
     public Record getById(Long id){
-        return repository.findByIdAndIsActive(id, true).orElseThrow(()->new NoSuchElementException("record not found"));
+        return repository.findById(id).orElseThrow(()->new NoSuchElementException("record not found"));
     }
 
     public void updateById(Long id, RecordDTO dto) {

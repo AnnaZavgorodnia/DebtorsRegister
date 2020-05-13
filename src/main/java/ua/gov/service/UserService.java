@@ -70,7 +70,9 @@ public class UserService {
         user.setEmail(dto.getEmail());
         user.setPhoneNumber(dto.getPhoneNumber());
         user.setStateAgency(dto.getStateAgency());
-        user.setPassword(passwordEncoder.encode(dto.getPassword()));
+        if(dto.getPassword() != null && !dto.getPassword().trim().isEmpty()){
+            user.setPassword(passwordEncoder.encode(dto.getPassword()));
+        }
         repository.save(user);
     }
 }

@@ -58,11 +58,10 @@ public class ObligorController {
             Obligor obligor = service.findObligorsRecords(dto);
             if(dto.getChargebackCategory() != null){
                 return obligor.getRecords().stream()
-                        .filter(el -> el.getChargebackCategory().getId().equals(chargebackCategory)
-                                        && el.getIsActive())
+                        .filter(el -> el.getChargebackCategory().getId().equals(chargebackCategory))
                         .collect(Collectors.toList());
             }
-            return obligor.getRecords().stream().filter(Record::getIsActive).collect(Collectors.toList());
+            return obligor.getRecords();
         } catch (RuntimeException e){
             return new ArrayList<>();
         }

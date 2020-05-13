@@ -21,6 +21,7 @@ $(document).ready(async function () {
             }
         });
 
+        //todo password
         let profile = {
             id: parsed_data.id,
             fullname: parsed_data.fullName,
@@ -33,11 +34,10 @@ $(document).ready(async function () {
         console.log("profile:");
         console.log(profile);
 
-        $('#fullName').val(profile.fullname);
-        $('#stateAgency').val(profile.stateAgency);
-        $('#email').val(profile.email);
-        $('#phoneNumber').val(profile.phoneNumber);
-        $('#password').val(profile.password);
+    $('#fullName').val(profile.fullname);
+    $('#stateAgency').val(profile.stateAgency);
+    $('#email').val(profile.email);
+    $('#phoneNumber').val(profile.phoneNumber);
 
         if (profile.is_active)
             $("#deactivateProfile").removeClass('ng-hide');

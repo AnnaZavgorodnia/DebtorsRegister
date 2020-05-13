@@ -157,7 +157,6 @@ async function setEntities(email, stateAgency) {
                     <td>${entity.stateAgency}</td>
                     <td>${entity.email}</td>
                     <td>${entity.phoneNumber}</td>
-                    <td>${entity.password}</td>
                     <td>${entity.is_active ? 'Активний' : 'Деактивований'}</td>
                     <td>
                         ${buttonsHtml}
@@ -206,6 +205,10 @@ $('#searchBtn').click(function (e) {
     let stateAgency = $("#stateAgency").val();
 
     setEntities(email, stateAgency);
+});
+
+$('.closeModal').click(function () {
+    $('#changeStatusModal').css('display', 'none');
 });
 
 $('#confirmChangeStatusBtn').click(async function () {

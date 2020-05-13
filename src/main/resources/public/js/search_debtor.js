@@ -1,4 +1,4 @@
-$( document ).ready(function () {
+$(document).ready(function () {
     let queryString = window.location.search;
     let urlParams = new URLSearchParams(queryString);
     let id = urlParams.get('id');
@@ -99,7 +99,10 @@ async function setPhysicalEntities(fullname, birthday, identification_code, char
 
     parsed_data.forEach(function (entity) {
         let html_for_register = (MY_APP.user && MY_APP.user.role === 'REGISTER')
-            ? `<td>
+            ? `<td class="${entity.is_active ? 'active' : 'archived'}">
+                    ${entity.is_active ? 'Активний' : 'Архівований'}
+                </td>
+              <td>
                    <button type="button" class="btn btn--color-negative delete-btn" data-id="${entity.id}" data-toggle="modal" data-target="#deleteModal">Видалити</button>
                    <button type="button" class="btn btn--color-warning update-btn" data-id="${entity.id}">Редагувати</button>
               </td>
@@ -130,7 +133,13 @@ async function setPhysicalEntities(fullname, birthday, identification_code, char
                             ${html_for_register}
                         </tr>`;
 
-        $("#physicalResults").append(entityElement);
+
+        if (MY_APP.user && MY_APP.user.role === 'REGISTER')
+            $("#physicalResults").append(entityElement);
+        else if (entity.is_active)
+            $("#physicalResults").append(entityElement);
+
+
     });
 
     $('.delete-btn').bind('click', function () {
@@ -186,10 +195,13 @@ async function setLegalEntities(fullname, identification_code, chargeback_catego
 
     parsed_data.forEach(function (entity) {
         let html_for_register = (MY_APP.user && MY_APP.user.role === 'REGISTER')
-            ? `<td >
+            ? `<td class="${entity.is_active ? 'active' : 'archived'}">
+                    ${entity.is_active ? 'Активний' : 'Архівований'}
+                </td>
+                <td >
                                             <button type="button" class="btn btn--color-negative delete-btn" data-id="${entity.id}" data-toggle="modal" data-target="#deleteModal">Видалити</button>
                                             <button type="button" class="btn btn--color-warning update-btn" data-id="${entity.id}">Редагувати</button>
-                                        </td>
+               </td>
                                         <td data-title="Детально" >
                                             <span class="cell-content">
                                             <a href="detailed-record-info?id=${entity.id}">
@@ -215,7 +227,10 @@ async function setLegalEntities(fullname, identification_code, chargeback_catego
                                         ${html_for_register}
                                      </tr>`;
 
-        $("#legalResults").append(entityElement);
+        if (MY_APP.user && MY_APP.user.role === 'REGISTER')
+            $("#legalResults").append(entityElement);
+        else if (entity.is_active)
+            $("#legalResults").append(entityElement);
     });
 
     $('.delete-btn').bind('click', function () {

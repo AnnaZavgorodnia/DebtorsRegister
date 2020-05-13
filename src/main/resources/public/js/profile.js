@@ -40,11 +40,6 @@ $(document).ready(async function () {
                             <label for="phoneNumber">Номер телефону реєстратора:</label>
                             <div id="phoneNumber">${parsed_data.phoneNumber ? parsed_data.phoneNumber : 'Дані відсутні'}</div>
                         </fieldset>
-
-                        <fieldset>
-                            <label for="password">Пароль для профілю реєстратора:</label>
-                            <div id="password">${parsed_data.password ? parsed_data.password : 'Дані відсутні'}</div>
-                        </fieldset>
                     </div>`;
 
             $('#profileInfo').append(profileInfoHtml);
