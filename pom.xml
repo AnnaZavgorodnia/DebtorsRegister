@@ -70,6 +70,7 @@
     </dependencies>
 
     <build>
+        <finalName>DebtorsRegister</finalName>
         <plugins>
             <plugin>
                 <groupId>org.springframework.boot</groupId>
