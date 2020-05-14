@@ -300,9 +300,10 @@ $('input:radio[name="debtorType"]').change(
 
 //physical
 $("#inputSurname").keyup(function () {
-    if ($(this).val().trim() !== '') {
-        $('#surnameFieldset').removeClass('invalid');
+    let val = $(this).val();
+    if (val.trim() !== '') {
 
+        $('#surnameFieldset').removeClass('invalid');
 
         if ($('#nameFieldset').hasClass('invalid')) {
             $("#searchBtnPhysical").prop("disabled", true);
@@ -322,7 +323,8 @@ $("#inputSurname").keyup(function () {
 });
 
 $("#inputName").keyup(function () {
-    if ($(this).val().trim() !== '') {
+    let val = $(this).val();
+    if (val.trim() !== '') {
         $('#nameFieldset').removeClass('invalid');
 
 
@@ -345,8 +347,8 @@ $("#inputName").keyup(function () {
 });
 
 $("#inputPersonCode").keyup(function () {
-
-    if ($(this).val().trim() !== '') {
+    let val = $(this).val();
+    if (val.trim() !== '') {
         $('#codeFieldset').removeClass('invalid');
 
         $('#nameFieldset').removeClass('invalid');
@@ -405,7 +407,8 @@ $('#searchBtnPhysical').click(
 
 //legal
 $("#inputFirmName").keyup(function () {
-    if ($(this).val().trim() !== '') {
+    let val = $(this).val();
+    if (val.trim() !== '') {
 
         $('#searchBtnLegal').prop('disabled', false);
 
@@ -418,7 +421,8 @@ $("#inputFirmName").keyup(function () {
 });
 
 $("#inputFirmCode").keyup(function () {
-    if ($(this).val().trim() !== '') {
+    let val = $(this).val();
+    if (val.trim() !== '') {
 
         $('#searchBtnLegal').prop('disabled', false);
 

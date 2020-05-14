@@ -15,7 +15,7 @@ function uniqueBy(a, cond) {
 $(document).ready(async function () {
 
     let data = await  $.ajax({
-             url: '/api/record?chargebackCategory=29',
+             url: '/api/record?chargebackCategory=28',
              type: 'get'
          });
 

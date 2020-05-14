@@ -1,3 +1,5 @@
+const reg_exp_more_than_one_space = /\s{2,}/;
+
 $('#cleanForm').click(function (e) {
     $('#createForm')[0].reset();
     e.preventDefault();
@@ -46,5 +48,15 @@ $('#createForm').submit(async function (e) {
             }
         }
     });
+
+});
+
+$('input[type=text]').keyup(function () {
+    let val = $(this).val();
+
+    if ( val === ' ' || reg_exp_more_than_one_space.test(val))
+        $(this).closest('fieldset').addClass('invalid');
+    else
+        $(this).closest('fieldset').removeClass('invalid');
 
 });

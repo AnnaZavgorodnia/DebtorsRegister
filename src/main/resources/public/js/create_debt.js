@@ -1,3 +1,5 @@
+const reg_exp_more_than_one_space = /\s{2,}/;
+
 $('input:radio[name="debtorType"]').change(
     function () {
         if ($(this).val() === 'physical') {
@@ -114,8 +116,18 @@ $('#createForm').submit(async function (e) {
              window.location = `detailed-record-info?id=${data}`;
          },
          error: function(){
-             alert("error");
-             //todo вивести повідомлення про помилку
+             $("#message").html("Перевірте правильність введених даних");
          }
      });
+});
+
+$('input[type=text]').keyup(function () {
+    if($(this).prop('required')){
+        let val = $(this).val();
+
+        if ( val === ' ' || reg_exp_more_than_one_space.test(val))
+            $(this).closest('fieldset').addClass('invalid');
+        else
+            $(this).closest('fieldset').removeClass('invalid');
+    }
 });

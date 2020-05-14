@@ -14,7 +14,7 @@ $(document).ready(async function () {
                     console.log(data);
                 },
                 error: function(){
-                    alert("error");
+                    window.location='error';
                 }
             });
 

@@ -1,3 +1,4 @@
+const reg_exp_more_than_one_space = /\s{2,}/;
 let id;
 let profile;
 
@@ -24,7 +25,7 @@ $(document).ready(async function () {
                     console.log(data);
                 },
                 error: function () {
-                    alert("error");
+                    window.location='error';
                 }
             });
 
@@ -88,7 +89,7 @@ $(document).ready(async function () {
                     window.location = `profile?id=${ID}`;
                 },
                 error: function (xhr, ajaxOptions, thrownError) {
-                    $("#message").html(xhr.responseText);
+                    $("#message").html(xhr.responseJSON.message);
                 }
             });
         });
@@ -143,8 +144,13 @@ $(document).ready(async function () {
     });
 });
 
+$('input[type=text]').keyup(function () {
+    if($(this).prop('required')) {
+        let val = $(this).val();
 
-
-
-
-
+        if (val === ' ' || reg_exp_more_than_one_space.test(val))
+            $(this).closest('fieldset').addClass('invalid');
+        else
+            $(this).closest('fieldset').removeClass('invalid');
+    }
+});

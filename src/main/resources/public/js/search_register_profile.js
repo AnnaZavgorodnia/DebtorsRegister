@@ -1,3 +1,5 @@
+const reg_exp_more_than_one_space = /\s{2,}/;
+
 let queryString = window.location.search;
 let urlParams = new URLSearchParams(queryString);
 let id = urlParams.get('id');
@@ -19,7 +21,7 @@ async function setEntitiesById(id) {
             console.log(data);
         },
         error: function(){
-            alert("error");
+            window.location='error';
         }
     });
 
@@ -118,7 +120,6 @@ async function setEntities(email, stateAgency) {
             console.log(data);
         },
         error: function(){
-            alert("error");
         }
     });
 
@@ -270,16 +271,36 @@ $('#cleanForm').click(function (e) {
 });
 
 $("#email").keyup(function () {
+    let input = $(this);
 
-    if ($(this).val() !== '' || $("#stateAgency").val() !== '')
+    if (validInputValue(input.val()) || $("#stateAgency").val().trim() !== '') {
+        input.closest('fieldset').removeClass('invalid');
+        $("#stateAgency").closest('fieldset').removeClass('invalid');
+
         $("#searchBtn").prop('disabled', false);
-    else
+    } else {
+        input.closest('fieldset').addClass('invalid');
         $("#searchBtn").prop('disabled', true);
+    }
+
 });
 
 $("#stateAgency").keyup(function () {
-    if ($(this).val() !== '' || $("#email").val() !== '')
+    let input = $(this);
+
+    if (validInputValue(input.val()) || $("#email").val().trim() !== '') {
+        input.closest('fieldset').removeClass('invalid');
+        $("#email").closest('fieldset').removeClass('invalid');
+
         $("#searchBtn").prop('disabled', false);
-    else
+    } else {
+        input.closest('fieldset').addClass('invalid');
         $("#searchBtn").prop('disabled', true);
+    }
+
+
 });
+
+function validInputValue(value) {
+    return !(value === ' ' || value.trim() === '' || reg_exp_more_than_one_space.test(value));
+}

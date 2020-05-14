@@ -81,31 +81,29 @@
                         <div id="message"></div>
                     </span>
             </div>
-            <div>
-                <form id="searchForm">
-                    <fieldset>
-                        <label for="email">Електронна адреса реєстратора:</label>
-                        <input type="email" id="email" placeholder="Електронна адреса"
-                               tabindex="1" autocomplete="off">
-                    </fieldset>
+            <form id="searchForm">
+                <fieldset>
+                    <label for="email">Електронна адреса реєстратора:</label>
+                    <input type="email" id="email" placeholder="Електронна адреса"
+                           tabindex="1" autocomplete="off">
+                </fieldset>
 
-                    <fieldset>
-                        <label for="stateAgency">Назва державного органу, для якого створений профіль
-                            реєстратора:</label>
-                        <input type="text" id="stateAgency" placeholder="Назва державного органу" tabindex="2"
-                               autocomplete="off">
-                    </fieldset>
+                <fieldset>
+                    <label for="stateAgency">Назва державного органу, для якого створений профіль
+                        реєстратора:</label>
+                    <input type="text" id="stateAgency" placeholder="Назва державного органу" tabindex="2"
+                           autocomplete="off">
+                </fieldset>
 
-                    <div class="row row--align-right ">
-                        <button class="btn btn--color-info" tabindex="3" id="cleanForm">
-                            Очистити
-                        </button>
-                        <button class="btn btn--color-info" tabindex="4" id="searchBtn" disabled>
-                            Шукати
-                        </button>
-                    </div>
-                </form>
-            </div>
+                <div class="row row--align-right ">
+                    <button class="btn btn--color-info" tabindex="3" id="cleanForm">
+                        Очистити
+                    </button>
+                    <button class="btn btn--color-info" type="submit" tabindex="4" id="searchBtn" disabled>
+                        Шукати
+                    </button>
+                </div>
+            </form>
 
             <div id="resultsMessage" class="row row--align-right ng-hide">
                 <p class="message message--color-negative ">
@@ -144,8 +142,8 @@
                     <br>
                 </div>
                 <div class="modal-body">
-                    <p  class="ng-hide" id="activateQuestion">Ви впевнені, що хочете активувати цей профіль?</p>
-                    <p  class="ng-hide" id="deactivateQuestion">Ви впевнені, що хочете деактивувати цей профіль?</p>
+                    <p class="ng-hide" id="activateQuestion">Ви впевнені, що хочете активувати цей профіль?</p>
+                    <p class="ng-hide" id="deactivateQuestion">Ви впевнені, що хочете деактивувати цей профіль?</p>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn--color-negative" id="confirmChangeStatusBtn">Так</button>

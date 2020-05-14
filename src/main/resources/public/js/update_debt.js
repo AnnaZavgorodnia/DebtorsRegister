@@ -1,3 +1,5 @@
+const reg_exp_more_than_one_space = /\s{2,}/;
+
 $(document).ready(async function () {
     const queryString = window.location.search;
     const urlParams = new URLSearchParams(queryString);
@@ -14,9 +16,8 @@ $(document).ready(async function () {
                     console.log(xhr.status);
                     console.log(data);
                 },
-                //todo
                 error: function () {
-                    alert(error);
+                    window.location="error";
                 }
             });
 
@@ -212,7 +213,7 @@ $(document).ready(async function () {
                 window.location = `detailed-record-info?id=${ID}`
             },
             error: function(){
-                $("#message").html("Виникла помилка!");
+                $("#message").html("Перевірте правильність введених даних");
             }
         });
 
@@ -237,6 +238,17 @@ $(document).ready(async function () {
 
         window.location = `search-debtor`;
 
+    });
+
+    $('input[type=text]').keyup(function () {
+        if($(this).prop('required')) {
+            let val = $(this).val();
+
+            if (val === ' ' || reg_exp_more_than_one_space.test(val))
+                $(this).closest('fieldset').addClass('invalid');
+            else
+                $(this).closest('fieldset').removeClass('invalid');
+        }
     });
 
 });

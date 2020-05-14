@@ -126,7 +126,9 @@
                     <fieldset>
                         <label for="password">Пароль для профілю реєстратора:</label>
                         <input type="password" id="password"
-                               placeholder="Пароль" tabindex="5"
+                               placeholder="Пароль" title="Пароль не може містити пробілів та знаків пунктуації!"
+                               pattern="^[a-zA-ZА-ЩЬЮЯҐЄІЇа-щьюяґєії0-9]*$"
+                               tabindex="5"
                                autocomplete="off" required>
                     </fieldset>
 

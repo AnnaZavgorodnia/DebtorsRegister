@@ -8,7 +8,6 @@ $(document).ready(async function () {
             console.log(data);
         },
         error: function(){
-            alert("error");
         }
     });
 

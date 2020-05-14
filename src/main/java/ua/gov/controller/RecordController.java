@@ -23,6 +23,7 @@ import ua.gov.model.Record;
 import ua.gov.model.User;
 import ua.gov.service.RecordService;
 
+import javax.validation.Valid;
 import java.security.Principal;
 import java.util.List;
 import java.util.NoSuchElementException;
@@ -52,7 +53,7 @@ public class RecordController {
 
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping
-    public Long createRecord(@RequestBody RecordDTO dto, Principal principal){
+    public Long createRecord(@RequestBody @Valid RecordDTO dto, Principal principal){
         dto.setUserEmail(principal.getName());
         return service.create(dto);
     }
@@ -65,7 +66,7 @@ public class RecordController {
 
     @ResponseStatus(HttpStatus.OK)
     @PutMapping("/{id}")
-    public void updateRecordById(@PathVariable Long id, @RequestBody RecordDTO dto, Principal principal){
+    public void updateRecordById(@PathVariable Long id, @RequestBody @Valid RecordDTO dto, Principal principal){
         dto.setUserEmail(principal.getName());
         service.updateById(id, dto);
     }
