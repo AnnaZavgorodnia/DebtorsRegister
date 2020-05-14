@@ -68,38 +68,38 @@ async function setPhysicalEntities(fullname, birthday, identification_code, char
     let data = await getData(fullname, identification_code, chargeback_category, false);
 
     let parsed_data = data.map(el => ({
-                                 id: el.id,
-                                 full_name: el.obligor.fullName,
-                                 birth_date: el.obligor.birthDate,
-                                 executive_document_receiver: el.executiveDocumentReceiver,
-                                 issuer_state_agency: el.executiveDocumentIssuer.stateAgency,
-                                 issuer_full_name: el.executiveDocumentIssuer.fullName,
-                                 issuer_email: el.executiveDocumentIssuer.email,
-                                 issuer_phone_number: el.executiveDocumentIssuer.phoneNumber,
-                                 executive_document_number_of_issue: el.executiveDocumentNumberOfIssue,
-                                 chargeback_category: el.chargebackCategory.title
-                        }));
+        id: el.id,
+        full_name: el.obligor.fullName,
+        birth_date: el.obligor.birthDate,
+        executive_document_receiver: el.executiveDocumentReceiver,
+        issuer_state_agency: el.executiveDocumentIssuer.stateAgency,
+        issuer_full_name: el.executiveDocumentIssuer.fullName,
+        issuer_email: el.executiveDocumentIssuer.email,
+        issuer_phone_number: el.executiveDocumentIssuer.phoneNumber,
+        executive_document_number_of_issue: el.executiveDocumentNumberOfIssue,
+        chargeback_category: el.chargebackCategory.title,
+        is_active: el.isActive
+    }));
 
     console.log("parsed_data:");
     console.log(parsed_data);
 
-//    let parsed_data = JSON.parse(testData);
-
     let resTable = $('#physicalResultsTable');
 
-    resTable.removeClass('ng-hide');
+    if (parsed_data.length !== 0) {
 
-    {
-        let today = new Date();
-        let dateTimeStr = today.toLocaleDateString() + " " + today.toLocaleTimeString();
+        resTable.removeClass('ng-hide');
 
-        $('#physicalSearchDateTime').text('Дата та час пошуку: ' + dateTimeStr);
-    }
+        {
+            let today = new Date();
+            let dateTimeStr = today.toLocaleDateString() + " " + today.toLocaleTimeString();
 
+            $('#physicalSearchDateTime').text('Дата та час пошуку: ' + dateTimeStr);
+        }
 
-    parsed_data.forEach(function (entity) {
-        let html_for_register = (MY_APP.user && MY_APP.user.role === 'REGISTER')
-            ? `<td class="${entity.is_active ? 'active' : 'archived'}">
+        parsed_data.forEach(function (entity) {
+            let html_for_register = (MY_APP.user && MY_APP.user.role === 'REGISTER')
+                ? `<td class="${entity.is_active ? 'active' : 'archived'}">
                     ${entity.is_active ? 'Активний' : 'Архівований'}
                 </td>
               <td>
@@ -113,9 +113,9 @@ async function setPhysicalEntities(fullname, birthday, identification_code, char
                                             </a>
                                   </span>
                </td>`
-            : '';
+                : '';
 
-        let entityElement = `<tr class="print-no-page-break">
+            let entityElement = `<tr class="print-no-page-break">
                             <td>${entity.full_name}</td>
                             <td>${entity.birth_date}</td>
                             <td>${entity.executive_document_receiver}</td>
@@ -134,32 +134,39 @@ async function setPhysicalEntities(fullname, birthday, identification_code, char
                         </tr>`;
 
 
-        if (MY_APP.user && MY_APP.user.role === 'REGISTER')
-            $("#physicalResults").append(entityElement);
-        else if (entity.is_active)
-            $("#physicalResults").append(entityElement);
+            if (MY_APP.user && MY_APP.user.role === 'REGISTER')
+                $("#physicalResults").append(entityElement);
+            else if (entity.is_active)
+                $("#physicalResults").append(entityElement);
 
 
-    });
+        });
 
-    $('.delete-btn').bind('click', function () {
-        $('#deleteModal').css('display', 'block');
+        $('.delete-btn').bind('click', function () {
+            $('#deleteModal').css('display', 'block');
 
-        let entityId = $(this).attr('data-id');
+            let entityId = $(this).attr('data-id');
 
-        $('#confirmDeleteBtn').attr('data-delete_id', entityId);
-    });
+            $('#confirmDeleteBtn').attr('data-delete_id', entityId);
+        });
 
-    $('.update-btn').bind('click', function () {
-        let entityId = $(this).attr('data-id');
+        $('.update-btn').bind('click', function () {
+            let entityId = $(this).attr('data-id');
 
-        window.location = `update-debt?id=${entityId}&type=physical`;
-    });
+            window.location = `update-debt?id=${entityId}&type=physical`;
+        });
 
 
-    $('html, body').animate({
-        scrollTop: resTable.offset().top
-    }, 1000);
+        $('html, body').animate({
+            scrollTop: resTable.offset().top
+        }, 1000);
+    } else {
+        $("#physicalResultsMessage").removeClass('ng-hide');
+
+        $('html, body').animate({
+            scrollTop: $("#physicalResultsMessage").offset().top
+        }, 1000);
+    }
 }
 
 async function setLegalEntities(fullname, identification_code, chargeback_category) {
@@ -175,7 +182,8 @@ async function setLegalEntities(fullname, identification_code, chargeback_catego
                                  issuer_email: el.executiveDocumentIssuer.email,
                                  issuer_phone_number: el.executiveDocumentIssuer.phoneNumber,
                                  executive_document_number_of_issue: el.executiveDocumentNumberOfIssue,
-                                 chargeback_category: el.chargebackCategory.title
+                                 chargeback_category: el.chargebackCategory.title,
+                                 is_active: el.isActive
                         }));
 
     console.log("parsed_data:");
@@ -183,14 +191,17 @@ async function setLegalEntities(fullname, identification_code, chargeback_catego
 
     let resTable = $('#legalResultsTable');
 
-    resTable.removeClass('ng-hide');
 
-    {
-        let today = new Date();
-        let dateTimeStr = today.toLocaleDateString() + " " + today.toLocaleTimeString();
+    if (parsed_data.length !== 0) {
 
-        $('#legalSearchDateTime').text('Дата та час пошуку: ' + dateTimeStr);
-    }
+        resTable.removeClass('ng-hide');
+
+        {
+            let today = new Date();
+            let dateTimeStr = today.toLocaleDateString() + " " + today.toLocaleTimeString();
+
+            $('#legalSearchDateTime').text('Дата та час пошуку: ' + dateTimeStr);
+        }
 
 
     parsed_data.forEach(function (entity) {
@@ -209,7 +220,7 @@ async function setLegalEntities(fullname, identification_code, chargeback_catego
                                             </a>
                                             </span>
                                         </td>`
-            : '';
+                : '';
 
         let entityElement = `<tr class="print-no-page-break">
                                         <td>${entity.full_name}</td>
@@ -227,30 +238,37 @@ async function setLegalEntities(fullname, identification_code, chargeback_catego
                                         ${html_for_register}
                                      </tr>`;
 
-        if (MY_APP.user && MY_APP.user.role === 'REGISTER')
-            $("#legalResults").append(entityElement);
-        else if (entity.is_active)
-            $("#legalResults").append(entityElement);
-    });
+            if (MY_APP.user && MY_APP.user.role === 'REGISTER')
+                $("#legalResults").append(entityElement);
+            else if (entity.is_active)
+                $("#legalResults").append(entityElement);
+        });
 
-    $('.delete-btn').bind('click', function () {
-        $('#deleteModal').css('display', 'block');
+        $('.delete-btn').bind('click', function () {
+            $('#deleteModal').css('display', 'block');
 
 
-        let entityId = $(this).attr('data-id');
+            let entityId = $(this).attr('data-id');
 
-        $('#confirmDeleteBtn').attr('data-delete_id', entityId);
-    });
+            $('#confirmDeleteBtn').attr('data-delete_id', entityId);
+        });
 
-    $('.update-btn').bind('click', function () {
-        let entityId = $(this).attr('data-id');
+        $('.update-btn').bind('click', function () {
+            let entityId = $(this).attr('data-id');
 
-        window.location = `update-debt?id=${entityId}&type=legal`;
-    });
+            window.location = `update-debt?id=${entityId}&type=legal`;
+        });
 
-    $('html, body').animate({
-        scrollTop: resTable.offset().top
-    }, 1000);
+        $('html, body').animate({
+            scrollTop: resTable.offset().top
+        }, 1000);
+    } else {
+        $("#legalResultsMessage").removeClass('ng-hide');
+
+        $('html, body').animate({
+            scrollTop: $("#legalResultsMessage").offset().top
+        }, 1000);
+    }
 }
 
 function getData(fullname, identification_code, chargeback_category, is_legal_entity){
@@ -366,6 +384,8 @@ $('#searchBtnPhysical').click(
         e.preventDefault();
         $('#physicalResults').empty();
 
+        $("#physicalResultsMessage").addClass('ng-hide');
+
         let surname = $("#inputSurname").val();
         let name = $("#inputName").val();
         let identification_code = $("#inputPersonCode").val();
@@ -422,7 +442,9 @@ $('#cleanFormLegal').click(function (e) {
 $('#searchBtnLegal').click(
     function (e) {
         e.preventDefault();
+
         $('#legalResults').empty();
+        $("#legalResultsMessage").addClass('ng-hide');
 
         let firmName = $("#inputFirmName").val().trim();
         let identification_code = $("#inputFirmCode").val().trim();

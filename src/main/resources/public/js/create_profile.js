@@ -36,8 +36,14 @@ $('#createForm').submit(async function (e) {
             console.log(data);
             window.location = `profile?id=${data}`;
         },
-        error: function(){
-            $("#message").html("Виникла помилка. " + message);
+        error: function (xhr, ajaxOptions, thrownError) {
+            if(xhr.status === 400){
+                console.log(xhr);
+                if(xhr.responseJSON.message === "Користувач з такою електронною адресою вже існує")
+                    $("#message").html("Користувач з такою поштою вже існує");
+                else
+                    $("#message").html("Перевірте правильність введених даних");
+            }
         }
     });
 

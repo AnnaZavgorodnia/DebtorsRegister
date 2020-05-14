@@ -2,6 +2,8 @@ package ua.gov.controller;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
+import org.springframework.validation.BindException;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -17,12 +19,14 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 import ua.gov.dto.UserDTO;
+import ua.gov.exception.ElementAlreadyExistsException;
 import ua.gov.exception.ResponseException;
 import ua.gov.model.Record;
 import ua.gov.model.RoleType;
 import ua.gov.model.User;
 import ua.gov.service.UserService;
 
+import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
@@ -39,7 +43,7 @@ public class UserController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public Long createUser(@RequestBody UserDTO dto){
+    public Long createUser(@RequestBody @Valid UserDTO dto){
         if(dto.getRole() == null){
             dto.setRole(RoleType.REGISTER);
         }
@@ -86,6 +90,13 @@ public class UserController {
     @ResponseBody
     public ResponseException handleNoSuchElementException(NoSuchElementException ex) {
         return new ResponseException(ex.getMessage());
+    }
+
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ExceptionHandler(ElementAlreadyExistsException.class)
+    @ResponseBody
+    public ResponseException handleElementAlreadyExistsException(ElementAlreadyExistsException ex) {
+        return new ResponseException("Користувач з такою електронною адресою вже існує");
     }
 
 }

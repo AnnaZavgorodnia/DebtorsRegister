@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import ua.gov.dto.UserDTO;
+import ua.gov.exception.ElementAlreadyExistsException;
 import ua.gov.model.Record;
 import ua.gov.model.User;
 import ua.gov.repository.UserRepository;
@@ -35,7 +36,15 @@ public class UserService {
         user.setCreatedAt(LocalDateTime.now());
         user.setStateAgency(dto.getStateAgency());
 
-        return repository.save(user);
+        User created;
+
+        try{
+            created = repository.save(user);
+        } catch (RuntimeException e){
+            throw new ElementAlreadyExistsException("user with such email already exists");
+        }
+
+        return created;
     }
 
     public User getById(Long id) {
