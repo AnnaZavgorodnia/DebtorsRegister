@@ -52,7 +52,7 @@ public class UserService {
     }
 
     public List<User> getByEmailAndStateAgency(String email, String stateAgency) {
-        return repository.findAllByEmailAndStateAgency(email, stateAgency);
+        return repository.findAllByEmailAndStateAgencyContainingIgnoreCase(email, stateAgency);
     }
 
     public List<User> findAll() {

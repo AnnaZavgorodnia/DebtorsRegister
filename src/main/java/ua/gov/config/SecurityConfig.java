@@ -25,9 +25,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http        .authorizeRequests()
                 .antMatchers("/all-profiles","/create-registers-profile",
-                        "/search-registers-profile", "/update-profile", "/profile").hasAuthority("ADMIN")
-                .antMatchers("/create-debt","/detailed-record-info", "/profile",
+                        "/search-registers-profile", "/update-profile").hasAuthority("ADMIN")
+                .antMatchers("/create-debt","/detailed-record-info",
                         "/update-debt").hasAuthority("REGISTER")
+                .antMatchers("/profile").hasAnyAuthority("ADMIN","REGISTER")
                 .antMatchers("/**","/js/**", "/css/**","/img/**","/api/**","/alimony-debtors","/search-debtor",
                         "/wages-debtors","/child-dates-debtors").permitAll()
                 .anyRequest().authenticated()
@@ -36,6 +37,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .defaultSuccessUrl("/")
                 .and()
                 .logout().permitAll()
+                .logoutSuccessUrl("/")
                 .clearAuthentication(true)
                 .deleteCookies("JSESSIONID")
                 .invalidateHttpSession(true)

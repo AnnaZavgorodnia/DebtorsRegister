@@ -28,7 +28,7 @@ public class ObligorService {
                     dto.getIdentificationCode(),
                     dto.getIsLegalEntity());
         } else {
-            obligor = repository.findByFullNameAndIsLegalEntity(
+            obligor = repository.findByFullNameContainingIgnoreCaseAndIsLegalEntity(
                     dto.getFullName().trim(),
                     dto.getIsLegalEntity());
         }
