@@ -37,7 +37,6 @@ $('#createForm').submit(async function (e) {
     e.preventDefault();
 
     let full_name = $('#fullName').val();
-    let birth_date = new Date($('#birthDate').val()).toISOString();
     let passport_number = $('#passportNumber').val();
     let identification_code = $('#identificationCode').val();
     let chargeback_category = $('#categorySelect_33 option:selected').val();
@@ -66,7 +65,12 @@ $('#createForm').submit(async function (e) {
     let amount_of_money_to_be_recovered = $('#amountOfMoneyToBeRecovered').val();
     let decision_implementation_details = $('#decisionImplementationDetails').val();
     let is_legal_entity = $('#physicalDebtor').hasClass('ng-hide');
-
+    let birth_date;
+    if(!is_legal_entity){
+        birth_date = new Date($('#birthDate').val()).toISOString();
+    } else{
+        birth_date = "";
+    }
 
     let data = {
        obligorFullName: full_name,
