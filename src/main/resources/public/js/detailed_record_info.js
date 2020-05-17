@@ -47,7 +47,8 @@ $(document).ready(async function () {
                 document_date_of_entry_into_force: datag.documentDateOfEntryIntoForce,
                 amount_of_money_to_be_recovered: datag.moneyAmountToBeRecovered,
                 decision_implementation_details: datag.informationAboutImplementationOfDecision,
-                is_legal_entity: datag.obligor.isLegalEntity
+                is_legal_entity: datag.obligor.isLegalEntity,
+                is_active: datag.isActive
             }
 
             console.log("parsed_data:");
@@ -234,6 +235,9 @@ $(document).ready(async function () {
                 </div>`;
 
             $('#debtInfo').append(debtInfoHtml);
+
+            if( !parsed_data.is_active)
+                $("#activeStatus").addClass('non-active').html('Запис архівований')
 
         } else {
             //invalid query

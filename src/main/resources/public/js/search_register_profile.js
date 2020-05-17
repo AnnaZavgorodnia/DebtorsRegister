@@ -132,32 +132,36 @@ async function setEntities(email, stateAgency) {
     }));
 
     let resTable = $('#resultsTable');
+    let resMessage = $("#resultsMessage");
 
-    resTable.removeClass('ng-hide');
+    if (parsed_data.length !== 0) {
 
-    {
-        let today = new Date();
-        let dateTimeStr = today.toLocaleDateString() + " " + today.toLocaleTimeString();
+        resTable.removeClass('ng-hide');
+        resMessage.addClass('ng-hide');
 
-        $('#searchDateTime').text('Дата та час пошуку: ' + dateTimeStr);
-    }
+        {
+            let today = new Date();
+            let dateTimeStr = today.toLocaleDateString() + " " + today.toLocaleTimeString();
+
+            $('#searchDateTime').text('Дата та час пошуку: ' + dateTimeStr);
+        }
 
 
-    parsed_data.forEach(function (entity) {
-        let buttonsHtml = entity.is_active
-            ? `<button class="btn btn--color-negative changeStatus" data-status="deactivate" data-id="${entity.id}" data-toggle="modal" data-target="#changeStatusModal">
+        parsed_data.forEach(function (entity) {
+            let buttonsHtml = entity.is_active
+                ? `<button class="btn btn--color-negative changeStatus" data-status="deactivate" data-id="${entity.id}" data-toggle="modal" data-target="#changeStatusModal">
                             Деактивувати профіль
                 </button>`
-            : `<button class="btn btn--color-positive changeStatus" data-status="activate" data-id="${entity.id}" data-toggle="modal" data-target="#changeStatusModal">
+                : `<button class="btn btn--color-positive changeStatus" data-status="activate" data-id="${entity.id}" data-toggle="modal" data-target="#changeStatusModal">
                             Активувати профіль
                </button>`;
 
-        let entityElement = `<tr class="print-no-page-break">
+            let entityElement = `<tr class="print-no-page-break">
                     <td>${entity.fullname}</td>
                     <td>${entity.stateAgency}</td>
                     <td>${entity.email}</td>
                     <td>${entity.phoneNumber}</td>
-                    <td>${entity.is_active ? 'Активний' : 'Деактивований'}</td>
+                    <td class="${entity.is_active ? 'active' : 'non-active'}">${entity.is_active ? 'Активний' : 'Деактивований'}</td>
                     <td>
                         ${buttonsHtml}
                         <button type="button" class="btn btn--color-warning update-btn" data-id="${entity.id}">
@@ -166,34 +170,43 @@ async function setEntities(email, stateAgency) {
                     </td>
                 </tr>`;
 
-        $("#result").append(entityElement);
-    });
+            $("#result").append(entityElement);
+        });
 
-    $('.changeStatus').bind('click', function () {
-        let profileId = $(this).attr('data-id');
-        let status = $(this).attr('data-status');
-
-
-        if (status === 'deactivate')
-            $('#deactivateQuestion').removeClass('ng-hide');
-        else if (status === 'activate')
-            $('#activateQuestion').removeClass('ng-hide');
-
-        $('#changeStatusModal').css('display', 'block');
-
-        $('#confirmChangeStatusBtn').attr('data-id', profileId).attr('data-status', status);
-    });
-
-    $('.update-btn').bind('click', function () {
-        let profileId = $(this).attr('data-id');
-
-        window.location = `update-profile?id=${profileId}`;
-    });
+        $('.changeStatus').bind('click', function () {
+            let profileId = $(this).attr('data-id');
+            let status = $(this).attr('data-status');
 
 
-    $('html, body').animate({
-        scrollTop: resTable.offset().top
-    }, 1000);
+            if (status === 'deactivate')
+                $('#deactivateQuestion').removeClass('ng-hide');
+            else if (status === 'activate')
+                $('#activateQuestion').removeClass('ng-hide');
+
+            $('#changeStatusModal').css('display', 'block');
+
+            $('#confirmChangeStatusBtn').attr('data-id', profileId).attr('data-status', status);
+        });
+
+        $('.update-btn').bind('click', function () {
+            let profileId = $(this).attr('data-id');
+
+            window.location = `update-profile?id=${profileId}`;
+        });
+
+
+        $('html, body').animate({
+            scrollTop: resTable.offset().top
+        }, 1000);
+    } else {
+        resMessage.removeClass('ng-hide');
+        resTable.addClass('ng-hide');
+
+
+        $('html, body').animate({
+            scrollTop: resMessage.offset().top
+        }, 1000);
+    }
 }
 
 $('#searchBtn').click(function (e) {

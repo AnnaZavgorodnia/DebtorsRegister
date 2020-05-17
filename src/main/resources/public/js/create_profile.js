@@ -55,8 +55,12 @@ $('input[type=text]').keyup(function () {
     let val = $(this).val();
 
     if ( val === ' ' || reg_exp_more_than_one_space.test(val))
-        $(this).closest('fieldset').addClass('invalid');
+        $(this).closest('fieldset').addClass('invalid').trigger('changeClass');
     else
-        $(this).closest('fieldset').removeClass('invalid');
+        $(this).closest('fieldset').removeClass('invalid').trigger('changeClass');
 
+});
+
+$("fieldset").on('changeClass', function () {
+    $("#submitCreate").prop('disabled', $('fieldset').hasClass('invalid'))
 });

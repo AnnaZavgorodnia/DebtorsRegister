@@ -86,9 +86,12 @@ async function setPhysicalEntities(fullname, birthday, identification_code, char
 
     let resTable = $('#physicalResultsTable');
 
-    if (parsed_data.length !== 0) {
+    let all_are_not_active = parsed_data.every((el) => !el.is_active);
+
+    if (parsed_data.length !== 0 && (!all_are_not_active || (MY_APP.user && MY_APP.user.role === 'REGISTER'))) {
 
         resTable.removeClass('ng-hide');
+        $("#physicalResultsMessage").addClass('ng-hide');
 
         {
             let today = new Date();
@@ -97,15 +100,19 @@ async function setPhysicalEntities(fullname, birthday, identification_code, char
             $('#physicalSearchDateTime').text('Дата та час пошуку: ' + dateTimeStr);
         }
 
+
         parsed_data.forEach(function (entity) {
+            let buttons = entity.is_active
+                ? `<td>
+                       <button type="button" class="btn btn--color-negative delete-btn" data-id="${entity.id}" data-toggle="modal" data-target="#deleteModal">Видалити</button>
+                       <button type="button" class="btn btn--color-warning update-btn" data-id="${entity.id}">Редагувати</button>
+                   </td>`
+                : '';
             let html_for_register = (MY_APP.user && MY_APP.user.role === 'REGISTER')
                 ? `<td class="${entity.is_active ? 'active' : 'archived'}">
                     ${entity.is_active ? 'Активний' : 'Архівований'}
                 </td>
-              <td>
-                   <button type="button" class="btn btn--color-negative delete-btn" data-id="${entity.id}" data-toggle="modal" data-target="#deleteModal">Видалити</button>
-                   <button type="button" class="btn btn--color-warning update-btn" data-id="${entity.id}">Редагувати</button>
-              </td>
+              ${buttons}
               <td data-title="Детально" >
                                   <span class="cell-content">
                                             <a href="detailed-record-info?id=${entity.id}">
@@ -191,10 +198,12 @@ async function setLegalEntities(fullname, identification_code, chargeback_catego
 
     let resTable = $('#legalResultsTable');
 
+    let all_are_not_active = parsed_data.every((el) => !el.is_active);
 
-    if (parsed_data.length !== 0) {
+    if (parsed_data.length !== 0 && (!all_are_not_active || (MY_APP.user && MY_APP.user.role === 'REGISTER'))) {
 
         resTable.removeClass('ng-hide');
+        $("#legalResultsMessage").addClass('ng-hide');
 
         {
             let today = new Date();
@@ -203,16 +212,18 @@ async function setLegalEntities(fullname, identification_code, chargeback_catego
             $('#legalSearchDateTime').text('Дата та час пошуку: ' + dateTimeStr);
         }
 
-
-    parsed_data.forEach(function (entity) {
-        let html_for_register = (MY_APP.user && MY_APP.user.role === 'REGISTER')
-            ? `<td class="${entity.is_active ? 'active' : 'archived'}">
-                    ${entity.is_active ? 'Активний' : 'Архівований'}
-                </td>
-                <td >
+        parsed_data.forEach(function (entity) {
+            let buttons = entity.is_active
+                ? `<td >
                                             <button type="button" class="btn btn--color-negative delete-btn" data-id="${entity.id}" data-toggle="modal" data-target="#deleteModal">Видалити</button>
                                             <button type="button" class="btn btn--color-warning update-btn" data-id="${entity.id}">Редагувати</button>
-               </td>
+               </td>`
+                : '';
+            let html_for_register = (MY_APP.user && MY_APP.user.role === 'REGISTER')
+                ? `<td class="${entity.is_active ? 'active' : 'archived'}">
+                    ${entity.is_active ? 'Активний' : 'Архівований'}
+                </td>
+                ${buttons}
                                         <td data-title="Детально" >
                                             <span class="cell-content">
                                             <a href="detailed-record-info?id=${entity.id}">

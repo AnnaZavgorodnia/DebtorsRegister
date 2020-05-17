@@ -32,7 +32,7 @@ $(document).ready(async function () {
                 </td>
                 <td>${entity.email}</td>
                 <td>${entity.phone_number}</td>
-                <td>${entity.is_active ? 'Активний' : 'Деактивований'}</td>
+                <td class="${entity.is_active ? 'active' : 'non-active'}">${entity.is_active ? 'Активний' : 'Деактивований'}</td>
                 <td>
                     <button type="button" class="btn btn--color-warning update-btn" data-id="${entity.id}">
                             Редагувати

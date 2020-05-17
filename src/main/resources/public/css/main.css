@@ -14,7 +14,9 @@
 .archived {
     color: red;
 }
-
+.non-active{
+    color: red;
+}
 .active {
     color: green;
 }
