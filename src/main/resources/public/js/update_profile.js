@@ -61,7 +61,7 @@ $(document).ready(async function () {
             window.location = `search-registers-profile?id=${ID}`;
         });
 
-        $("#updateForm").submit(function (e) {
+        $("#updateForm").submit(async function (e) {
             e.preventDefault();
 
             let full_name = $('#fullName').val();
