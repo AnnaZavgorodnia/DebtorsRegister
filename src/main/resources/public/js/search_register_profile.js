@@ -69,7 +69,6 @@ async function setEntitiesById(id) {
                     <td>${entity.stateAgency}</td>
                     <td>${entity.email}</td>
                     <td>${entity.phoneNumber}</td>
-                    <td>${entity.password}</td>
                     <td>${entity.is_active ? 'Активний' : 'Деактивований'}</td>
                     <td>
                         ${buttonsHtml}
