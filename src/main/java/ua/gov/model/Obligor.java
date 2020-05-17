@@ -42,13 +42,13 @@ public class Obligor {
     @Column(nullable = false, name = "full_name")
     private String fullName;
 
-    @Column(nullable = false, name = "birth_date")
+    @Column(name = "birth_date")
     private LocalDate birthDate;
 
     @Column(nullable = false, name = "identification_code", unique = true)
     private String identificationCode;
 
-    @Column(nullable = false, name = "passport_number")
+    @Column(name = "passport_number")
     private String passportNumber;
 
     @Column(name = "bank_account_number")
